@@ -1,0 +1,26 @@
+<html>
+	<head>
+		<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js'></script>
+		<script src='/libs/kinetic-v4.3.1.js' type='text/javascript'></script>
+		<script src='/libs/simplemodal-1.4.3.js' type='text/javascript'></script>
+		
+		<script src='/res/scripts/game.js' type='text/javascript'></script>
+		<script src='/res/scripts/utils.js' type='text/javascript'></script>
+		
+		<link rel='stylesheet' type='text/css' href='/res/styles/game.css'>
+		<link rel='stylesheet' type='text/css' href='/res/styles/uni.css'>
+	</head>
+	<body>
+		<div id='fullWrapper'>
+			<a href='/index.html' class='goBack'>&larr; Return to main page</a>
+			<div id='gameWrapper'>
+				<div id='controls'><button type='button' onclick='checkErrors();'>Check</button><button id='helpButton' type='button' onclick='help(true);'>Help/Tips</button></div>
+				<!--<div id='imageHeader'><img onclick='selectTool(1);' id='h0' /><img onclick='selectTool(2);' id='h1' /><img onclick='selectTool(3);' id='h2' /><img onclick='selectTool(4);' id='h3' /><img onclick='selectTool(5);' id='h4' /><img onclick='selectTool(6);' id='h5' /><img onclick='selectTool(7);' id='h6'/><img onclick='selectTool(8);' id='h7' /><img onclick='selectTool(9);' id='h8' /></div>-->
+				<div id='numStage'></div><div id='gameStage'></div>
+				<!--Zoom: <button type='button' onclick='zoom(true);'>+</button><button type='button' onclick='zoom(false);'>-</button>     -->
+				<div id='alerts'></div>
+			</div>
+		</div>
+		<div id='help' style='display:none'>Click to place the selected element.<br />Right click to mark the tile with a note of the selected element.<br />Use 0-9, +, and - to quickly select tools, or click on the icons on the left side of the screen.<br /><button style='float:right' id='closeHelp' onclick='help(false);'>Close</button></div>
+	</body>
+</html>

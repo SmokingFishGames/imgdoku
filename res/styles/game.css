@@ -1,0 +1,40 @@
+canvas {
+	border: 1px solid black;
+}
+#gameWrapper{
+	margin-left: auto;
+	margin-right:auto;
+	width:825px;
+}
+#gameStage {
+	width:675px;
+	float:right;
+	background-color:#FFF7C2;
+}
+#numStage {
+	width:150px;
+	float:left;
+	background-color:#FFF7C2;
+}
+.goBack {
+	text-decoration: none;
+	top:5;
+	left:5;
+	position:absolute;
+}
+#helpButton {
+	float:right;
+}
+#alerts {
+	text-align:center;
+	font-size:25px;
+}
+#simplemodal-overlay {
+	background-color:#000;
+}
+#simplemodal-container {
+	background-color:#333;
+	border:8px solid #444;
+	padding:12px;
+	color: white;
+}

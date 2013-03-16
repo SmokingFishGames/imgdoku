@@ -1,0 +1,33 @@
+#fullWrapper {
+	max-width:800px;
+	background-color:#FFF7C2;
+	padding:30px;
+	border-radius:20px;
+	font-size:30px;
+	font-family:'serif';
+	word-break:loose;
+}
+.difficulty {
+	font-size:20px;
+}
+.playNow {
+	width:250px;
+	height:60px;
+	font-size:40;
+	margin-left:auto;
+	margin-right:auto;
+	border-radius:30px;
+}
+.submit {
+	width:125px;
+	height:30px;
+	font-size:20;
+	margin-left:auto;
+	margin-right:0;
+	float:right;
+	border-radius:15px;
+}
+.indexButton {
+	background-color:#FFBEFF;
+	text-align:center;
+}
