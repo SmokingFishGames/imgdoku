@@ -18,7 +18,7 @@
 				<hr />
 				Difficulty: <span class='difficulty'><input type='radio' name='difficulty' value='1'> Easy <input type='radio' name='difficulty' value='2' checked> Medium <input type='radio' name='difficulty' value='3'> Hard <input type='radio' name='difficulty' value='4'> Expert</span><br />
 				<hr />
-				<div class="fb-login-button" data-show-faces="false" data-width="200" data-max-rows="1"></div>
+				<div class="fb-login-button" data-show-faces="true" data-width="200" data-max-rows="1" scope="user_photos, friends_photos"></div><button type='button' onclick='fetchAlbums();'>FB PHOTOS</button>
 				<hr />
 				<a href='http://imgur.com' target='_blank'>Imgur</a> Album URL: <input id='imgurinput' /><br />
 				
@@ -33,7 +33,7 @@
 			var js, fjs = d.getElementsByTagName(s)[0];
 			if (d.getElementById(id)) return;
 			js = d.createElement(s); js.id = id;
-			js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=APP_ID";
+			js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=154174584743698";
 			fjs.parentNode.insertBefore(js, fjs);
 		}(document, 'script', 'facebook-jssdk'));
 	</script>
