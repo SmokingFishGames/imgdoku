@@ -122,6 +122,8 @@ $(document).ready(function() {
 	}
 	if (origin=='i') {
 		getImgurImages(hash);
+	} else if (origin == 'fb') {
+		getFBImages(hash);
 	}
 	
 	erase = new Image();
@@ -215,6 +217,11 @@ function getImgurImages(hash) {
 			alert('Malformed hash or URL');
 		}
 	});
+}
+
+function getFBImages(hash) {
+	console.log('Not operational yet,');
+	console.log(hash);
 }
 
 //function drawSolved() {
