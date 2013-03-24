@@ -1,4 +1,5 @@
 #fullWrapper {
+	min-width: 800px;
 	max-width:800px;
 	background-color:#FFF7C2;
 	padding:30px;
@@ -7,6 +8,37 @@
 	font-family:'serif';
 	word-break:loose;
 }
+#mainForm {
+	
+}
+#fbaccountholder {
+	width:800px;
+	height:100px;
+}
+#fbholder {
+	
+}
+#fbalbums {
+	width:600px;
+	height:100px;
+	display:inline-block;
+	vertical-align:middle;
+	overflow-x: auto;
+	overflow-y: hidden;
+	white-space:nowrap;
+}
+.fb-login-button {
+	display:inline-block;
+	vertical-align:middle;
+}
+.fbalbumimg {
+	height:90px;
+	margin:5px;
+	vertical-align:middle;
+	border:0px;
+	border-style: solid;
+	border-color: blue;
+}
 .difficulty {
 	font-size:20px;
 }
@@ -14,20 +46,23 @@
 	width:250px;
 	height:60px;
 	font-size:40;
-	margin-left:auto;
-	margin-right:auto;
 	border-radius:30px;
 }
 .submit {
-	width:125px;
+	width:250px;
 	height:30px;
 	font-size:20;
-	margin-left:auto;
-	margin-right:0;
-	float:right;
 	border-radius:15px;
 }
 .indexButton {
 	background-color:#FFBEFF;
 	text-align:center;
+}
+.buttonHolder {
+	text-align:center;
+}
+.originHolder {
+	/*border:5px solid #D1D1D1;*/
+	border-radius:10px;
+	background-color: #FFF29C;
 }

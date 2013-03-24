@@ -69,17 +69,17 @@
 //	ref.parentNode.insertBefore(js, ref);
 //}(document));
 
-function fetchAlbums() {
-	FB.api('/me/albums', function(response) {
-		console.log(response);
-		for (i in response.data) {
-			if (response.data[i].count >= 9) {
-				fbalbums.push(new fbAlbum(response.data[i].id, response.data[i].name, response.data[i].cover_photo, response.data[i].link));
-			}
-		}
-		//console.log(response.metadata.connections.photos);
-		//FB.api(response.metadata.connections.photos, function(secResponse) {
-		//	console.log(secResponse.data);
-		//});
-	});
-}
+//function fetchAlbums() {
+//	FB.api('/me/albums', function(response) {
+//		console.log(response);
+//		for (i in response.data) {
+//			if (response.data[i].count >= 9) {
+//				fbalbums.push(new fbAlbum(response.data[i].id, response.data[i].name, response.data[i].cover_photo, response.data[i].link));
+//			}
+//		}
+//		//console.log(response.metadata.connections.photos);
+//		//FB.api(response.metadata.connections.photos, function(secResponse) {
+//		//	console.log(secResponse.data);
+//		//});
+//	});
+//}
