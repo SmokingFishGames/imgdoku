@@ -12,14 +12,14 @@
 	
 }
 #fbaccountholder {
-	width:800px;
+	/*width:800px;*/
 	height:100px;
 }
 #fbholder {
 	
 }
 #fbalbums {
-	width:600px;
+	width:550px;
 	height:100px;
 	display:inline-block;
 	vertical-align:middle;
@@ -62,7 +62,8 @@
 	text-align:center;
 }
 .originHolder {
-	/*border:5px solid #D1D1D1;*/
 	border-radius:10px;
 	background-color: #FFF29C;
+	margin:5px;
+	padding:20px;
 }
