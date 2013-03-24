@@ -123,7 +123,7 @@ $(document).ready(function() {
 	if (origin=='i') {
 		getImgurImages(hash);
 	} else if (origin == 'fb') {
-		getFBImages(hash);
+		getFBAlbum(hash);
 	}
 	
 	erase = new Image();
@@ -219,9 +219,69 @@ function getImgurImages(hash) {
 	});
 }
 
-function getFBImages(hash) {
-	console.log('Not operational yet,');
-	console.log(hash);
+function getFBAlbum(hash) {
+	// Load the SDK Asynchronously
+	(function(d){
+		var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+		if (d.getElementById(id)) {return;}
+		js = d.createElement('script'); js.id = id; js.async = true;
+		js.src = "//connect.facebook.net/en_US/all.js";
+		ref.parentNode.insertBefore(js, ref);
+	}(document));
+	
+	window.fbAsyncInit = function() {
+		FB.init({
+			appId      : '154174584743698', // App ID
+			channelUrl : '/res/fb/channel.html', // Channel File
+			status     : true, // check login status
+			cookie     : true, // enable cookies to allow the server to access the session
+			xfbml      : true  // parse XFBML
+		});
+		
+		FB.getLoginStatus(function(response) {
+			if (response.status === 'connected') {
+				// connected
+				console.log(response);
+				console.log('connected');
+				FB.api('/' + hash + '/photos', function(newResp) {
+					getFBImages(newResp);
+				});
+			} else if (response.status === 'not_authorized') {
+				// not_authorized
+				alert('You don\'t have the permissions to view this album!  Try changing permissions or using a different album.');
+			} else {
+				// not_logged_in
+				alert('You aren\'t logged in to Facebook!');
+			}
+		});
+		
+		// Additional init code here
+		
+	};
+}
+
+function getFBImages(api) {
+	console.log(api);
+	if (api.data.length >= 9) {
+		for (var i = 0; i < 9; i++) {
+			images.push(new Image());
+			images[i].src = api.data[i].source;
+			images[i].index = i;
+			images[i].onload = function() {
+				loaded++;
+				if (this.width > this.height) {
+					this.divisor = this.width/75;
+				} else {
+					this.divisor = this.height/75;
+				} if (loaded==12) {
+					drawUnsolved();
+					drawToolbar();
+				}
+			}
+		}
+	} else {
+		alert('Not enough images in album.');
+	}
 }
 
 //function drawSolved() {
