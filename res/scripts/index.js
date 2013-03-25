@@ -68,6 +68,14 @@ window.fbAsyncInit = function() {
 	});
 };
 
+function finishFBLogin() {
+	FB.getLoginStatus(function(response) {
+		if (response.status=="connected") {
+			initFBAlbums();
+		}
+	});
+}
+
 function submitCustom() {
 	var origin = getOrigin();
 	switch (origin) {
