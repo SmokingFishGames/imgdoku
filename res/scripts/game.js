@@ -188,12 +188,14 @@ function getImgurImages(hash) {
 		beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'Client-ID aec6af81bfca057');},
 		success: function(data) {
 			if (data.data.length >= 9) {
+				$('#alerts').text('Loading...');
 				for (var i = 0; i < 9; i++) {
 					images.push(new Image());
 					images[i].src = data.data[i].link;
 					images[i].index = i;
 					images[i].onload = function() {
 						loaded++;
+						$('#alerts').append('.');
 						if (this.width > this.height) {
 							this.divisor = this.width/75;
 						} else {
@@ -204,6 +206,7 @@ function getImgurImages(hash) {
 						//$('#h'+this.index).attr('height', this.height/this.divisor);
 						//$('#h'+this.index).attr('width', this.width/this.divisor);
 						if (loaded==12) {
+							$('#alerts').text('Loaded!  Enjoy your game.');
 							drawUnsolved();
 							drawToolbar();
 						}
@@ -266,17 +269,20 @@ function getFBAlbum(hash) {
 function getFBImages(api) {
 	console.log(api);
 	if (api.data.length >= 9) {
+		$('#alerts').text('Loading...');
 		for (var i = 0; i < 9; i++) {
 			images.push(new Image());
 			images[i].src = api.data[i].source;
 			images[i].index = i;
 			images[i].onload = function() {
 				loaded++;
+				$('#alerts').append('.');
 				if (this.width > this.height) {
 					this.divisor = this.width/75;
 				} else {
 					this.divisor = this.height/75;
 				} if (loaded==12) {
+					$('#alerts').text('Loaded!  Enjoy your game.');
 					drawUnsolved();
 					drawToolbar();
 				}
