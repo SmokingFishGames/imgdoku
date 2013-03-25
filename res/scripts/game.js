@@ -16,6 +16,9 @@ var zoomIn;
 var zoomOut;
 
 var diff;
+var hash;
+var origin;
+var mess;
 
 var solved = [];
 var unsolved = [];
@@ -98,8 +101,6 @@ $(document).ready(function() {
 		width: 150,
 		height:675
 	});
-	var hash;
-	var origin;
 	if(typeof(specHash) !== 'undefined') {
 		hash = specHash;
 	} else if (typeof(getUrlVars()['h']) !== 'undefined') {
@@ -121,6 +122,19 @@ $(document).ready(function() {
 	} else {
 		diff = 2;
 	}
+	if (typeof(specMess) !== 'undefined') {
+		mess = specMess;
+	} else if (typeof(getUrlVars()['pn']) !== 'undefined') {
+		if (getUrlVars()['pn'] == 1)
+			mess = -1;
+	} else {
+		mess = -1;
+	}
+	
+	if (mess != -1)
+		$('#announceWrapper').html(mess);
+	
+	
 	if (origin=='i') {
 		getImgurImages(hash);
 	} else if (origin == 'fb') {
