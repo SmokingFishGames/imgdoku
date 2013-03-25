@@ -4,7 +4,6 @@ var selectedFB = {empty:true};
 function submitImgurURL() {
 	var val = $('#imgurinput').val();
 	val = parseImgurURL(val);
-	console.log(val);
 	if (val=='' || val.length != 5) {
 		var r = confirm('This appears to be a malformed Imgur hash or URL.  Are you sure you want to try to load it?');
 		if (r == true) {
@@ -85,7 +84,19 @@ function initFBAlbums() {
 	$('#fbfriendmenu').append('<option value="me">' + 'Me' + '</option>');
 	FB.api('/me/friends', function(friends) {
 		for (i in friends.data) {
-			$('#fbfriendmenu').append('<option value="' + friends.data[i].id + '">' + friends.data[i].name + '</option>');
+			FB.api('/' + friends.data[i].id + '/albums', function (friendsresp){
+				if (friendsresp.data.length > 0) {
+					var over9 = false;
+					for (i in friendsresp.data) {
+						if (friendsresp.data[i].count >= 9) {
+							over9 = true;
+							break;
+						}
+					}
+					if (over9)
+						$('#fbfriendmenu').append('<option value="' + friendsresp.data[0].from.id + '">' + friendsresp.data[0].from.name + '</option>');
+				}
+			});
 		}
 	});
 	fetchFBAlbums('me');
@@ -99,7 +110,6 @@ function selectFriend() {
 }
 
 function fetchFBAlbums(id) {
-	console.log(id);
 	FB.api('/' + id + '/albums', function(response) {
 		if (response.data.length == 0) {
 			if (id == 'me') {
@@ -120,7 +130,6 @@ function fetchFBAlbums(id) {
 							for (i in response.images) {
 								if (response.images[i].height < 200 || response.images[i].width < 200) {
 									$('#' + response.id).attr('src', response.images[i].source);
-									foundicon = true;
 									break;
 								}
 							}
@@ -133,7 +142,6 @@ function fetchFBAlbums(id) {
 }
 
 function selectFBImg(albumID, coverID) {
-	console.log(albumID, coverID);
 	if (selectedFB.empty == true) {
 	} else {
 		$('#'+selectedFB.coverID).css('border','0px');
