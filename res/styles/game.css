@@ -8,12 +8,12 @@ canvas {
 }
 #gameStage {
 	width:675px;
-	float:right;
+	display:inline-block;
 	background-color:#FFF7C2;
 }
 #numStage {
 	width:150px;
-	float:left;
+	display:inline-block;
 	background-color:#FFF7C2;
 }
 .goBack {
