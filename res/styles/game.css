@@ -38,3 +38,7 @@ canvas {
 	padding:12px;
 	color: white;
 }
+#announceWrapper {
+	text-align:center;
+	font-size:30px;
+}
