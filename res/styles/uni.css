@@ -11,6 +11,15 @@ body {
 	font-size:10px;
 	color:#8F8F8F;
 }
+#footer a:link {
+	color:#8F8F8F;
+}
 #footer a:visited {
 	color:#8F8F8F;
+}
+#footer a:hover {
+	color:#696969;
+}
+#footer a:active {
+	color:#5E5E5E;
 }
