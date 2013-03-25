@@ -243,6 +243,9 @@ function getFBAlbum(hash) {
 				// connected
 				console.log(response);
 				console.log('connected');
+				FB.api('/' + hash, function(newResp) {
+					document.title = 'Imagedoku - ' + newResp.name + ' (Facebook)';
+				});
 				FB.api('/' + hash + '/photos', function(newResp) {
 					getFBImages(newResp);
 				});
