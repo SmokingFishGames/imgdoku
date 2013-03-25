@@ -125,7 +125,7 @@ function fetchFBAlbums(id) {
 				if (response.data[i].count >= 9) {
 					//entries++;
 					if (response.data[i].type != 'app') {
-						$('#fbalbums').append('<img id="' + response.data[i].cover_photo + '" class="fbalbumimg" onclick="selectFBImg(' + response.data[i].id + ',' + response.data[i].cover_photo + ');" title="' + response.data[i].name + '" />');
+						$('#fbalbums').append('<img id="' + response.data[i].cover_photo + '" class="fbalbumimg" onclick="selectFBImg(\'' + String(response.data[i].id) + '\',\'' + String(response.data[i].cover_photo) + '\');" title="' + response.data[i].name + '" />');
 						FB.api(response.data[i].cover_photo, function(response) {
 							for (i in response.images) {
 								if (response.images[i].height < 200 || response.images[i].width < 200) {
@@ -142,6 +142,7 @@ function fetchFBAlbums(id) {
 }
 
 function selectFBImg(albumID, coverID) {
+	console.log(albumID, coverID);
 	if (selectedFB.empty == true) {
 	} else {
 		$('#'+selectedFB.coverID).css('border','0px');
