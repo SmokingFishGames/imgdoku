@@ -1,5 +1,6 @@
 body {
 	background-color:#FFF3A3;
+	font-family: Bebas;
 }
 #fullWrapper {
 	margin-left:auto;
@@ -22,4 +23,8 @@ body {
 }
 #footer a:active {
 	color:#5E5E5E;
+}
+@font-face {
+	font-family: Bebas;
+	src: url('/res/fonts/BebasNeue.otf');
 }
