@@ -6,3 +6,11 @@ body {
 	margin-right:auto;
 	width:auto;
 }
+#footer {
+	text-align:center;
+	font-size:10px;
+	color:#8F8F8F;
+}
+#footer a:visited {
+	color:#8F8F8F;
+}
