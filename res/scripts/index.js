@@ -58,12 +58,12 @@ window.fbAsyncInit = function() {
 	FB.getLoginStatus(function(response) {
 		if (response.status === 'connected') {
 			console.log('connected');
-			fetchAlbums();
+			initFBAlbums();
 		} else if (response.status === 'not_authorized') {
-			$('#fbalbums').text('You revoked permissions for this app.  Please re-enable permissions');
+			$('#fbalbums').text('You need to log in.');
 			console.log('not authorized');
 		} else {
-			$('#fbalbums').text('You aren\'t logged in to Facebook.');
+			$('#fbalbums').text('You need to log in.');
 			console.log('not logged in');
 		}
 	});
@@ -81,25 +81,53 @@ function submitCustom() {
 	}
 }
 
-function fetchAlbums() {
-	FB.api('/me/albums', function(response) {
-		if (response.data.length == 0) {
-			$('#fbalbums').text('You don\'t have any albums on Facebook.');
-		} else {
-			$('#fbalbums').html('');
+function initFBAlbums() {
+	$('#fbfriendmenu').append('<option value="me">' + 'Me' + '</option>');
+	FB.api('/me/friends', function(friends) {
+		for (i in friends.data) {
+			$('#fbfriendmenu').append('<option value="' + friends.data[i].id + '">' + friends.data[i].name + '</option>');
 		}
-		var entries = 0;
-		for (i in response.data) {
-			if (response.data[i].count >= 9) {
-				entries++;
-				$('#fbalbums').append('<img id="' + response.data[i].cover_photo + '" class="fbalbumimg" onclick="selectFBImg(' + response.data[i].id + ',' + response.data[i].cover_photo + ');" />');
-				FB.api(response.data[i].cover_photo, function(response) {
-					$('#' + response.id).attr('src', response.source);
+	});
+	fetchFBAlbums('me');
+	$('#fbfriendmenu').css('display', 'inline');
+	$('#fbfriendselect').css('display', 'inline');
+}
+
+function selectFriend() {
+	var id = $('#fbfriendmenu').val();
+	fetchFBAlbums(id);
+}
+
+function fetchFBAlbums(id) {
+	console.log(id);
+	FB.api('/' + id + '/albums', function(response) {
+		if (response.data.length == 0) {
+			if (id == 'me') {
+				$('#fbalbums').text('You don\'t have any albums available to this app.');
+			} else {
+				FB.api('/' + id, function(response) {
+					$('#fbalbums').text(response.name + ' doesn\'t have any albums available to this app.');
 				});
 			}
-		}
-		if (entries == 0) {
-			$('#fbalbums').text('No albums with enough images.');
+		} else {
+			$('#fbalbums').html('');
+			for (i in response.data) {
+				if (response.data[i].count >= 9) {
+					//entries++;
+					if (response.data[i].type != 'app') {
+						$('#fbalbums').append('<img id="' + response.data[i].cover_photo + '" class="fbalbumimg" onclick="selectFBImg(' + response.data[i].id + ',' + response.data[i].cover_photo + ');" title="' + response.data[i].name + '" />');
+						FB.api(response.data[i].cover_photo, function(response) {
+							for (i in response.images) {
+								if (response.images[i].height < 200 || response.images[i].width < 200) {
+									$('#' + response.id).attr('src', response.images[i].source);
+									foundicon = true;
+									break;
+								}
+							}
+						});
+					}
+				}
+			}
 		}
 	});
 }

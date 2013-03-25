@@ -13,23 +13,38 @@
 }
 #fbaccountholder {
 	/*width:800px;*/
-	height:100px;
+	/*height:100px;*/
 }
 #fbholder {
 	
 }
 #fbalbums {
-	width:550px;
-	height:100px;
+	width:750px;
+	/*height:115px;*/
 	display:inline-block;
-	vertical-align:middle;
 	overflow-x: auto;
 	overflow-y: hidden;
 	white-space:nowrap;
+	background-color:#FFF8C7;
+	border-radius:10px;
+	margin-top:10px;
+}
+#fbfriendmenu {
+	width:150px;
+}
+/*#fbloginholder {*/
+/*	display:inline-block;*/
+/*	width:200px;*/
+/*}*/
+.fbalbummarker {
+	display:inline-block;
+	vertical-align:middle;
+	height:100px;
+	width:100px;
 }
 .fb-login-button {
 	display:inline-block;
-	vertical-align:middle;
+	/*width:200px;*/
 }
 .fbalbumimg {
 	height:90px;
