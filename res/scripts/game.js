@@ -9,6 +9,7 @@ var cellToolLayer;
 
 var images = [];
 var loaded = 0;
+var loadedPuzzle = false;
 
 var erase;
 var zoomIn;
@@ -175,6 +176,11 @@ $(document).ready(function() {
 			}
 		}
 		board = new Board();
+		loadedPuzzle = true;
+		if (loaded == 12) {
+			drawSolved();
+			drawUnsolved();
+		}
 	});
 });
 
@@ -207,8 +213,10 @@ function getImgurImages(hash) {
 						//$('#h'+this.index).attr('width', this.width/this.divisor);
 						if (loaded==12) {
 							$('#alerts').text('Loaded!  Enjoy your game.');
-							drawUnsolved();
-							drawToolbar();
+							if (loadedPuzzle) {
+								drawUnsolved();
+								drawToolbar();
+							}
 						}
 					}
 				}
@@ -283,8 +291,10 @@ function getFBImages(api) {
 					this.divisor = this.height/75;
 				} if (loaded==12) {
 					$('#alerts').text('Loaded!  Enjoy your game.');
-					drawUnsolved();
-					drawToolbar();
+					if (loadedPuzzle) {
+						drawUnsolved();
+						drawToolbar();
+					}
 				}
 			}
 		}
