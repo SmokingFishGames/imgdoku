@@ -32,6 +32,11 @@
 #fbfriendmenu {
 	width:150px;
 }
+.fbfriendselections {
+	display:none;
+	font-size:20px;
+	font-family:Bebas;
+}
 /*#fbloginholder {*/
 /*	display:inline-block;*/
 /*	width:200px;*/
