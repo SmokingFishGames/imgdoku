@@ -126,7 +126,7 @@ $(document).ready(function() {
 		mess = specMess;
 	} else if (typeof(getUrlVars()['pn']) !== 'undefined') {
 		if (getUrlVars()['pn'] == 1)
-			mess = -1;
+			mess = '<a href="http://sports.yahoo.com/college-basketball/">NCAA Sweet Sixteen 2013!</a>';
 	} else {
 		mess = -1;
 	}
