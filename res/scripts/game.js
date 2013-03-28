@@ -126,7 +126,7 @@ $(document).ready(function() {
 		mess = specMess;
 	} else if (typeof(getUrlVars()['pn']) !== 'undefined') {
 		if (getUrlVars()['pn'] == 1)
-			mess = '<a href="http://sports.yahoo.com/college-basketball/">NCAA Sweet Sixteen 2013!</a>';
+			mess = '<a href="http://sports.yahoo.com/college-basketball/" target="_blank">NCAA Sweet Sixteen 2013!</a>';
 	} else {
 		mess = -1;
 	}
@@ -205,7 +205,7 @@ function getImgurImages(hash) {
 		url: 'https://api.imgur.com/3/album/' + hash + '/images',
 		type: 'GET',
 		dataType: 'json',
-		beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'Client-ID aec6af81bfca057');},
+		beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'Client-ID 60512304ac2e7ce');},
 		success: function(data) {
 			if (data.data.length >= 9) {
 				$('#alerts').text('Loading...');
