@@ -1,6 +1,6 @@
 body {
 	background-color:#FFF3A3;
-	font-family: Bebas;
+	font-family: Liberation;
 }
 #fullWrapper {
 	margin-left:auto;
@@ -27,4 +27,8 @@ body {
 @font-face {
 	font-family: Bebas;
 	src: url('/res/fonts/BebasNeue.otf');
+}
+@font-face {
+	font-family: Liberation;
+	src: url('/res/fonts/LiberationSerif.ttf');
 }

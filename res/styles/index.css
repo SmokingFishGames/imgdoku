@@ -35,7 +35,7 @@
 .fbfriendselections {
 	display:none;
 	font-size:20px;
-	font-family:Bebas;
+	font-family:Liberation;
 }
 /*#fbloginholder {*/
 /*	display:inline-block;*/
@@ -77,7 +77,7 @@
 .indexButton {
 	background-color:#FFBEFF;
 	text-align:center;
-	font-family:Bebas;
+	font-family:Liberation;
 }
 .buttonHolder {
 	text-align:center;
