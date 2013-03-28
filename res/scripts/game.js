@@ -192,7 +192,7 @@ $(document).ready(function() {
 		board = new Board();
 		loadedPuzzle = true;
 		if (loaded == 12) {
-			drawSolved();
+			//drawSolved();
 			drawUnsolved();
 		}
 	});
