@@ -8,8 +8,21 @@
 	/*font-family:'serif';*/
 	word-break:loose;
 }
+#titleHead {
+	margin-right: auto;
+	margin-left: auto;
+	text-align: center;
+	font-size: 100;
+	position: relative;
+}
+#titleSubhead {
+	top: -20;
+	right: -200;
+	font-size: 20;
+	position: relative;
+}
 #mainForm {
-	
+	margin-top:15px;
 }
 #fbaccountholder {
 	/*width:800px;*/
