@@ -368,7 +368,6 @@ function drawUnsolved() {
 				//});
 				imgLayer.add(imageToAdd);
 			} else if (board.tiles[i][j].val == '*') {
-				//NEEDS TO BE DRAWN--WILL COMPLETE LATER
 				for (k in board.tiles[i][j].poss) {
 					if (board.tiles[i][j].poss[k]) {
 						imageSrc = images[k];
@@ -750,9 +749,15 @@ function Tile(val, sol, perm) {
 					this.conf = 2;
 				}
 			} else {
-				this.val = val;
-				this.conf = 2;
-				this.resetPoss();
+				if (this.val == val) {
+					this.resetPoss();
+					this.val = '.';
+					this.conf = 0;
+				} else {
+					this.val = val;
+					this.conf = 2;
+					this.resetPoss();
+				}
 			}
 			drawUnsolved();
 		}
