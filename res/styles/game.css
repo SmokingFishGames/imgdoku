@@ -6,6 +6,9 @@ canvas {
 	margin-right:auto;
 	width:825px;
 }
+#fullWrapper {
+	width:825px;
+}
 #gameStage {
 	width:675px;
 	display:inline-block;
@@ -21,6 +24,19 @@ canvas {
 	top:5;
 	left:5;
 	position:absolute;
+	color:#8F8F8F;
+}
+.goBack:link {
+	color:#8F8F8F;
+}
+.goBack:visited {
+	color:#8F8F8F;
+}
+.goBack:hover {
+	color:#696969;
+}
+.goBack:active {
+	color:#5E5E5E;
 }
 #helpButton {
 	float:right;

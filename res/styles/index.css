@@ -1,9 +1,6 @@
 #fullWrapper {
 	min-width: 800px;
 	max-width:800px;
-	background-color:#FFF7C2;
-	padding:30px;
-	border-radius:20px;
 	font-size:30px;
 	/*font-family:'serif';*/
 	word-break:loose;

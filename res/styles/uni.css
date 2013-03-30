@@ -1,11 +1,14 @@
 body {
-	background-color:#FFF3A3;
+	background-color:rgb(226, 255, 254);
 	font-family: Liberation;
 }
 #fullWrapper {
 	margin-left:auto;
 	margin-right:auto;
-	width:auto;
+	/*width:auto;*/
+	padding:30px;
+	border-radius:20px;
+	background-color:rgb(255, 153, 0);
 }
 #footer {
 	text-align:center;
