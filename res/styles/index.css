@@ -69,6 +69,12 @@
 	border-style: solid;
 	border-color: blue;
 }
+.originDivider {
+	text-align: center;
+	padding: 15px;
+	font-style: italic;
+	font-size: 40px;
+}
 .difficulty {
 	font-size:20px;
 }
