@@ -162,3 +162,180 @@ function selectFBImg(albumID, coverID) {
 	$('#'+selectedFB.coverID).css('border','5px solid #91FDFF');
 	$('#'+selectedFB.coverID).css('margin','0px');
 }
+
+function submitAlbum() {
+	window.location = 'game.html?o=i&h=' + upHash + '&d='+getDiff();
+}
+
+
+//UPLOAD CODE
+{function openModal() {
+	$('#uploadHolder').modal({
+		overlayClose: true,
+		onClose: function() {
+			closeModal();
+		},
+		onShow: function() {
+			$('#simplemodal-container').css('height', 'auto');
+			$('#simplemodal-container').css('width', 'auto');
+		},
+		autoResize: true
+	});
+	document.getElementById('infile').addEventListener('change', inputLocal, false);
+	$.ajax({
+		url: 'https://api.imgur.com/3/album/',
+		type: 'POST',
+		//data: 'ids[]=' + imgurIDs[0],
+		beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'Client-ID '+imgurClientID);},
+		success: function(data) {
+			console.log(data);
+			upDeleteHash = data.data.deletehash;
+			upHash = data.data.id;
+			$('#albumLink').html('<a href="http://imgur.com/a/' + upHash + '" target="_blank">Any images will be publicly available at this address.</a>');
+		},
+		error: function(data) { console.log(data); }
+	});
+}
+function closeModal() {
+	$.modal.close();
+	deleteAlbum();
+	uploadedImgs = [];
+	currUploading = 0;
+	upDeleteHash;
+	upHash;
+	$('#infile').prop('disabled', false);
+	$('#inurl').prop('disabled', false);
+	$('#inurlButton').prop('disabled', false);
+	$('#submitUpload').prop('disabled', true);
+}
+var imgurClientID = '60512304ac2e7ce';
+var uploadedImgs = [];
+var currUploading = 0;
+var upDeleteHash;
+var upHash;
+function imgurImg(ID, link, deletehash) {
+	this.ID = ID;
+	this.link = link;
+	this.deletehash = deletehash;
+}
+function uploadImgur(string) {
+	if (uploadedImgs.length + currUploading < 9) {
+		currUploading++;
+		$('#upProgress').css('display', 'inline');
+		$.ajax({
+			url: 'https://api.imgur.com/3/image/',
+			type: 'POST',
+			data: {image:string, album:upDeleteHash},
+			beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'Client-ID '+imgurClientID);},
+			success: function(data) {
+				var newImgur = new imgurImg(data.data.id, data.data.link, data.data.deletehash);
+				uploadedImgs.push(newImgur);
+				currUploading--;
+				drawImages();
+				if (uploadedImgs.length == 9) {
+					$('#infile').prop('disabled', true);
+					$('#inurl').prop('disabled', true);
+					$('#inurlButton').prop('disabled', true);
+					$('#submitUpload').prop('disabled', false);
+				}
+				if (currUploading == 0) {
+					$('#upProgress').css('display', 'none');
+				}
+			},
+			error: function(data) {
+				currUploading--;
+				if (currUploading == 0) {
+					$('#upProgress').css('display', 'none');
+				}
+				console.log(data);
+			}
+		});
+	}
+}
+function submitImages() {
+	var imgurIDs = [];
+	for (i = 0; i < 9; i++) {
+		imgurIDs[i] = uploadedImgs[i].ID;
+	}
+	
+}
+function drawImages() {
+	$('#imgDisp').html('');
+	var stringToDisp = '';
+	stringToDisp += '<table class="imgDispTable">';
+	for (i in uploadedImgs) {
+		if (i %3 == 0)
+			stringToDisp += '<tr>';
+		stringToDisp += '<td class="thumbHolder"><img class="thumb" src="' + uploadedImgs[i].link + '" /><img src="/res/img/cancel1.png" class="deleteImg" onclick="deleteImg(\'' + uploadedImgs[i].ID + '\');" /></td>';
+		if (i%2 == 2)
+			stringToDisp += '</tr>';
+	}
+	stringToDisp += '</table>';
+	$('#imgDisp').html(stringToDisp);
+}
+function deleteImg(hash) {
+	for (i in uploadedImgs) {
+		if (uploadedImgs[i].ID == hash) {
+			$.ajax({
+				url: 'https://api.imgur.com/3/image/' + uploadedImgs[i].deletehash,
+				type: 'DELETE',
+				beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'Client-ID '+imgurClientID);},
+				success: function(data) {
+					console.log(data);
+				},
+				error: function(data) { console.log(data); }
+			});
+			uploadedImgs.splice(i, 1);
+			$('#infile').prop('disabled', false);
+			$('#inurl').prop('disabled', false);
+			$('#inurlButton').prop('disabled', false);
+			$('#submitUpload').prop('disabled', true);
+			break;
+		}
+	}
+	drawImages();
+}
+function deleteAlbum() {
+	for (i in uploadedImgs) {
+		$.ajax({
+			url: 'https://api.imgur.com/3/image/' + uploadedImgs[i].deletehash,
+			type: 'DELETE',
+			beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'Client-ID '+imgurClientID);},
+			success: function(data) {
+				console.log(data);
+			},
+			error: function(data) { console.log(data); }
+		});
+	}
+	$.ajax({
+		url: 'https://api.imgur.com/3/album/' + upDeleteHash,
+		type: 'DELETE',
+		beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'Client-ID '+imgurClientID);},
+		success: function(data) {
+			console.log(data);
+		},
+		error: function(data) { console.log(data); }
+	});
+}
+function inputLocal(evt) {
+	//var reader = new FileReader();
+	var files = evt.target.files;
+	for (var i = 0, f; f = files[i]; i++) {
+		if (!f.type.match('image.*')) {
+			continue;
+		}
+		var r = new FileReader();
+		r.onload = function (file) {
+			var b64 = file.target.result;
+			b64 = b64.replace(/^data:image\/(png|jpg|jpeg|gif);base64,/, "")
+			uploadImgur(b64);
+		}
+		r.readAsDataURL(f);
+	}
+	$('#infile').val('');
+}
+function inputExternal() {
+	var link = $('#inurl').val();
+	uploadImgur(link);
+	$('#inurl').val('');
+}}

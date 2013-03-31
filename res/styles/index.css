@@ -84,6 +84,12 @@
 	font-size:40;
 	border-radius:30px;
 }
+.uploadOwn {
+	width:350px;
+	height:60px;
+	font-size:40;
+	border-radius:30px;
+}
 .submit {
 	width:250px;
 	height:30px;
@@ -103,4 +109,52 @@
 	background-color: #FFF29C;
 	margin:5px;
 	padding:20px;
+}
+
+/*UPLOAD STYLING*/
+.thumb {
+	max-width:100px;
+	max-height:100px;
+}
+.thumbHolder {
+	width:100px;
+	height:100px;
+	display:inline-block;
+	text-align:center;
+	border:1px solid black;
+	position:relative;
+}
+#submitUpload {
+}
+#submitUploadHolder {
+	text-align:right;
+}
+.deleteImg {
+	width:10px;
+	height:10px;
+	top:0;
+	right:0;
+	position:absolute;
+}
+.imgDispTable {
+	border-collapse: collapse;
+}
+#localfile {
+}
+#upProgress{
+	display: none;
+	position:absolute;
+	top:50%;
+	bottom:50%;
+	right:50%;
+	left:50%;
+	z-index:99999;
+}
+#imgDisp {
+	width:306px;
+	height:306px;
+}
+#albumLink {
+	font-size:10;
+	text-align:center;
 }

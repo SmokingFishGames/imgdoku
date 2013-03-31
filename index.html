@@ -19,6 +19,8 @@
 				<hr />
 				<div class='buttonHolder'><button type='button' class='playNow indexButton' onclick='playNow();'>Play Now</button></div>
 				<div class='originDivider'>OR</div>
+				<div class='buttonHolder'><button type='button' class='uploadOwn indexButton' onclick='openModal();'>Create Your Own</button></div>
+				<div class='originDivider'>OR</div>
 				<input type='radio' name='origin' value='fb' checked> Use <a href='http://facebook.com' target='_blank'>Facebook</a>
 				<div id='fbholder'>
 					<div class='originHolder'  id='fbaccountholder'><div class="fb-login-button" data-show-faces="true" data-width="500" data-max-rows="1" scope="user_photos, friends_photos" onlogin="finishFBLogin();"></div><select id='fbfriendmenu' class='fbfriendselections'></select><button id='fbfriendselect' type='button' onclick='selectFriend();' class='fbfriendselections'>Select</button><div id='fbalbums'>Loading...</div></div>
@@ -33,6 +35,15 @@
 			</form>
 		</div>
 		<div id='footer'>&#169; 2013 <a href='http://smokingfishgames.com'>Smoking Fish Games</a> -- <a href='https://github.com/SmokingFishGames/imgdoku'>Open source on GitHub</a></div>
+		<div id='uploadHolder' style='display:none;'>
+			<input type='file' id='infile' accept='image/*' multiple /><br />
+			<input type='text' id='inurl' placeholder='Input a URL' /><button id='inurlButton' type='button' onclick='inputExternal();'>Submit URL</button>
+			<div id='upProgress'><img src='/res/img/upload.gif' /></div><br />
+			<div id='imgDisp'></div>
+			<div id='albumLink'></div>
+			<div id='submitUploadHolder'><button type='button' id='submitUpload' onclick='submitAlbum();' disabled>Play</button></div>
+			<button class='defaultModalCloseButton' id='closeHelp' onclick='$.modal.close();'>X</button>
+		</div>
 		<div id="fb-root"></div>
 	</body>
 </html>
