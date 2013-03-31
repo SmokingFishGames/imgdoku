@@ -35,3 +35,14 @@ body {
 	font-family: Liberation;
 	src: url('/res/fonts/LiberationSerif.ttf');
 }
+
+#simplemodal-overlay {
+	background-color:#000;
+}
+#simplemodal-container {
+	background-color:#FFF7C2;
+	border:8px solid rgb(255, 153, 0);
+	border-radius:20px;
+	padding:12px;
+	color: black;
+}
