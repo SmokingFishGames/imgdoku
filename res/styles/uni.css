@@ -61,3 +61,6 @@ body {
 .defaultModalContent {
 	
 }
+button {
+	cursor:pointer;
+}
