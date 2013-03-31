@@ -21,17 +21,19 @@
 				<div class='originDivider'>OR</div>
 				<div class='buttonHolder'><button type='button' class='uploadOwn indexButton' onclick='openModal();'>Create Your Own</button></div>
 				<div class='originDivider'>OR</div>
-				<input type='radio' name='origin' value='fb' checked> Use <a href='http://facebook.com' target='_blank'>Facebook</a>
+				<!--<input type='radio' name='origin' value='fb' checked> Use <a href='http://facebook.com' target='_blank'>Facebook</a>-->
 				<div id='fbholder'>
 					<div class='originHolder'  id='fbaccountholder'><div class="fb-login-button" data-show-faces="true" data-width="500" data-max-rows="1" scope="user_photos, friends_photos" onlogin="finishFBLogin();"></div><select id='fbfriendmenu' class='fbfriendselections'></select><button id='fbfriendselect' type='button' onclick='selectFriend();' class='fbfriendselections'>Select</button><div id='fbalbums'>Loading...</div></div>
 				</div>
+				<div class='buttonHolder'><button type='button' class='submit indexButton' onclick='submitFB();'>Use Facebook</button></div>
 				<div class='originDivider'>OR</div>
-				<input type='radio' name='origin' value='i'> Use <a href='http://imgur.com' target='_blank'>Imgur</a>
+				<!--<input type='radio' name='origin' value='i'> Use <a href='http://imgur.com' target='_blank'>Imgur</a>-->
 				<div class='originHolder' id='imgurholder'>
 					 Album URL: <input id='imgurinput' /><br />
 				</div>
-				<hr />
-				<div class='buttonHolder'><button type='button' class='submit indexButton' onclick='submitCustom();'>Use Custom Album</button></div>
+				<div class='buttonHolder'><button type='button' class='submit indexButton' onclick='submitImgurURL();'>Use Imgur</button></div>
+				<!--<hr />
+				<div class='buttonHolder'><button type='button' class='submit indexButton' onclick='submitCustom();'>Use Custom Album</button></div>-->
 			</form>
 		</div>
 		<div id='footer'>&#169; 2013 <a href='http://smokingfishgames.com'>Smoking Fish Games</a> -- <a href='https://github.com/SmokingFishGames/imgdoku'>Open source on GitHub</a></div>
