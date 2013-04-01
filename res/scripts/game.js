@@ -125,8 +125,12 @@ $(document).ready(function() {
 	if (typeof(specMess) !== 'undefined') {
 		mess = specMess;
 	} else if (typeof(getUrlVars()['pn']) !== 'undefined') {
-		if (getUrlVars()['pn'] == 1)
-			mess = '<a href="http://sports.yahoo.com/college-basketball/" target="_blank">NCAA Final Four 2013!</a>';
+		if (getUrlVars()['pn'] == 1) {
+			$.get('/res/misc/playNow.txt', function(data) {
+				$('#announceWrapper').html(data);
+			});
+		}
+		mess = -1;
 	} else {
 		mess = -1;
 	}
