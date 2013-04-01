@@ -34,7 +34,7 @@ function submitFB() {
 }
 
 function playNow() {
-	window.location = 'game.html?o=i&h=HNvHT&d='+getDiff()+'&pn=1';
+	window.location = 'game.html?o=i&h=9lWA8&d='+getDiff()+'&pn=1';
 }
 
 function getDiff() {
