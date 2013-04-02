@@ -50,8 +50,15 @@ function playNow() {
 }
 
 function getDiff() {
+	$.cookie('diff',  $('input[name=difficulty]:checked', '#mainForm').val());
 	return $('input[name=difficulty]:checked', '#mainForm').val();
 }
+
+$(document).ready(function() {
+	if (typeof($.cookie('diff') != 'undefined')) {
+		$('input[name=difficulty]:eq(' + (Number($.cookie('diff'))-1) + ')', '#mainForm').attr('checked', 'checked');
+	}
+});
 
 function getOrigin() {
 	return $('input[name=origin]:checked', '#mainForm').val();
