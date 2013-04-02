@@ -34,7 +34,39 @@
 				Right click to mark the tile with a note of the selected element.<br />
 				Use 0-9, +, and - to quickly select tools, or click on the icons on the left side of the screen.
 			</div>
-			<button class='defaultModalCloseButton' id='closeHelp' onclick='help(false);'>X</button>
+			<button class='defaultModalCloseButton' onclick='help(false);'>X</button>
+		</div>
+		<div id='insufficientImagesError' style='display:none;'>
+			<div class='defaultModalTitle'>Error</div>
+			<hr />
+			<div class='defaultModalContent'>
+				There aren't enough images in that album.
+			</div>
+			<button class='defaultModalCloseButton' onclick='$.modal.close();'>X</button>
+		</div>
+		<div id='imgurMalformedError' style='display:none;'>
+			<div class='defaultModalTitle'>Error</div>
+			<hr />
+			<div class='defaultModalContent'>
+				This is a malformed Imgur hash or URL.
+			</div>
+			<button class='defaultModalCloseButton' onclick='$.modal.close();'>X</button>
+		</div>
+		<div id='fbLoggedOutError' style='display:none;'>
+			<div class='defaultModalTitle'>Error</div>
+			<hr />
+			<div class='defaultModalContent'>
+				You aren't logged in to Facebook.
+			</div>
+			<button class='defaultModalCloseButton' onclick='$.modal.close();'>X</button>
+		</div>
+		<div id='fbUnauthorizedError' style='display:none;'>
+			<div class='defaultModalTitle'>Error</div>
+			<hr />
+			<div class='defaultModalContent'>
+				You don't have the permissions to view this album!  Try changing permissions or using a different album.
+			</div>
+			<button class='defaultModalCloseButton' onclick='$.modal.close();'>X</button>
 		</div>
 	</body>
 </html>

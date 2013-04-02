@@ -240,11 +240,11 @@ function getImgurImages(hash) {
 					}
 				}
 			} else {
-				alert('Not enough images in album.');
+				$('#insufficientImagesError').modal();
 			}
 		},
 		error: function(data) {
-			alert('Malformed hash or URL');
+			$('#imgurMalformedError').modal();
 		}
 	});
 }
@@ -281,10 +281,10 @@ function getFBAlbum(hash) {
 				});
 			} else if (response.status === 'not_authorized') {
 				// not_authorized
-				alert('You don\'t have the permissions to view this album!  Try changing permissions or using a different album.');
+				$('#fbUnauthorizedError').modal();
 			} else {
 				// not_logged_in
-				alert('You aren\'t logged in to Facebook!');
+				$('#fbLoggedOutError').modal();
 			}
 		});
 		
@@ -318,7 +318,7 @@ function getFBImages(api) {
 			}
 		}
 	} else {
-		alert('Not enough images in album.');
+		$('#insufficientImagesError').modal();
 	}
 }
 

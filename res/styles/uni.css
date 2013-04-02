@@ -61,6 +61,9 @@ body {
 .defaultModalContent {
 	
 }
+.defaultModalButtons {
+	text-align:right;
+}
 button {
 	cursor:pointer;
 }

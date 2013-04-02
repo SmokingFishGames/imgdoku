@@ -1,13 +1,17 @@
 var fbalbums;
 var selectedFB = {empty:true};
 
-function submitImgurURL() {
+function submitImgurURL(isConf) {
 	var val = $('#imgurinput').val();
 	val = parseImgurURL(val);
 	if (val=='' || val.length != 5) {
-		var r = confirm('This appears to be a malformed Imgur hash or URL.  Are you sure you want to try to load it?');
-		if (r == true) {
+		//var r = confirm('This appears to be a malformed Imgur hash or URL.  Are you sure you want to try to load it?');
+		if (isConf) {
 			window.location = 'game.html?o=i&h='+val+'&d='+getDiff();
+		} else {
+			$('#imgurMalformedError').modal({
+				overlayClose: true
+			});
 		}
 	} else {
 		window.location = 'game.html?o=i&h='+val+'&d='+getDiff();
@@ -27,7 +31,10 @@ function parseImgurURL(url) {
 
 function submitFB() {
 	if (selectedFB.empty == true) {
-		alert('You haven\'t selected a Facebook album yet.  Please select one, then try again.');
+		$('#fbUnselectedError').modal({
+			overlayClose: true
+		});
+		//alert('You haven\'t selected a Facebook album yet.  Please select one, then try again.');
 	} else {
 		window.location = 'game.html?o=fb&h=' + selectedFB.albumID + '&d='+getDiff();
 	}

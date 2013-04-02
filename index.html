@@ -31,7 +31,7 @@
 				<div class='originHolder' id='imgurholder'>
 					 Album URL: <input id='imgurinput' /><br />
 				</div>
-				<div class='buttonHolder'><button type='button' class='submit indexButton' onclick='submitImgurURL();'>Use Imgur</button></div>
+				<div class='buttonHolder'><button type='button' class='submit indexButton' onclick='submitImgurURL(false);'>Use Imgur</button></div>
 				<!--<hr />
 				<div class='buttonHolder'><button type='button' class='submit indexButton' onclick='submitCustom();'>Use Custom Album</button></div>-->
 			</form>
@@ -44,7 +44,27 @@
 			<div id='imgDisp'></div>
 			<div id='albumLink'></div>
 			<div id='submitUploadHolder'><button type='button' id='submitUpload' onclick='submitAlbum();' disabled>Play</button></div>
-			<button class='defaultModalCloseButton' id='closeHelp' onclick='$.modal.close();'>X</button>
+			<button class='defaultModalCloseButton' onclick='$.modal.close();'>X</button>
+		</div>
+		<div id='fbUnselectedError' style='display:none;'>
+			<div class='defaultModalTitle'>Error</div>
+			<hr />
+			<div class='defaultModalContent'>
+				You haven't selected a Facebook album yet.  Please select one, then try again.
+			</div>
+			<button class='defaultModalCloseButton' onclick='$.modal.close();'>X</button>
+		</div>
+		<div id='imgurMalformedError' style='display:none;'>
+			<div class='defaultModalTitle'>Error</div>
+			<hr />
+			<div class='defaultModalContent'>
+				This appears to be a malformed Imgur hash or URL.  Are you sure you want to try to load it?
+			</div>
+			<br />
+			<div class='defaultModalButtons'>
+				<button type='button' onclick='$.modal.close();'>No</button><button type='button' onclick='submitImgurURL(true);'>Yes</button>
+			</div>
+			<button class='defaultModalCloseButton' onclick='$.modal.close();'>X</button>
 		</div>
 		<div id="fb-root"></div>
 	</body>
