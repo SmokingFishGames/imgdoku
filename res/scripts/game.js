@@ -198,6 +198,7 @@ $(document).ready(function() {
 		if (loaded == 12) {
 			//drawSolved();
 			drawUnsolved();
+			drawToolbar();
 		}
 	});
 });
