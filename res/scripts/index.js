@@ -377,6 +377,18 @@ function selectUpHist(ID) {
 	$('#'+selectedUpHist.ID).css('margin','0px');
 }
 
+function deleteUpHist(ID) {
+	for (var i in upHist) {
+		if (upHist[i] == ID) {
+			upHist.splice(i, 1);
+			$('#' + ID).css('display', 'none');
+			var jsonUpHist = JSON.stringify(upHist);
+			$.cookie('userUpped', jsonUpHist);
+			break;
+		}
+	}
+}
+
 $(document).ready(function() {
 	if (typeof($.cookie('userUpped')) != 'undefined') {
 		var prevHist = $.cookie('userUpped');
@@ -396,7 +408,7 @@ $(document).ready(function() {
 					var imgID = data.data.cover;
 					imgID += 't';
 					imgID = 'http://i.imgur.com/' + imgID + '.jpg';
-					$('#createdPalettes').append('<img id="' + data.data.id + '" class="albumthumb" onclick="selectUpHist(\'' + data.data.id + '\');" title="' + data.data.id + '" src="' + imgID + '" />');
+					$('#createdPalettes').append('<div class="albumThumbHolder" id="' + data.data.id + '"><img class="albumthumb" onclick="selectUpHist(\'' + data.data.id + '\');" title="' + data.data.id + '" src="' + imgID + '" /><img src="/res/img/cancel1.png" class="deleteImg" onclick="deleteUpHist(\'' + data.data.id + '\');"></div>');
 				},
 				error: function(data) { console.log(data); }
 			});

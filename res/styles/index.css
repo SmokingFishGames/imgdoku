@@ -74,8 +74,12 @@
 }
 .albumthumb {
 	height:90px;
-	margin:5px;
 	vertical-align:middle;
+}
+.albumThumbHolder {
+	display:inline-block;
+	position:relative;
+	margin:5px;
 	border:0px;
 	border-style: solid;
 	border-color: blue;
