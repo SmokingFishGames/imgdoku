@@ -126,7 +126,7 @@ $(document).ready(function() {
 		mess = specMess;
 	} else if (typeof(getUrlVars()['pn']) !== 'undefined') {
 		if (getUrlVars()['pn'] == 1) {
-			$.get('/res/misc/playNow.txt', function(data) {
+			$.get('/res/misc/playNowMess.txt', function(data) {
 				$('#announceWrapper').html(data);
 			});
 		}

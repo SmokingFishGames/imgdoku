@@ -41,7 +41,11 @@ function submitFB() {
 }
 
 function playNow() {
-	window.location = 'game.html?o=i&h=9lWA8&d='+getDiff()+'&pn=1';
+	$.get('/res/misc/playNowHash.txt', function(pnHash) {
+		window.location = 'game.html?o=i&h=' + pnHash + '&d='+getDiff()+'&pn=1';
+	}).error(function() {
+		window.location = 'game.html?o=i&h=6EsqA&d='+getDiff()+'&pn=1';
+	});
 }
 
 function getDiff() {
