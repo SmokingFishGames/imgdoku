@@ -42,6 +42,17 @@
 #fbfriendmenu {
 	width:150px;
 }
+#createdPalettes {
+	width:750px;
+	/*height:115px;*/
+	display:inline-block;
+	overflow-x: auto;
+	overflow-y: hidden;
+	white-space:nowrap;
+	background-color:#FFF8C7;
+	border-radius:10px;
+	margin-top:10px;
+}
 .fbfriendselections {
 	display:none;
 	font-size:20px;
@@ -61,7 +72,7 @@
 	display:inline-block;
 	/*width:200px;*/
 }
-.fbalbumimg {
+.albumthumb {
 	height:90px;
 	margin:5px;
 	vertical-align:middle;

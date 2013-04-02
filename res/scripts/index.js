@@ -1,5 +1,6 @@
 var fbalbums;
 var selectedFB = {empty:true};
+var selectedUpHist = {empty:true};
 
 function submitImgurURL(isConf) {
 	var val = $('#imgurinput').val();
@@ -144,7 +145,7 @@ function fetchFBAlbums(id) {
 				if (response.data[i].count >= 9) {
 					//entries++;
 					if (response.data[i].type != 'app') {
-						$('#fbalbums').append('<img id="' + response.data[i].cover_photo + '" class="fbalbumimg" onclick="selectFBImg(\'' + String(response.data[i].id) + '\',\'' + String(response.data[i].cover_photo) + '\');" title="' + response.data[i].name + '" />');
+						$('#fbalbums').append('<img id="' + response.data[i].cover_photo + '" class="albumthumb" onclick="selectFBImg(\'' + String(response.data[i].id) + '\',\'' + String(response.data[i].cover_photo) + '\');" title="' + response.data[i].name + '" />');
 						FB.api(response.data[i].cover_photo, function(response) {
 							for (i in response.images) {
 								if (response.images[i].height < 200 || response.images[i].width < 200) {
@@ -174,13 +175,8 @@ function selectFBImg(albumID, coverID) {
 	$('#'+selectedFB.coverID).css('margin','0px');
 }
 
-function submitAlbum() {
-	window.location = 'game.html?o=i&h=' + upHash + '&d='+getDiff();
-}
-
-
 //UPLOAD CODE
-{function openModal() {
+function openModal() {
 	$('#uploadHolder').modal({
 		overlayClose: true,
 		onClose: function() {
@@ -224,6 +220,7 @@ var uploadedImgs = [];
 var currUploading = 0;
 var upDeleteHash;
 var upHash;
+var upHist = [];
 function imgurImg(ID, link, deletehash) {
 	this.ID = ID;
 	this.link = link;
@@ -349,4 +346,65 @@ function inputExternal() {
 	var link = $('#inurl').val();
 	uploadImgur(link);
 	$('#inurl').val('');
-}}
+}
+function submitAlbum() {
+	upHist.push(upHash);
+	var jsonUpHist = JSON.stringify(upHist);
+	$.cookie('userUpped', jsonUpHist);
+	window.location = 'game.html?o=i&h=' + upHash + '&d='+getDiff();
+}
+function submitUpHist() {
+	if (selectedUpHist.empty == true) {
+		$('#imgurUnselectedError').modal({
+			overlayClose: true
+		});
+		//alert('You haven\'t selected a Facebook album yet.  Please select one, then try again.');
+	} else {
+		window.location = 'game.html?o=i&h=' + selectedUpHist.ID + '&d='+getDiff();
+	}
+}
+
+function selectUpHist(ID) {
+	console.log(ID);
+	if (selectedUpHist.empty == true) {
+	} else {
+		$('#'+selectedUpHist.ID).css('border','0px');
+		$('#'+selectedUpHist.ID).css('margin','5px');
+	}
+	selectedUpHist.ID = ID;
+	selectedUpHist.empty = false;
+	$('#'+selectedUpHist.ID).css('border','5px solid #91FDFF');
+	$('#'+selectedUpHist.ID).css('margin','0px');
+}
+
+$(document).ready(function() {
+	if (typeof($.cookie('userUpped')) != 'undefined') {
+		var prevHist = $.cookie('userUpped');
+		prevHist = $.parseJSON(prevHist);
+		if (typeof(prevHist) == 'string') {
+			upHist = [prevHist];
+		} else {
+			upHist = prevHist;
+		}
+		for (i in upHist) {
+			$.ajax({
+				url: 'https://api.imgur.com/3/album/' + upHist[i],
+				type: 'GET',
+				beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'Client-ID '+imgurClientID);},
+				success: function(data) {
+					console.log(data);
+					var imgID = data.data.cover;
+					imgID += 't';
+					imgID = 'http://i.imgur.com/' + imgID + '.jpg';
+					$('#createdPalettes').append('<img id="' + data.data.id + '" class="albumthumb" onclick="selectUpHist(\'' + data.data.id + '\');" title="' + data.data.id + '" src="' + imgID + '" />');
+				},
+				error: function(data) { console.log(data); }
+			});
+		}
+		if (upHist.length == 0) {
+			$('#createdPalettes').text('You haven\'t made any image sets yet.');
+		}
+	} else {
+		$('#createdPalettes').text('You haven\'t made any image sets yet.');
+	}
+});

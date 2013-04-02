@@ -3,6 +3,7 @@
 		<title>Imagedoku</title>
 		<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js'></script>
 		<script src='/libs/simplemodal-1.4.3.js' type='text/javascript'></script>
+		<script src='/libs/jquery.cookie.js' type='text/javascript'></script>
 		
 		<script src='/res/scripts/index.js' type='text/javascript'></script>
 		<script src='/res/scripts/utils.js' type='text/javascript'></script>
@@ -21,9 +22,14 @@
 				<div class='originDivider'>OR</div>
 				<div class='buttonHolder'><button type='button' class='uploadOwn indexButton' onclick='openModal();'>Create Your Own</button></div>
 				<div class='originDivider'>OR</div>
+				<div class='originHolder'><div id='createdPalettes'></div></div>
+				<div class='buttonHolder'><button type='button' class='submit indexButton' onclick='submitUpHist();'>Use Previously Created</button></div>
+				<div class='originDivider'>OR</div>
 				<!--<input type='radio' name='origin' value='fb' checked> Use <a href='http://facebook.com' target='_blank'>Facebook</a>-->
 				<div id='fbholder'>
-					<div class='originHolder'  id='fbaccountholder'><div class="fb-login-button" data-show-faces="true" data-width="500" data-max-rows="1" scope="user_photos, friends_photos" onlogin="finishFBLogin();"></div><select id='fbfriendmenu' class='fbfriendselections'></select><button id='fbfriendselect' type='button' onclick='selectFriend();' class='fbfriendselections'>Select</button><div id='fbalbums'>Loading...</div></div>
+					<div class='originHolder'  id='fbaccountholder'>
+						<div class="fb-login-button" data-show-faces="true" data-width="500" data-max-rows="1" scope="user_photos, friends_photos" onlogin="finishFBLogin();"></div><select id='fbfriendmenu' class='fbfriendselections'></select><button id='fbfriendselect' type='button' onclick='selectFriend();' class='fbfriendselections'>Select</button><div id='fbalbums'>Loading...</div>
+					</div>
 				</div>
 				<div class='buttonHolder'><button type='button' class='submit indexButton' onclick='submitFB();'>Use Facebook</button></div>
 				<div class='originDivider'>OR</div>
@@ -51,6 +57,14 @@
 			<hr />
 			<div class='defaultModalContent'>
 				You haven't selected a Facebook album yet.  Please select one, then try again.
+			</div>
+			<button class='defaultModalCloseButton' onclick='$.modal.close();'>X</button>
+		</div>
+		<div id='imgurUnselectedError' style='display:none;'>
+			<div class='defaultModalTitle'>Error</div>
+			<hr />
+			<div class='defaultModalContent'>
+				You haven't selected a previously created image set yet.  Please select one, then try again.
 			</div>
 			<button class='defaultModalCloseButton' onclick='$.modal.close();'>X</button>
 		</div>
