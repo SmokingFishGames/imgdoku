@@ -152,7 +152,7 @@ function fetchFBAlbums(id) {
 				if (response.data[i].count >= 9) {
 					//entries++;
 					if (response.data[i].type != 'app') {
-						$('#fbalbums').append('<img id="' + response.data[i].cover_photo + '" class="albumthumb" onclick="selectFBImg(\'' + String(response.data[i].id) + '\',\'' + String(response.data[i].cover_photo) + '\');" title="' + response.data[i].name + '" />');
+						$('#fbalbums').append('<img id="' + response.data[i].cover_photo + '" class="fbalbumthumb" onclick="selectFBImg(\'' + String(response.data[i].id) + '\',\'' + String(response.data[i].cover_photo) + '\');" title="' + response.data[i].name + '" />');
 						FB.api(response.data[i].cover_photo, function(response) {
 							for (i in response.images) {
 								if (response.images[i].height < 200 || response.images[i].width < 200) {
@@ -415,7 +415,7 @@ $(document).ready(function() {
 					var imgID = data.data.cover;
 					imgID += 't';
 					imgID = 'http://i.imgur.com/' + imgID + '.jpg';
-					$('#createdPalettes').append('<div class="albumThumbHolder" id="' + data.data.id + '"><img class="albumthumb" onclick="selectUpHist(\'' + data.data.id + '\');" title="' + data.data.id + '" src="' + imgID + '" /><img src="/res/img/cancel1.png" class="deleteImg" onclick="deleteUpHist(\'' + data.data.id + '\');"></div>');
+					$('#createdPalettes').append('<div class="albumThumbHolder" id="' + data.data.id + '"><img class="imguralbumthumb" onclick="selectUpHist(\'' + data.data.id + '\');" title="' + data.data.id + '" src="' + imgID + '" /><img src="/res/img/cancel1.png" class="deleteImg" onclick="deleteUpHist(\'' + data.data.id + '\');"></div>');
 				},
 				error: function(data) { console.log(data); }
 			});

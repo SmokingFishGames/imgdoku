@@ -72,8 +72,17 @@
 	display:inline-block;
 	/*width:200px;*/
 }
-.albumthumb {
-	height:90px;
+.fbalbumthumb {
+	height:125px;
+	display:inline-block;
+	position:relative;
+	margin:5px;
+	border:0px;
+	border-style: solid;
+	border-color: blue;
+}
+.imguralbumthumb {
+	height:125px;
 	vertical-align:middle;
 }
 .albumThumbHolder {
