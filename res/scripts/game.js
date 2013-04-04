@@ -27,6 +27,8 @@ var board;
 
 var selected = 1;
 
+var drawImg = true;
+
 window.oncontextmenu = function() {
         return false;
 };
@@ -370,20 +372,28 @@ function drawUnsolved() {
 		for (var j = 0; j < 9; j++) {
 			if (board.tiles[i][j].val != '.' && board.tiles[i][j].val != '*') {
 				imageSrc = images[board.tiles[i][j].val-1];
-				var imageToAdd = new Kinetic.Image({
-					image:imageSrc,
-					height: Math.floor(imageSrc.height/imageSrc.divisor),
-					width: Math.floor(imageSrc.width/imageSrc.divisor),
-					x: Math.floor((75*i)+(75-((imageSrc.width/imageSrc.divisor)))/2),
-					y: Math.floor((75*j)+(75-((imageSrc.height/imageSrc.divisor)))/2)/*,
-					draggable:true*/
-				});
-				//imageToAdd.on('mouseover', function() {
-				//	stage.setDraggable(false);
-				//});
-				//imageToAdd.on('mouseout', function() {
-				//	stage.setDraggable(true);
-				//});
+				var imageToAdd;
+				if (drawImg) {
+					imageToAdd = new Kinetic.Image({
+						image:imageSrc,
+						height: Math.floor(imageSrc.height/imageSrc.divisor),
+						width: Math.floor(imageSrc.width/imageSrc.divisor),
+						x: Math.floor((75*i)+(75-((imageSrc.width/imageSrc.divisor)))/2),
+						y: Math.floor((75*j)+(75-((imageSrc.height/imageSrc.divisor)))/2)
+					});
+				} else if (!drawImg) {
+					imageToAdd = new Kinetic.Text({
+						x: Math.floor(75*i),
+						y: Math.floor(75*j),
+						fontFamily: 'Liberation',
+						text: board.tiles[i][j].val,
+						fontSize: 75,
+						fill: 'black',
+						height: 75,
+						width: 75,
+						align: 'center'
+					});
+				}
 				imgLayer.add(imageToAdd);
 			} else if (board.tiles[i][j].val == '*') {
 				for (k in board.tiles[i][j].poss) {
@@ -394,17 +404,35 @@ function drawUnsolved() {
 						y = 75*j;
 						x += (k%3)*25;
 						y += Math.floor((k/3))*25;
-						x += 25-(((imageSrc.width/imageSrc.divisor))/3);
-						y += 25-(((imageSrc.height/imageSrc.divisor))/3);
-						x = Math.floor(x);
-						y = Math.floor(y);
-						var imageToAdd = new Kinetic.Image({
-							image:imageSrc,
-							height: Math.floor((imageSrc.height/imageSrc.divisor)/3),
-							width: Math.floor((imageSrc.width/imageSrc.divisor)/3),
-							x: x,
-							y: y
-						});
+						var imageToAdd;
+						if (drawImg) {
+							x += 25-(((imageSrc.width/imageSrc.divisor))/3);
+							y += 25-(((imageSrc.height/imageSrc.divisor))/3);
+							x = Math.floor(x);
+							y = Math.floor(y);
+							imageToAdd = new Kinetic.Image({
+								image:imageSrc,
+								height: Math.floor((imageSrc.height/imageSrc.divisor)/3),
+								width: Math.floor((imageSrc.width/imageSrc.divisor)/3),
+								x: x,
+								y: y
+							});
+						} else if (!drawImg) {
+							var value = Number(k)+1;
+							x = Math.floor(x);
+							y = Math.floor(y);
+							imageToAdd = new Kinetic.Text({
+								fontFamily: 'Liberation',
+								height: Math.floor(75/3),
+								width: Math.floor(75/3),
+								fontSize: 25,
+								text: value,
+								x: x,
+								y: y,
+								align: 'center',
+								fill: 'black'
+							});
+						}
 						imgLayer.add(imageToAdd);
 					}
 				}
@@ -527,13 +555,28 @@ function drawToolbar() {
 		var x = 0;
 		var y = i;
 		y*=75;
-		var imageToAdd = new Kinetic.Image({
-			image:imageSrc,
-			height: Math.floor(imageSrc.height/imageSrc.divisor),
-			width: Math.floor(imageSrc.width/imageSrc.divisor),
-			x: Math.floor(x+(75-((imageSrc.width/imageSrc.divisor)))/2),
-			y: Math.floor(y+(75-((imageSrc.height/imageSrc.divisor)))/2)
-		});
+		var imageToAdd;
+		if (drawImg) {
+			imageToAdd = new Kinetic.Image({
+				image:imageSrc,
+				height: Math.floor(imageSrc.height/imageSrc.divisor),
+				width: Math.floor(imageSrc.width/imageSrc.divisor),
+				x: Math.floor(x+(75-((imageSrc.width/imageSrc.divisor)))/2),
+				y: Math.floor(y+(75-((imageSrc.height/imageSrc.divisor)))/2)
+			});
+		} else if (!drawImg) {
+			imageToAdd = new Kinetic.Text({
+				x: x,
+				y: y,
+				fontFamily: 'Liberation',
+				text: i+1,
+				fontSize: 75,
+				fill: 'black',
+				height: 75,
+				width: 75,
+				align: 'center'
+			});
+		}
 		imgToolLayer.add(imageToAdd);
 	}
 	for (var i = 0; i < 9; i++) {
@@ -838,6 +881,17 @@ function checkErrors() {
 	$('#alerts').text(alertString);
 }
 
+function toggleDrawImg() {
+	if (drawImg) {
+		drawImg = false;
+		$('#toggleDrawImg').text('Switch to Images');
+	} else {
+		drawImg = true;
+		$('#toggleDrawImg').text('Switch to Numbers');
+	}
+	drawUnsolved();
+	drawToolbar();
+}
 //function zoom(zoomIn) {
 //	var zoomAmount;
 //	if (zoomIn)
