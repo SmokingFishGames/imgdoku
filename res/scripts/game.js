@@ -29,6 +29,8 @@ var selected = 1;
 
 var drawImg = true;
 
+var albumURL;
+
 window.oncontextmenu = function() {
         return false;
 };
@@ -255,7 +257,7 @@ function getImgurImages(hash) {
 		dataType: 'json',
 		beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'Client-ID 60512304ac2e7ce');},
 		success: function(data) {
-			$('#albumLink').html('<a class="aAlbumLink" href="' + data.data.link + '" target="_blank">View Album</a>')
+			albumURL = data.data.link;
 		},
 		error: function(data) {
 			console.log(data);
@@ -289,7 +291,7 @@ function getFBAlbum(hash) {
 				console.log('connected');
 				FB.api('/' + hash, function(newResp) {
 					document.title = 'Imagedoku - ' + newResp.name + ' (Facebook)';
-					$('#albumLink').html('<a href="' + newResp.link + '" target="_blank">View Album</a>')
+					albumURL = newResp.link;
 				});
 				FB.api('/' + hash + '/photos', function(newResp) {
 					getFBImages(newResp);
@@ -895,6 +897,11 @@ function toggleDrawImg() {
 
 function hint() {
 	
+}
+
+function viewAlbum() {
+	var win=window.open(albumURL, '_blank');
+	win.focus();
 }
 //function zoom(zoomIn) {
 //	var zoomAmount;
