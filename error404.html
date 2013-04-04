@@ -20,6 +20,7 @@
 			<div id='gameWrapper'>
 				<div id='controls'>
 					<button type='button' onclick='checkErrors();'>Check</button>
+					<button type='button' onclick='solvePuzzle(false);'>Solve</button>
 					<button id='toggleDrawImg' type='button' onclick='toggleDrawImg();'>Switch to Numbers</button>
 					<button id='albumLink' onclick='viewAlbum();'>View Album</button>
 					<button id='helpButton' type='button' onclick='help(true);'>Help/Tips</button>
@@ -70,6 +71,18 @@
 			<hr />
 			<div class='defaultModalContent'>
 				You don't have the permissions to view this album!  Try changing permissions or using a different album.
+			</div>
+			<button class='defaultModalCloseButton' onclick='$.modal.close();'>X</button>
+		</div>
+		<div id='solvePuzzleConfirmation' style='display:none;'>
+			<div class='defaultModalTitle'>Solve Puzzle</div>
+			<hr />
+			<div class='defaultModalContent'>
+				Are you sure you want to solve the puzzle?
+			</div>
+			<br />
+			<div class='defaultModalButtons'>
+				<button type='button' onclick='$.modal.close();'>No</button><button type='button' onclick='solvePuzzle(true);'>Yes</button>
 			</div>
 			<button class='defaultModalCloseButton' onclick='$.modal.close();'>X</button>
 		</div>
