@@ -412,7 +412,7 @@ $(document).ready(function() {
 					var imgID = data.data.cover;
 					imgID += 't';
 					imgID = 'http://i.imgur.com/' + imgID + '.jpg';
-					$('#createdPalettes').append('<div class="albumThumbHolder" id="' + data.data.id + '"><img class="imguralbumthumb" onclick="selectUpHist(\'' + data.data.id + '\');" title="' + data.data.id + '" src="' + imgID + '" /><img src="/res/img/cancel1.png" class="deleteImg" onclick="deleteUpHist(\'' + data.data.id + '\');"></div>');
+					$('#createdPalettes').append('<div class="albumThumbHolder" id="' + data.data.id + '"><img class="imguralbumthumb" onclick="selectUpHist(\'' + data.data.id + '\');" title="' + data.data.id + '" src="' + imgID + '" /><img src="/res/img/cancel1.png" class="deleteImg" onclick="deleteUpHist(\'' + data.data.id + '\');"><a class="albumLink" target="_blank" href="' + data.data.link + '">View Album</a></div>');
 				},
 				error: function(data) { console.log(data); }
 			});

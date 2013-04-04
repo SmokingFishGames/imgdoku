@@ -93,6 +93,14 @@
 	border-style: solid;
 	border-color: blue;
 }
+.albumLink {
+	top:0;
+	left:0;
+	position:absolute;
+	font-size:10;
+	padding:3px;
+	background-color:#FFF8C7;
+}
 .difficultyHolder {
 	text-align:center;
 }
