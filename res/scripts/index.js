@@ -149,7 +149,7 @@ function fetchFBAlbums(id) {
 				if (response.data[i].count >= 9) {
 					//entries++;
 					if (response.data[i].type != 'app') {
-						$('#fbalbums').append('<img id="' + response.data[i].cover_photo + '" class="fbalbumthumb" onclick="selectFBImg(\'' + String(response.data[i].id) + '\',\'' + String(response.data[i].cover_photo) + '\');" title="' + response.data[i].name + '" />');
+						$('#fbalbums').append('<div class="albumThumbHolder" id="' + response.data[i].cover_photo + 'ath"><img id="' + response.data[i].cover_photo + '" class="fbalbumthumb" onclick="selectFBImg(\'' + String(response.data[i].id) + '\',\'' + String(response.data[i].cover_photo) + '\');" title="' + response.data[i].name + '" /><a href="' + response.data[i].link + '" target="_blank" class="albumLink">View Album</a></div>');
 						FB.api(response.data[i].cover_photo, function(response) {
 							for (i in response.images) {
 								if (response.images[i].height < 200 || response.images[i].width < 200) {
@@ -169,14 +169,14 @@ function selectFBImg(albumID, coverID) {
 	console.log(albumID, coverID);
 	if (selectedFB.empty == true) {
 	} else {
-		$('#'+selectedFB.coverID).css('border','0px');
-		$('#'+selectedFB.coverID).css('margin','5px');
+		$('#'+selectedFB.coverID+'ath').css('border','0px');
+		$('#'+selectedFB.coverID+'ath').css('margin','5px');
 	}
 	selectedFB.albumID = albumID;
 	selectedFB.coverID = coverID;
 	selectedFB.empty = false;
-	$('#'+selectedFB.coverID).css('border','5px solid #91FDFF');
-	$('#'+selectedFB.coverID).css('margin','0px');
+	$('#'+selectedFB.coverID+'ath').css('border','5px solid #91FDFF');
+	$('#'+selectedFB.coverID+'ath').css('margin','0px');
 }
 
 //UPLOAD CODE
