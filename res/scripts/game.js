@@ -132,6 +132,7 @@ $(document).ready(function() {
 		if (getUrlVars()['pn'] == 1) {
 			$.get('/res/misc/playNowMess.txt', function(data) {
 				$('#announceWrapper').html(data);
+				$('#announceWrapper').css('padding-bottom', '20px');
 			});
 		}
 		mess = -1;
@@ -139,8 +140,10 @@ $(document).ready(function() {
 		mess = -1;
 	}
 	
-	if (mess != -1)
+	if (mess != -1) {
 		$('#announceWrapper').html(mess);
+		$('#announceWrapper').css('padding-bottom', '20px');
+	}
 	
 	
 	if (origin=='i') {
