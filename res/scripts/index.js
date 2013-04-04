@@ -50,7 +50,7 @@ function playNow() {
 }
 
 function getDiff() {
-	$.cookie('diff',  $('input[name=difficulty]:checked', '#mainForm').val());
+	$.cookie('diff',  $('input[name=difficulty]:checked', '#mainForm').val(), {expires: 999});
 	return $('input[name=difficulty]:checked', '#mainForm').val();
 }
 
@@ -75,14 +75,11 @@ $(document).ready(function(d, s, id) {
 window.fbAsyncInit = function() {
 	FB.getLoginStatus(function(response) {
 		if (response.status === 'connected') {
-			console.log('connected');
 			initFBAlbums();
 		} else if (response.status === 'not_authorized') {
 			$('#fbalbums').text('You need to log in.');
-			console.log('not authorized');
 		} else {
 			$('#fbalbums').text('You need to log in.');
-			console.log('not logged in');
 		}
 	});
 };
@@ -357,7 +354,7 @@ function inputExternal() {
 function submitAlbum() {
 	upHist.push(upHash);
 	var jsonUpHist = JSON.stringify(upHist);
-	$.cookie('userUpped', jsonUpHist);
+	$.cookie('userUpped', jsonUpHist, {expires: 999});
 	window.location = 'game.html?o=i&h=' + upHash + '&d='+getDiff();
 }
 function submitUpHist() {
@@ -390,7 +387,7 @@ function deleteUpHist(ID) {
 			upHist.splice(i, 1);
 			$('#' + ID).css('display', 'none');
 			var jsonUpHist = JSON.stringify(upHist);
-			$.cookie('userUpped', jsonUpHist);
+			$.cookie('userUpped', jsonUpHist, {expires: 999});
 			break;
 		}
 	}
