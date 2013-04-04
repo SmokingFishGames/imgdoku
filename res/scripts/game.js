@@ -247,6 +247,18 @@ function getImgurImages(hash) {
 			$('#imgurMalformedError').modal();
 		}
 	});
+	$.ajax({
+		url: 'https://api.imgur.com/3/album/' + hash,
+		type: 'GET',
+		dataType: 'json',
+		beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'Client-ID 60512304ac2e7ce');},
+		success: function(data) {
+			$('#albumLink').html('<a href="' + data.data.link + '" target="_blank">View Album</a>')
+		},
+		error: function(data) {
+			console.log(data);
+		}
+	});
 }
 
 function getFBAlbum(hash) {
@@ -275,6 +287,7 @@ function getFBAlbum(hash) {
 				console.log('connected');
 				FB.api('/' + hash, function(newResp) {
 					document.title = 'Imagedoku - ' + newResp.name + ' (Facebook)';
+					$('#albumLink').html('<a href="' + newResp.link + '" target="_blank">View Album</a>')
 				});
 				FB.api('/' + hash + '/photos', function(newResp) {
 					getFBImages(newResp);
