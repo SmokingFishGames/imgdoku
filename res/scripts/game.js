@@ -255,7 +255,7 @@ function getImgurImages(hash) {
 		dataType: 'json',
 		beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'Client-ID 60512304ac2e7ce');},
 		success: function(data) {
-			$('#albumLink').html('<a href="' + data.data.link + '" target="_blank">View Album</a>')
+			$('#albumLink').html('<a class="aAlbumLink" href="' + data.data.link + '" target="_blank">View Album</a>')
 		},
 		error: function(data) {
 			console.log(data);
@@ -891,6 +891,10 @@ function toggleDrawImg() {
 	}
 	drawUnsolved();
 	drawToolbar();
+}
+
+function hint() {
+	
 }
 //function zoom(zoomIn) {
 //	var zoomAmount;

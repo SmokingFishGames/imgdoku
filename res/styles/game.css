@@ -52,3 +52,7 @@ canvas {
 #controls {
 	text-align:center;
 }
+.aAlbumLink {
+	text-decoration:none;
+	color: black;
+}
