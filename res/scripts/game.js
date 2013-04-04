@@ -716,6 +716,7 @@ function help(open) {
 
 function Board() {
 	this.tiles = [];
+	this.solved = false;
 	for (var i = 0; i < 9; i++) {
 		this.tiles[i] = [];
 		for (var j = 0; j < 9; j++) {			
@@ -745,6 +746,18 @@ function Board() {
 		drawUnsolved();
 		return {b:blank, e: errors};
 	}
+	this.solve = function() {
+		for (var i = 0; i < 9; i++) {
+			for (var j = 0; j < 9; j++) {
+				if (!this.tiles[i][j].perm) {
+					this.tiles[i][j].val = this.tiles[i][j].sol;
+					this.tiles[i][j].conf = 3;
+				}
+			}
+		}
+		drawUnsolved();
+		this.checkWin();
+	}
 	this.checkWin = function() {
 		var blank = 0;
 		var errors = 0;
@@ -759,11 +772,14 @@ function Board() {
 		}
 		if(blank == 0 && errors == 0) {
 			$('#alerts').text('We have a winner!');
+			this.solved = true;
 		}
 	}
 	this.set = function(x,y,val, perm) {
-		this.tiles[x][y].set(val, perm);
-		this.checkWin();
+		if (!this.solved) {
+			this.tiles[x][y].set(val, perm);
+			this.checkWin();
+		}
 	}
 }
 
@@ -897,6 +913,17 @@ function toggleDrawImg() {
 
 function hint() {
 	
+}
+
+function solvePuzzle(conf) {
+	if (conf) {
+		$.modal.close();
+		board.solve();
+	} else {
+		$('#solvePuzzleConfirmation').modal({
+			overlayClose: true
+		});
+	}
 }
 
 function viewAlbum() {
