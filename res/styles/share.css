@@ -23,12 +23,13 @@
 }
 #buttonHolder {
 	position:relative;
+	margin:5px;
 }
 .playButton {
-	right:0;
+	right:50px;
 }
 .cancelButton {
-	left:0;
+	left:50px;
 }
 #albumHolder {
 	width:750px;
@@ -47,7 +48,7 @@
 	padding-top:20px;
 }
 .shareButton {
-	width:250px;
+	width:100px;
 	height:30px;
 	font-size:20;
 	border-radius:15px;
