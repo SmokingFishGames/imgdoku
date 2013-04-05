@@ -1,0 +1,79 @@
+#fullWrapper {
+	min-width: 800px;
+	max-width:800px;
+	font-size:30px;
+	/*font-family:'serif';*/
+	word-break:loose;
+}
+#titleHead {
+	margin-right: auto;
+	margin-left: auto;
+	text-align: center;
+	font-size: 100;
+	position: relative;
+}
+#titleSubhead {
+	top: -20;
+	right: -200;
+	font-size: 20;
+	position: relative;
+}
+#mainForm {
+	margin-top:15px;
+}
+#buttonHolder {
+	position:relative;
+}
+.playButton {
+	right:0;
+}
+.cancelButton {
+	left:0;
+}
+#albumHolder {
+	width:750px;
+	/*height:115px;*/
+	display:inline-block;
+	overflow-x: auto;
+	overflow-y: hidden;
+	white-space:nowrap;
+	background-color:#FFF8C7;
+	border-radius:10px;
+	margin-top:10px;
+}
+#albumLink {
+	text-align: center;
+	font-size: 35;
+	padding-top:20px;
+}
+.shareButton {
+	width:250px;
+	height:30px;
+	font-size:20;
+	border-radius:15px;
+	position:absolute;
+}
+.imguralbumthumb {
+	height:125px;
+	vertical-align:middle;
+}
+.albumThumbHolder {
+	display:inline-block;
+	position:relative;
+	margin:5px;
+	border:0px;
+	border-style: solid;
+	border-color: blue;
+}
+.difficultyHolder {
+	text-align:center;
+}
+.difficulty {
+	font-size:20px;
+}
+.originHolder {
+	border-radius:10px;
+	background-color: #FFF29C;
+	margin:5px;
+	padding:20px;
+}

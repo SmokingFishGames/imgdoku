@@ -15,7 +15,7 @@ function submitImgurURL(isConf) {
 			});
 		}
 	} else {
-		window.location = 'game.html?o=i&h='+val+'&d='+getDiff();
+		window.location = '/game.html?o=i&h='+val+'&d='+getDiff();
 	}
 }
 
@@ -37,20 +37,20 @@ function submitFB() {
 		});
 		//alert('You haven\'t selected a Facebook album yet.  Please select one, then try again.');
 	} else {
-		window.location = 'game.html?o=fb&h=' + selectedFB.albumID + '&d='+getDiff();
+		window.location = '/game.html?o=fb&h=' + selectedFB.albumID + '&d='+getDiff();
 	}
 }
 
 function playNow() {
 	$.get('/res/misc/playNowHash.txt', function(pnHash) {
-		window.location = 'game.html?o=i&h=' + pnHash + '&d='+getDiff()+'&pn=1';
+		window.location = '/game.html?o=i&h=' + pnHash + '&d='+getDiff()+'&pn=1';
 	}).error(function() {
-		window.location = 'game.html?o=i&h=6EsqA&d='+getDiff()+'&pn=1';
+		window.location = '/game.html?o=i&h=6EsqA&d='+getDiff()+'&pn=1';
 	});
 }
 
 function getDiff() {
-	$.cookie('diff',  $('input[name=difficulty]:checked', '#mainForm').val(), {expires: 999});
+	$.cookie('diff',  $('input[name=difficulty]:checked', '#mainForm').val(), {expires: 999, path: '/'});
 	return $('input[name=difficulty]:checked', '#mainForm').val();
 }
 
@@ -354,7 +354,7 @@ function inputExternal() {
 function submitAlbum() {
 	upHist.push(upHash);
 	var jsonUpHist = JSON.stringify(upHist);
-	$.cookie('userUpped', jsonUpHist, {expires: 999});
+	$.cookie('userUpped', jsonUpHist, {expires: 999, path: '/'});
 	window.location = 'game.html?o=i&h=' + upHash + '&d='+getDiff();
 }
 function submitUpHist() {
@@ -387,7 +387,7 @@ function deleteUpHist(ID) {
 			upHist.splice(i, 1);
 			$('#' + ID).css('display', 'none');
 			var jsonUpHist = JSON.stringify(upHist);
-			$.cookie('userUpped', jsonUpHist, {expires: 999});
+			$.cookie('userUpped', jsonUpHist, {expires: 999, path: '/'});
 			break;
 		}
 	}

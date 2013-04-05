@@ -68,3 +68,15 @@ body {
 button {
 	cursor:pointer;
 }
+a img {
+	border: 0;
+}
+.undecLink {
+	color:black;
+	text-decoration:none;
+}
+.indexButton {
+	background-color:#FFBEFF;
+	text-align:center;
+	font-family:Liberation;
+}

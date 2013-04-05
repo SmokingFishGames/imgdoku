@@ -1,0 +1,53 @@
+<html>
+	<head>
+		<title>Imagedoku</title>
+		<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js'></script>
+		<script src='/libs/simplemodal-1.4.3.min.js' type='text/javascript'></script>
+		<script src='/libs/jquery.cookie.min.js' type='text/javascript'></script>
+		
+		<script src='/res/scripts/share.js' type='text/javascript'></script>
+		<script src='/res/scripts/utils.js' type='text/javascript'></script>
+		
+		<link rel='stylesheet' type='text/css' href='/res/styles/share.css'>
+		<link rel='stylesheet' type='text/css' href='/res/styles/uni.css'>
+	</head>
+	<body>
+		<a href="https://github.com/SmokingFishGames/imgdoku" target="_blank"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+		<div id='fullWrapper'>
+			<div id='titleHead'><a href='/' class='undecLink'>Imagedoku</a><div id="titleSubhead">beta</div></div>
+			<form id='mainForm'>
+				<div class='difficultyHolder'>Difficulty: <span class='difficulty'><input type='radio' name='difficulty' value='1'> Easy <input type='radio' name='difficulty' value='2' checked> Medium <input type='radio' name='difficulty' value='3'> Hard <input type='radio' name='difficulty' value='4'> Expert</span></div>
+				<hr />
+				<div class='originHolder'>
+					<div id='albumHolder'></div>
+					<div id='albumLink'></div>
+				</div>
+				<div id='buttonHolder'><button type='button' class="indexButton shareButton cancelButton" onclick="cancel();">Cancel</button><button type='button' class="indexButton shareButton playButton" id="playButton" onclick="playShared();">Play</button></div>
+			</form>
+		</div>
+		<div id='footer'>&#169; 2013 <a href='http://smokingfishgames.com'>Smoking Fish Games</a> -- <a href='https://github.com/SmokingFishGames/imgdoku'>Open source on GitHub</a></div>
+		<div id='imgurMalformedError' style='display:none;'>
+			<div class='defaultModalTitle'>Error</div>
+			<hr />
+			<div class='defaultModalContent'>
+				This appears to be a malformed Imgur hash or URL.  Are you sure you want to try to load it?
+			</div>
+			<br />
+			<div class='defaultModalButtons'>
+				<button type='button' onclick='$.modal.close();'>No</button><button type='button' onclick='submitImgurURL(true);'>Yes</button>
+			</div>
+			<button class='defaultModalCloseButton' onclick='$.modal.close();'>X</button>
+		</div>
+		<div id='insufficientImagesError' style='display:none;'>
+			<div class='defaultModalTitle'>Error</div>
+			<hr />
+			<div class='defaultModalContent'>
+				There aren't enough images in that album.
+			</div>
+			<div class='defaultModalButtons'>
+				<button type='button' onclick='$.modal.close();'>OK</button>
+			</div>
+			<button class='defaultModalCloseButton' onclick='$.modal.close();'>X</button>
+		</div>
+	</body>
+</html>
