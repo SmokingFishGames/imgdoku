@@ -13,6 +13,7 @@ $(document).ready(function() {
 	$.ajax({
 		url: 'https://api.imgur.com/3/album/' + sharedAlbumID,
 		type: 'GET',
+		dataType: 'json',
 		beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'Client-ID '+imgurClientID);},
 		success: function(data) {
 			var url = encodeURI(window.location.href);

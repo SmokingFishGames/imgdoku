@@ -191,6 +191,7 @@ function openModal() {
 		url: 'https://api.imgur.com/3/album/',
 		type: 'POST',
 		//data: 'ids[]=' + imgurIDs[0],
+		dataType: 'json',
 		beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'Client-ID '+imgurClientID);},
 		success: function(data) {
 			console.log(data);
@@ -232,6 +233,7 @@ function uploadImgur(string) {
 			url: 'https://api.imgur.com/3/image/',
 			type: 'POST',
 			data: {image:string, album:upDeleteHash},
+			dataType: 'json',
 			beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'Client-ID '+imgurClientID);},
 			success: function(data) {
 				var newImgur = new imgurImg(data.data.id, data.data.link, data.data.deletehash);
@@ -285,6 +287,7 @@ function deleteImg(hash) {
 			$.ajax({
 				url: 'https://api.imgur.com/3/image/' + uploadedImgs[i].deletehash,
 				type: 'DELETE',
+				dataType: 'json',
 				beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'Client-ID '+imgurClientID);},
 				success: function(data) {
 					console.log(data);
@@ -306,6 +309,7 @@ function deleteAlbum() {
 		$.ajax({
 			url: 'https://api.imgur.com/3/image/' + uploadedImgs[i].deletehash,
 			type: 'DELETE',
+			dataType: 'json',
 			beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'Client-ID '+imgurClientID);},
 			success: function(data) {
 				console.log(data);
@@ -316,6 +320,7 @@ function deleteAlbum() {
 	$.ajax({
 		url: 'https://api.imgur.com/3/album/' + upDeleteHash,
 		type: 'DELETE',
+		dataType: 'json',
 		beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'Client-ID '+imgurClientID);},
 		success: function(data) {
 			console.log(data);
@@ -403,6 +408,7 @@ $(document).ready(function() {
 			$.ajax({
 				url: 'https://api.imgur.com/3/album/' + upHist[i],
 				type: 'GET',
+				dataType: 'json',
 				beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'Client-ID '+imgurClientID);},
 				success: function(data) {
 					console.log(data);
