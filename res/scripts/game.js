@@ -147,6 +147,7 @@ $(document).ready(function() {
 	
 	
 	if (origin=='i') {
+		$('#albumShare').css('display', 'inline');
 		getImgurImages(hash);
 	} else if (origin == 'fb') {
 		getFBAlbum(hash);
@@ -931,6 +932,12 @@ function solvePuzzle(conf) {
 
 function viewAlbum() {
 	var win=window.open(albumURL, '_blank');
+	win.focus();
+}
+
+function shareAlbum() {
+	var shareURL = 'http://imagedoku.com/share.html?h=' + hash;
+	var win = window.open(shareURL, '_blank');
 	win.focus();
 }
 //function zoom(zoomIn) {

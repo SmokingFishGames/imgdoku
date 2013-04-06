@@ -35,6 +35,10 @@
 
 #shareLinkHolder {
 	height:24px;
+	width:523px;
+	margin: 0 auto;
+	text-align:center;
+	padding-bottom:5px;
 }
 .shareLink {
 	float:left;
