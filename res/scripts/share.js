@@ -2,10 +2,10 @@ var imgurClientID = '60512304ac2e7ce';
 var sharedAlbumID;
 
 $(document).ready(function() {
-	var fb_ref = getUrlVars()['fb_ref'];
-	if (typeof(fb_ref) != 'undefined') {
-		window.location = "http://imagedoku.com/share.html?h=" + fb_ref;
-	} else {
+	//var fb_ref = getUrlVars()['fb_ref'];
+	//if (typeof(fb_ref) != 'undefined') {
+	//	window.location = "http://imagedoku.com/share.html?h=" + fb_ref;
+	//} else {
 		$('input[name=difficulty]:eq(' + (Number($.cookie('diff'))-1) + ')', '#mainForm').attr('checked', 'checked');
 		sharedAlbumID = getUrlVars()['h'];
 		//<a data-pin-config="beside" href="//pinterest.com/pin/create/button/?url=http%3A%2F%2Fwww.flickr.com%2Fphotos%2Fkentbrew%2F6851755809%2F&media=http%3A%2F%2Ffarm8.staticflickr.com%2F7027%2F6851755809_df5b2051c9_z.jpg&description=Next%20stop%3A%20Pinterest" data-pin-do="buttonPin" ><img src="//assets.pinterest.com/images/pidgets/pin_it_button.png" /></a>
@@ -34,7 +34,7 @@ $(document).ready(function() {
 				$('#imgurMalformedError').modal();
 			}
 		});
-	}
+	//}
 });
 
 function getDiff() {
