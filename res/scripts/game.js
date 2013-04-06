@@ -215,16 +215,17 @@ $(document).ready(function() {
 
 function getImgurImages(hash) {
 	$.ajax({
-		url: 'https://api.imgur.com/3/album/' + hash + '/images',
+		url: 'https://api.imgur.com/3/album/'+hash,
 		type: 'GET',
 		dataType: 'json',
 		beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'Client-ID 60512304ac2e7ce');},
 		success: function(data) {
-			if (data.data.length >= 9) {
+			albumURL = data.data.link;
+			if (data.data.images.length >= 9) {
 				$('#alerts').text('Loading...');
 				for (var i = 0; i < 9; i++) {
 					images.push(new Image());
-					images[i].src = data.data[i].link;
+					images[i].src = data.data.images[i].link;
 					images[i].index = i;
 					images[i].onload = function() {
 						loaded++;
@@ -253,18 +254,6 @@ function getImgurImages(hash) {
 		},
 		error: function(data) {
 			$('#imgurMalformedError').modal();
-		}
-	});
-	$.ajax({
-		url: 'https://api.imgur.com/3/album/' + hash,
-		type: 'GET',
-		dataType: 'json',
-		beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'Client-ID 60512304ac2e7ce');},
-		success: function(data) {
-			albumURL = data.data.link;
-		},
-		error: function(data) {
-			console.log(data);
 		}
 	});
 }
