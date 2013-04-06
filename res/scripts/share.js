@@ -35,6 +35,7 @@ $(document).ready(function() {
 			}
 		});
 	//}
+	$('#twitterTweeter').attr('href', 'https://twitter.com/share?url=' + encodeURIComponent(reddit_url));
 });
 
 function getDiff() {
