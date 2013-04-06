@@ -4,8 +4,12 @@
 		
 		<meta property="fb:app_id" content="154174584743698" />
 		<meta property="og:type"   content="imgdoku:share" />
-		<meta property="og:url"    content="http://imagedoku.com/share.html" />
-		<meta property="og:title"  content="Imagedoku - Share" />
+		<meta property="og:url"    content="http://imagedoku.com/share.html<?php
+			if (isset($_GET['h'])) {
+				echo('?h=' . $_GET['h']);
+			}
+		?>" />
+		<meta property="og:title"  content="Imagedoku - Share <?php echo($_GET['h']); ?>" />
 		<meta property="og:image"  content="http://imagedoku.com/res/img/SFG_Logo.png" />
 		
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
