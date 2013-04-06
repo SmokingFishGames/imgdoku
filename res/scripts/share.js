@@ -15,7 +15,7 @@ $(document).ready(function() {
 			dataType: 'json',
 			beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'Client-ID '+imgurClientID);},
 			success: function(data) {
-				var url = encodeURI(window.location.href);
+				var url = encodeURI(reddit_url);
 				var media = encodeURI('http://i.imgur.com/' + data.data.cover + '.jpg');
 				$('#pinterestHolder').html('<a target="_blank" data-pin-config="beside" href="//pinterest.com/pin/create/button/?url=' + url + '&media=' + media + '&description=Imagedoku album recommendation: ' + data.data.id + '" data-pin-do="buttonPin" ><img src="//assets.pinterest.com/images/pidgets/pin_it_button.png" /></a>');
 				if (data.data.images.length >= 9) {
