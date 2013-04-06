@@ -54,12 +54,6 @@ function getDiff() {
 	return $('input[name=difficulty]:checked', '#mainForm').val();
 }
 
-$(document).ready(function() {
-	if (typeof($.cookie('diff') != 'undefined')) {
-		$('input[name=difficulty]:eq(' + (Number($.cookie('diff'))-1) + ')', '#mainForm').attr('checked', 'checked');
-	}
-});
-
 function getOrigin() {
 	return $('input[name=origin]:checked', '#mainForm').val();
 }
@@ -394,6 +388,9 @@ function deleteUpHist(ID) {
 }
 
 $(document).ready(function() {
+	if (typeof($.cookie('diff') != 'undefined')) {
+		$('input[name=difficulty]:eq(' + (Number($.cookie('diff'))-1) + ')', '#mainForm').attr('checked', 'checked');
+	}
 	if (typeof($.cookie('userUpped')) != 'undefined') {
 		var prevHist = $.cookie('userUpped');
 		prevHist = $.parseJSON(prevHist);
