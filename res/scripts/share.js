@@ -19,7 +19,7 @@ $(document).ready(function() {
 					var imgID = data.data[i].id;
 					imgID += 't';
 					imgID = 'http://i.imgur.com/' + imgID + '.jpg';
-					$('#albumHolder').append('<div class="albumThumbHolder"><a href="' + data.data[i].link + '"><img class="imguralbumthumb" title="' + data.data[i].id + '" src="' + imgID + '" /></a></div>');
+					$('#albumHolder').append('<div class="albumThumbHolder"><a href="' + data.data[i].link + '" target="_blank"><img class="imguralbumthumb" title="' + data.data[i].id + '" src="' + imgID + '" /></a></div>');
 				}
 			} else {
 				$('#insufficientImagesError').modal();
