@@ -23,14 +23,31 @@
 }
 #buttonHolder {
 	position:relative;
-	margin:5px;
+	margin:10px;
+	height: 25px;
 }
 .playButton {
-	right:50px;
+	right:25px;
 }
 .cancelButton {
-	left:50px;
+	left:25px;
 }
+
+#shareLinkHolder {
+	height:24px;
+}
+.shareLink {
+	float:left;
+	padding: 0px 10px;
+}
+.fblikeholder {
+	width:135px;
+}
+.redditholder {
+	width:120px;
+	padding-top:1px;
+}
+
 #albumHolder {
 	width:750px;
 	/*height:115px;*/
@@ -48,10 +65,10 @@
 	padding-top:20px;
 }
 .shareButton {
-	width:100px;
-	height:30px;
-	font-size:20;
-	border-radius:15px;
+	width:200px;
+	height:60px;
+	font-size:40;
+	border-radius:30px;
 	position:absolute;
 }
 .imguralbumthumb {

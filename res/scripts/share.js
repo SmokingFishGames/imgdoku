@@ -2,9 +2,12 @@ var imgurClientID = '60512304ac2e7ce';
 var sharedAlbumID;
 
 $(document).ready(function() {
-	if (typeof($.cookie('diff') != 'undefined')) {
 	$('input[name=difficulty]:eq(' + (Number($.cookie('diff'))-1) + ')', '#mainForm').attr('checked', 'checked');
-}
+	//if (typeof(getUrlVars()['s']) !== 'undefined') {
+	//	if (getUrlVars()['s'] == 1) {
+	//		$('#shareButtonHolder').css('display', 'inline');
+	//	}
+	//}
 	sharedAlbumID = getUrlVars()['h'];
 	$.ajax({
 		url: 'https://api.imgur.com/3/album/' + sharedAlbumID + '/images',
