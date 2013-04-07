@@ -9,13 +9,13 @@
 	margin-right: auto;
 	margin-left: auto;
 	text-align: center;
-	font-size: 100;
+	font-size: 100px;
 	position: relative;
 }
 #titleSubhead {
 	top: -20;
 	right: -200;
-	font-size: 20;
+	font-size: 20px;
 	position: relative;
 }
 #mainForm {
@@ -65,13 +65,13 @@
 }
 #albumLink {
 	text-align: center;
-	font-size: 35;
+	font-size: 35px;
 	padding-top:20px;
 }
 .shareButton {
 	width:200px;
 	height:60px;
-	font-size:40;
+	font-size:40px;
 	border-radius:30px;
 	position:absolute;
 }

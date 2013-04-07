@@ -55,11 +55,11 @@ body {
 	border: 2px solid #8C8C8C;
 }
 .defaultModalTitle {
-	font-size:40;
+	font-size:40px;
 	text-transform:uppercase;
 }
 .defaultModalContent {
-	font-size:20;
+	font-size:20px;
 }
 .defaultModalButtons {
 	text-align:right;
