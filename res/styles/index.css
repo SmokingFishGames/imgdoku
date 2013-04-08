@@ -156,6 +156,7 @@
 	top:0;
 	right:0;
 	position:absolute;
+	cursor:pointer;
 }
 .imgDispTable {
 	border-collapse: collapse;
