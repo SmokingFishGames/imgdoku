@@ -10,6 +10,19 @@ body {
 	border-radius:20px;
 	background-color:rgb(255, 153, 0);
 }
+#titleHead {
+	margin-right: auto;
+	margin-left: auto;
+	text-align: center;
+	font-size: 100px;
+	position: relative;
+}
+#titleSubhead {
+	top: -20px;
+	right: -200px;
+	font-size: 20px;
+	position: relative;
+}
 #footer {
 	text-align:center;
 	font-size:10px;

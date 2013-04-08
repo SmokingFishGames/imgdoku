@@ -5,19 +5,6 @@
 	/*font-family:'serif';*/
 	word-break:loose;
 }
-#titleHead {
-	margin-right: auto;
-	margin-left: auto;
-	text-align: center;
-	font-size: 100px;
-	position: relative;
-}
-#titleSubhead {
-	top: -20;
-	right: -200;
-	font-size: 20px;
-	position: relative;
-}
 #mainForm {
 	margin-top:15px;
 }
