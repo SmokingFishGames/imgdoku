@@ -17,6 +17,7 @@ $(document).ready(function() {
 				url: 'https://api.imgur.com/3/album/' + sharedAlbumID,
 				type: 'GET',
 				dataType: 'json',
+				cache: false,
 				beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'Client-ID '+imgurClientID);},
 				success: function(data) {
 					var url = encodeURI(reddit_url);

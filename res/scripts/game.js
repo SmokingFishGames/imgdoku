@@ -218,6 +218,7 @@ function getImgurImages(hash) {
 		url: 'https://api.imgur.com/3/album/'+hash,
 		type: 'GET',
 		dataType: 'json',
+		cache: false,
 		beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'Client-ID 60512304ac2e7ce');},
 		success: function(data) {
 			albumURL = data.data.link;
