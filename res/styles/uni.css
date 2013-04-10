@@ -19,9 +19,12 @@ body {
 }
 #titleSubhead {
 	top: -20px;
-	right: -200px;
+	right: -122px;
 	font-size: 20px;
 	position: relative;
+}
+.titleSubheadLink {
+	color:black;
 }
 #footer {
 	text-align:center;

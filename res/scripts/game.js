@@ -272,7 +272,7 @@ function getFBAlbum(hash) {
 	window.fbAsyncInit = function() {
 		FB.init({
 			appId      : '154174584743698', // App ID
-			channelUrl : '/res/fb/channel.html', // Channel File
+			channelUrl : '/res/misc/channel.html', // Channel File
 			status     : true, // check login status
 			cookie     : true, // enable cookies to allow the server to access the session
 			xfbml      : true  // parse XFBML
