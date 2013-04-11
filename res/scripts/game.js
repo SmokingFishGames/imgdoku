@@ -926,7 +926,7 @@ function viewAlbum() {
 }
 
 function shareAlbum() {
-	var shareURL = 'http://imagedoku.com/share.html?h=' + hash;
+	var shareURL = '/share.html?h=' + hash;
 	var win = window.open(shareURL, '_blank');
 	win.focus();
 }
