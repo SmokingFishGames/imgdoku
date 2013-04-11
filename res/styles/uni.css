@@ -49,7 +49,7 @@ body {
 }
 @font-face {
 	font-family: Liberation;
-	src: url('/res/fonts/LiberationSerif.otf');
+	src: url('/res/fonts/LiberationSerif.ttf');
 }
 
 #simplemodal-overlay {
