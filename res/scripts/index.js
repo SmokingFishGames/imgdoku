@@ -160,7 +160,6 @@ function fetchFBAlbums(id) {
 }
 
 function selectFBImg(albumID, coverID) {
-	console.log(albumID, coverID);
 	if (selectedFB.empty == true) {
 	} else {
 		$('#'+selectedFB.coverID+'ath').css('border','0px');
@@ -194,7 +193,6 @@ function openModal() {
 		dataType: 'json',
 		beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'Client-ID '+imgurClientID);},
 		success: function(data) {
-			console.log(data);
 			upDeleteHash = data.data.deletehash;
 			upHash = data.data.id;
 			$('#albumLink').html('<a href="http://imgur.com/a/' + upHash + '" target="_blank">Any images will be publicly available at this address.</a>');
@@ -256,7 +254,6 @@ function uploadImgur(string) {
 				if (currUploading == 0) {
 					$('#upProgress').css('display', 'none');
 				}
-				console.log(data);
 			}
 		});
 	}
@@ -372,7 +369,6 @@ function submitUpHist() {
 }
 
 function selectUpHist(ID) {
-	console.log(ID);
 	if (selectedUpHist.empty == true) {
 	} else {
 		$('#'+selectedUpHist.ID).css('border','0px');
@@ -416,7 +412,6 @@ $(document).ready(function() {
 				cache: false,
 				beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'Client-ID '+imgurClientID);},
 				success: function(data) {
-					console.log(data);
 					var imgID = data.data.cover;
 					imgID += 't';
 					imgID = 'http://i.imgur.com/' + imgID + '.jpg';

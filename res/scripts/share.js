@@ -48,16 +48,13 @@ $(document).ready(function() {
 
 function getDiff() {
 	$.cookie('diff',  $('input[name=difficulty]:checked', '#mainForm').val(), {expires: 999, path: '/'});
-	console.log('hereDiff');
 	return $('input[name=difficulty]:checked', '#mainForm').val();
 }
 
 function playShared() {
-	console.log('here');
 	window.location = '/game.html?o=i&h=' + sharedAlbumID + '&d='+getDiff();
 }
 
 function cancel() {
-	console.log('here');
 	window.location = '/';
 }

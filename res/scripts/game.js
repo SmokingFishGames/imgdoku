@@ -281,8 +281,6 @@ function getFBAlbum(hash) {
 		FB.getLoginStatus(function(response) {
 			if (response.status === 'connected') {
 				// connected
-				console.log(response);
-				console.log('connected');
 				FB.api('/' + hash, function(newResp) {
 					document.title = 'Imagedoku - ' + newResp.name + ' (Facebook)';
 					albumURL = newResp.link;
@@ -305,7 +303,6 @@ function getFBAlbum(hash) {
 }
 
 function getFBImages(api) {
-	console.log(api);
 	if (api.data.length >= 9) {
 		$('#alerts').text('Loading...');
 		for (var i = 0; i < 9; i++) {
@@ -846,14 +843,11 @@ function selectTile(x, y, perm) {
 }
 
 function selectTool(val) {
-	console.log(selected + '->' + val);
 	selected = val;
 }
 
 function zoom(x,y) {
-	console.log(x + " " + y);
 	var currScale = stage.getScale();
-	console.log(currScale);
 	if (selected == '+') {
 		if (currScale.x < 9) {
 			stage.setScale(currScale.x*3);
