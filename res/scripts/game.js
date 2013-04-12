@@ -402,8 +402,8 @@ function drawUnsolved() {
 						y += Math.floor((k/3))*25;
 						var imageToAdd;
 						if (drawImg) {
-							x += 25-(((imageSrc.width/imageSrc.divisor))/3);
-							y += 25-(((imageSrc.height/imageSrc.divisor))/3);
+							x += 25-(Math.floor(((imageSrc.width/imageSrc.divisor))/3));
+							y += 25-(Math.floor(((imageSrc.height/imageSrc.divisor))/3));
 							x = Math.floor(x);
 							y = Math.floor(y);
 							imageToAdd = new Kinetic.Image({
