@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+	<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# imgdoku: http://ogp.me/ns/fb/imgdoku#">
+		<title>Imagedoku - Share</title>
+		
+		<meta property="fb:app_id" content="154174584743698" />
+		<meta property="og:type"   content="imgdoku:share" />
+		<meta property="og:url"    content="http://imagedoku.com/share.html<?php
+			if (isset($_GET['h'])) {
+				echo('?h=' . $_GET['h']);
+			}
+		?>" />
+		<meta property="og:title"  content="Imagedoku - Share <?php echo($_GET['h']); ?>" />
+		<meta property="og:image"  content="http://imagedoku.com/res/img/logo.png" />
+		
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		
+		<script src="http://platform.tumblr.com/v1/share.js"></script>
+		
+		<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js'></script>
+		<script src='/libs/simplemodal-1.4.3.min.js' type='text/javascript'></script>
+		<script src='/libs/jquery.cookie.min.js' type='text/javascript'></script>
+		<script src='/libs/jquery.browser.min.js' type='text/javascript'></script>
+		
+		<script src='/libs/jreject/reject.js'></script>
+		
+		<link rel='stylesheet' type='text/css' href='/libs/jreject/reject.css' />
+		
+		<script src='/res/scripts/share.min.js' type='text/javascript'></script>
+		<script src='/res/scripts/utils.min.js' type='text/javascript'></script>
+		
+		<link rel='stylesheet' type='text/css' href='/res/styles/share.css' />
+		<link rel='stylesheet' type='text/css' href='/res/styles/uni.css' />
+		
+		<script type='text/javascript'>
+			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+			
+			ga('create', 'UA-26738353-2', 'imagedoku.com');
+			ga('send', 'pageview');
+		</script>
+	</head>
+	<body>
+		<a href="https://github.com/SmokingFishGames/imgdoku" target="_blank"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+		<div id='fullWrapper'>
+			<div id='titleHead'><a href='/' class='undecLink'>Imagedoku</a><div id="titleSubhead">by <a href='http://smokingfishgames.com' target='_blank' class='titleSubheadLink'>Smoking Fish Games</a></div></div>
+			<form id='mainForm'>
+				<div class='difficultyHolder'>Difficulty: <span class='difficulty'><input type='radio' name='difficulty' value='1'> Easy <input type='radio' name='difficulty' value='2' checked> Medium <input type='radio' name='difficulty' value='3'> Hard <input type='radio' name='difficulty' value='4'> Expert</span></div>
+				<hr />
+				<div id='shareLinkHolder'>
+					<script type="text/javascript">
+						var url = window.location.href;
+						var matchedHash = window.location.href.match(/h=[a-zA-Z0-9]*/);
+						matchedHash = matchedHash[0].replace(/h=/, '');
+						reddit_title = "Imagedoku album recommendation: " + matchedHash;
+						reddit_newwindow = '1';
+						reddit_target = 'Imagedoku';
+						reddit_url = 'http://imagedoku.com/share.html?h=' + matchedHash;
+					</script>
+					<div class="shareLink fblikeholder"><div class="fb-like" data-send="true" data-layout="button_count" data-width="135" data-show-faces="false"></div></div>
+					<div class="shareLink twitterholder"><a id="twitterTweeter" href="https://twitter.com/share" class="twitter-share-button" data-text="Play this album on #Imagedoku!" data-via="SmokingFishGame" data-count="none">Tweet</a></div>
+					<div class="shareLink tumblrholder"><span id="tumblr_button"></span></div>
+					<div class="shareLink redditholder"><script type="text/javascript" src="http://www.reddit.com/static/button/button1.js"></script></div>
+					<div class="shareLink pinterestholder" id="pinterestHolder"></div>
+				</div>
+				<div class='originHolder'>
+					<div id='albumHolder'></div>
+					<div id='albumLink'></div>
+				</div>
+				<div id='buttonHolder'><button type='button' class="indexButton shareButton cancelButton" onclick="cancel();">Cancel</button><button type='button' class="indexButton shareButton playButton" id="playButton" onclick="playShared();">Play</button></div>
+			</form>
+		</div>
+		<div id='footer'>&#169; 2013 <a href='http://smokingfishgames.com' target='_blank'>Smoking Fish Games</a> -- <a href='https://github.com/SmokingFishGames/imgdoku' target='_blank'>Open source on GitHub</a> -- <a href='mailto:contact@smokingfishgames.com'>Contact SFG</a> -- <a href='https://github.com/SmokingFishGames/imgdoku/issues/new' target='_blank'>Report a bug</a></div>
+		<!--<div id='imgurMalformedError' style='display:none;'>
+			<div class='defaultModalTitle'>Error</div>
+			<hr />
+			<div class='defaultModalContent'>
+				This appears to be a malformed Imgur hash or URL.  Are you sure you want to try to load it?
+			</div>
+			<br />
+			<div class='defaultModalButtons'>
+				<button type='button' onclick='$.modal.close();'>No</button><button type='button' onclick='submitImgurURL(true);'>Yes</button>
+			</div>
+			<button class='defaultModalCloseButton' onclick='$.modal.close();'>X</button>
+		</div>
+		<div id='insufficientImagesError' style='display:none;'>
+			<div class='defaultModalTitle'>Error</div>
+			<hr />
+			<div class='defaultModalContent'>
+				There aren't enough images in that album.
+			</div>
+			<div class='defaultModalButtons'>
+				<button type='button' onclick='$.modal.close();'>OK</button>
+			</div>
+			<button class='defaultModalCloseButton' onclick='$.modal.close();'>X</button>
+		</div>-->
+		<div id="fb-root"></div>
+		<script>(function(d, s, id) {
+			var js, fjs = d.getElementsByTagName(s)[0];
+			if (d.getElementById(id)) return;
+			js = d.createElement(s); js.id = id;
+			js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=154174584743698";
+			fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk'));</script>
+		<script>
+			!function(d,s,id){
+				var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);
+			}}(document,"script","twitter-wjs");
+		</script>
+		<script type="text/javascript">
+			var tumblr_link_url = reddit_url;
+			var tumblr_link_name = reddit_title;
+			var tumblr_link_description = "Check out this album on Imagedoku!";
+			var tumblr_button = document.createElement("a");
+			tumblr_button.setAttribute("href", "http://www.tumblr.com/share/link?url=" + encodeURIComponent(tumblr_link_url) + "&name=" + encodeURIComponent(tumblr_link_name) + "&description=" + encodeURIComponent(tumblr_link_description));
+			tumblr_button.setAttribute("title", "Share on Tumblr");
+			tumblr_button.setAttribute("style", "display:inline-block; text-indent:-9999px; overflow:hidden; width:129px; height:20px; background:url('http://platform.tumblr.com/v1/share_3.png') top left no-repeat transparent;");
+			tumblr_button.innerHTML = "Share on Tumblr";
+			document.getElementById("tumblr_button").appendChild(tumblr_button);
+		</script>
+		<script type="text/javascript">
+			(function(d){
+				var f = d.getElementsByTagName('SCRIPT')[0], p = d.createElement('SCRIPT');
+				p.type = 'text/javascript';
+				p.async = true;
+				p.src = '//assets.pinterest.com/js/pinit.js';
+				f.parentNode.insertBefore(p, f);
+			}(document));
+		</script>
+	</body>
+</html>
