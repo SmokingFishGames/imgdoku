@@ -1,10 +1,10 @@
 <?php
 	ini_set("display_errors", "On");
 	error_reporting(E_ALL);	
-	$easy = sqlite_open('/home/www/imagedoku.com/admin/db/easy.db', 0666, $error);
-	$medium = sqlite_open('/home/www/imagedoku.com/admin/db/medium.db', 0666, $error);
-	$hard = sqlite_open('/home/www/imagedoku.com/admin/db/hard.db', 0666, $error);
-	$expert = sqlite_open('/home/www/imagedoku.com/admin/db/expert.db', 0666, $error);
+	$easy = sqlite_open('/home/www/imagedoku.com/_static/db/easy.db', 0666, $error);
+	$medium = sqlite_open('/home/www/imagedoku.com/_static/db/medium.db', 0666, $error);
+	$hard = sqlite_open('/home/www/imagedoku.com/_static/db/hard.db', 0666, $error);
+	$expert = sqlite_open('/home/www/imagedoku.com/_static/db/expert.db', 0666, $error);
 	
 	$stm = "SELECT * FROM Puzzles ORDER BY RANDOM() LIMIT 1;";
 	if ($_GET["d"] == 1) {

@@ -42,7 +42,7 @@ function submitFB() {
 }
 
 function playNow() {
-	$.get('/res/misc/playNowHash.txt', function(pnHash) {
+	$.get('/_static/pn/pnh.txt', function(pnHash) {
 		window.location = '/game.html?o=i&h=' + pnHash + '&d='+getDiff()+'&pn=1';
 	}).error(function() {
 		window.location = '/game.html?o=i&h=6EsqA&d='+getDiff()+'&pn=1';

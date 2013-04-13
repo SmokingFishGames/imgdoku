@@ -130,7 +130,7 @@ $(document).ready(function() {
 		mess = specMess;
 	} else if (typeof(getUrlVars()['pn']) !== 'undefined') {
 		if (getUrlVars()['pn'] == 1) {
-			$.get('/res/misc/playNowMess.txt', function(data) {
+			$.get('/_static/pn/pnm.txt', function(data) {
 				$('#announceWrapper').html(data);
 				$('#announceWrapper').css('padding-bottom', '20px');
 			});
