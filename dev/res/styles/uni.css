@@ -92,7 +92,11 @@ a img {
 	text-decoration:none;
 }
 .indexButton {
-	background-color:#FFBEFF;
+	background-color:#FFB240;
 	text-align:center;
 	font-family:Liberation;
+	border: 5px ridge #A66300;
+}
+.indexButton:active {
+	border-style:inset;
 }
