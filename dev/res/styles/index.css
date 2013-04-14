@@ -146,9 +146,15 @@
 	position:relative;
 }
 #submitUpload {
+	max-width:100px;
+}
+#submitUploadButtonHolder {
+	position:absolute;
+	right:0;
 }
 #submitUploadHolder {
-	text-align:right;
+	position:relative;
+	height:20px;
 }
 .deleteImg {
 	width:10px;
@@ -165,12 +171,15 @@
 }
 #upProgress{
 	display: none;
-	position:absolute;
+	/*position:absolute;
 	top:50%;
 	bottom:50%;
 	right:50%;
 	left:50%;
-	z-index:99999;
+	z-index:99999;*/
+}
+#upProgress img{
+	height:25px;
 }
 #imgDisp {
 	width:312px;

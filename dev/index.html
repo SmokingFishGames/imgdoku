@@ -72,10 +72,9 @@
 		<div id='uploadHolder' style='display:none;'>
 			<input type='file' id='infile' accept='image/*' multiple /><br />
 			<input type='text' id='inurl' placeholder='Input a URL' /><button id='inurlButton' type='button' onclick='inputExternal();'>Submit URL</button>
-			<div id='upProgress'><img src='/res/img/upload.gif' /></div><br />
 			<div id='imgDisp'></div>
 			<div id='albumLink'></div>
-			<div id='submitUploadHolder'><button type='button' onclick='$.modal.close();'>Cancel</button><button type='button' id='submitUpload' onclick='submitAlbum();' disabled>Play</button></div>
+			<div id='submitUploadHolder'><div id='upProgress'><img src='/res/img/upload.gif' /></div><div id='submitUploadButtonHolder'><button type='button' onclick='$.modal.close();'>Cancel</button><button type='button' id='submitUpload' onclick='submitAlbum();' disabled>Play</button></div></div>
 			<button class='defaultModalCloseButton' onclick='$.modal.close();'>X</button>
 		</div>
 		<div id='fbUnselectedError' style='display:none;'>
