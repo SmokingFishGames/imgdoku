@@ -100,3 +100,6 @@ a img {
 .indexButton:active {
 	border-style:inset;
 }
+.emphasis {
+	font-weight:bold;
+}

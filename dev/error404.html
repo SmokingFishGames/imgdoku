@@ -71,9 +71,10 @@
 			<hr />
 			<div class='defaultModalContent'>
 				There aren't enough images in that album.
+				<span class='emphasis'>Reloading the page may solve this error.</span>
 			</div>
 			<div class='defaultModalButtons'>
-				<button type='button' onclick='$.modal.close();'>OK</button>
+				<button type='button' onclick='location.reload();'>Reload</button><button type='button' onclick='$.modal.close();'>OK</button>
 			</div>
 			<button class='defaultModalCloseButton' onclick='$.modal.close();'>X</button>
 		</div>
@@ -82,9 +83,10 @@
 			<hr />
 			<div class='defaultModalContent'>
 				This is a malformed Imgur hash or URL.
+				<span class='emphasis'>Reloading the page may solve this error.</span>
 			</div>
 			<div class='defaultModalButtons'>
-				<button type='button' onclick='$.modal.close();'>OK</button>
+				<button type='button' onclick='location.reload();'>Reload</button><button type='button' onclick='$.modal.close();'>OK</button>
 			</div>
 			<button class='defaultModalCloseButton' onclick='$.modal.close();'>X</button>
 		</div>
