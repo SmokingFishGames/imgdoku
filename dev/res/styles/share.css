@@ -10,8 +10,8 @@
 }
 #buttonHolder {
 	position:relative;
-	margin:10px;
-	height: 25px;
+	height: 60px;
+	padding-top:10px;
 }
 .playButton {
 	right:25px;
