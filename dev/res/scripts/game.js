@@ -31,6 +31,8 @@ var drawImg = true;
 
 var albumURL;
 
+var mousedOver = {x:null, y:null};
+
 window.oncontextmenu = function() {
         return false;
 };
@@ -178,16 +180,20 @@ $(document).ready(function() {
 	stage.add(miniCellLayer);
 	stage.add(cellLayer);
 	
-	//var zoom = function(e) {
-	//	if (stage.getMousePosition()) {
-	//		var zoomAmount = e.wheelDeltaY*0.001;
-	//		if (imgLayer.getScale().x+zoomAmount > 0)
-	//			imgLayer.setScale(imgLayer.getScale().x+zoomAmount)
-	//		imgLayer.draw();
-	//	}
-	//}
-	//
-	//document.addEventListener('mousewheel', zoom(), false);
+	var zoomMouse = function(e) {
+		if (stage.getMousePosition()) {
+			e.preventDefault();
+			if (mousedOver.x != null && mousedOver.y != null) {
+				if (e.wheelDeltaY > 0) {
+					zoom(mousedOver.x,mousedOver.y, true);
+				} else if (e.wheelDeltaY < 0) {
+					zoom(mousedOver.x,mousedOver.y, false);
+				}
+			}
+		}
+	}
+	
+	document.addEventListener('mousewheel', zoomMouse, false);
 	
 	$.get('/res/php/puzzle.php', {d:diff}).done( function(data) {
 		var puzzle = $.parseJSON(data);
@@ -210,8 +216,6 @@ $(document).ready(function() {
 		}
 	});
 });
-
-
 
 function getImgurImages(hash) {
 	$.ajax({
@@ -496,6 +500,9 @@ function drawTiles() {
 			});
 			newCell.ix = i;
 			newCell.iy = j;
+			newCell.on('mouseover', function() {
+				mousedOver = {x:this.ix, y:this.iy};
+			});
 			if (!board.tiles[i][j].perm) {
 				newCell.on('mouseover', function() {
 					this.setStroke('blue');
@@ -839,8 +846,10 @@ function Tile(val, sol, perm) {
 }
 
 function selectTile(x, y, perm) {
-	if (selected == '+' || selected == '-') {
-		zoom(x,y);
+	if (selected == '+') {
+		zoom(x,y,true);
+	} else if (selected == '-') {
+		zoom(x,y,false);
 	} else {
 		board.set(x,y,selected, perm);
 	}
@@ -850,13 +859,13 @@ function selectTool(val) {
 	selected = val;
 }
 
-function zoom(x,y) {
+function zoom(x,y, isZoomIn) {
 	var currScale = stage.getScale();
-	if (selected == '+') {
+	if (isZoomIn) {
 		if (currScale.x < 9) {
 			stage.setScale(currScale.x*3);
 		}
-	} else if (selected == '-') {
+	} else if (!isZoomIn) {
 		if (currScale.x > 1) {
 			stage.setScale(currScale.x/3);
 		}
