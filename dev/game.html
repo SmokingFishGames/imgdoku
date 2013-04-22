@@ -55,6 +55,7 @@
 					<button id='albumLink' onclick='viewAlbum();'>View Album</button>
 					<button id='albumShare' onclick='shareAlbum();' style='display:none;'>Share Album</button>
 					<button id='helpButton' type='button' onclick='help(true);'>Help/Tips</button>
+					<button id='checkpointButton' type='button' onclick='openCheckpoints();'>View Checkpoints</button>
 				</div>
 				<div id='numStage'></div><div id='gameStage'></div>
 				<!--Zoom: <button type='button' onclick='zoom(true);'>+</button><button type='button' onclick='zoom(false);'>-</button>     -->
@@ -131,6 +132,20 @@
 			<br />
 			<div class='defaultModalButtons'>
 				<button type='button' onclick='$.modal.close();'>No</button><button type='button' onclick='solvePuzzle(true);'>Yes</button>
+			</div>
+			<button class='defaultModalCloseButton' onclick='$.modal.close();'>X</button>
+		</div>
+		<div id='checkpointHolder' style='display:none;'>
+			<div class='defaultModalTitle'>Checkpoints</div>
+			<hr />
+			<div class='defaultModalContent' id='checkpoints'>
+			</div>
+			<!--<br />
+			<div class='defaultModalButtons'>
+				<button type='button' onclick='$.modal.close();'>No</button><button type='button' onclick='solvePuzzle(true);'>Yes</button>
+			</div>-->
+			<div class='defaultModalButtons'>
+				<button type='button' onclick='$.modal.close();'>Close</button><button type='button' onclick='deleteCP();'>Delete Checkpoint</button><button type='button' onclick='retrieveCP();'>Choose Checkpoint</button>
 			</div>
 			<button class='defaultModalCloseButton' onclick='$.modal.close();'>X</button>
 		</div>

@@ -52,3 +52,47 @@ canvas {
 #controls {
 	text-align:center;
 }
+#checkpoints {
+	width:750px;
+	/*height:115px;*/
+	display:inline-block;
+	overflow-x: auto;
+	overflow-y: hidden;
+	white-space:nowrap;
+	background-color:#FFF8C7;
+	border-radius:10px;
+	margin-top:10px;
+	text-align:center;
+}
+
+.cp {
+	border: 1px solid black;
+	border-collapse: collapse;
+}
+table.cp {
+}
+tr.cp {
+}
+td.cp {
+	height:20px;
+	width:20px;
+	font-size:20px;
+}
+td.outlineTop {
+	border-top: 4px solid black;
+}
+td.outlineBot {
+	border-bottom: 4px solid black;
+}
+td.outlineRight {
+	border-right: 4px solid black;
+}
+td.outlineLeft {
+	border-left: 4px solid black;
+}
+
+div.cpHolder {
+	display:inline-block;
+	padding:20px;
+	border-radius:20px;
+}

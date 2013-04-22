@@ -25,6 +25,8 @@ var unsolved = [];
 
 var board;
 
+var checkpoints = [];
+
 var selected = 1;
 
 var drawImg = true;
@@ -208,6 +210,7 @@ $(document).ready(function() {
 			}
 		}
 		board = new Board();
+		checkpoints.push(JSON.stringify(board));
 		loadedPuzzle = true;
 		if (loaded == 12) {
 			//drawSolved();
@@ -936,6 +939,84 @@ function shareAlbum() {
 	var shareURL = '/share.html?h=' + hash;
 	var win = window.open(shareURL, '_blank');
 	win.focus();
+}
+
+function openCheckpoints() {
+	$('#checkpoints').html('');
+	for (i in checkpoints) {
+		var newBoard = JSON.parse(checkpoints[i]);
+		$('#checkpoints').prepend(drawCheckpoint(newBoard, i));
+	}
+	$('#checkpointHolder').modal({
+		overlayClose: true,
+		onShow: function() {
+			$('#simplemodal-container').css('height', 'auto');
+			$('#simplemodal-container').css('width', 'auto');
+		},
+		onClose: function() {
+			selectedCP = null;
+			$.modal.close();
+		},
+		autoResize: true
+	});
+	
+}
+
+function drawCheckpoint(drawBoard, iterator) {
+	var drawString = '<div class="cpHolder" id="' + iterator + '" onclick="selectCP(' + iterator + ');">';
+	drawString += '<table class="cp">';
+	for (var i = 0; i < 9; i++) {
+		drawString += '<tr class="cp">';
+		for (var j = 0; j < 9; j++) {
+			drawString += '<td class="cp';
+			if (i == 0 || i == 3 || i == 6) {
+				drawString += ' outlineTop';
+			} else if (i == 2 || i == 5 || i == 8) {
+				drawString += ' outlineBot';
+			}
+			if (j == 0 || j == 3 || j == 6) {
+				drawString += ' outlineLeft';
+			} else if (j == 2 || j == 5 || j == 8) {
+				drawString += ' outlineRight';
+			}
+			//if (drawBoard.tiles[i][j].val != '.')
+				drawString += '">' + drawBoard.tiles[j][i].val + '</td>';
+			//else
+			//	drawString += '">_</td>';
+		}
+		drawString += '</tr>';
+	}
+	drawString += '</table>';
+	drawString += '</div>';
+	return drawString;
+}
+
+var selectedCP = null;
+
+function selectCP(i) {
+	if (selectedCP != null)
+		$('#'+selectedCP).css('background-color');
+	selectedCP = i;
+	$('#'+selectedCP).css('background-color', 'rgb(145, 253, 255)');
+}
+function retrieveCP() {
+	var newBoard = JSON.parse(checkpoints[selectedCP]);
+	for (i in board.tiles) {
+		for (j in board.tiles) {
+			board.tiles[i][j].val = newBoard.tiles[i][j].val;
+			board.tiles[i][j].poss = newBoard.tiles[i][j].poss;
+			board.tiles[i][j].sol = newBoard.tiles[i][j].sol;
+			board.tiles[i][j].perm = newBoard.tiles[i][j].perm;
+			board.tiles[i][j].conf = newBoard.tiles[i][j].conf;
+		}
+	}
+	board.solved = newBoard.solved;
+	$.modal.close();
+	drawUnsolved();
+}
+function deleteCP() {
+	checkpoints.splice(selectedCP,1);
+	$.modal.close();
 }
 //function zoom(zoomIn) {
 //	var zoomAmount;
