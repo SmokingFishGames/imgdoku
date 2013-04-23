@@ -961,6 +961,9 @@ function openCheckpoints() {
 	});
 	
 }
+function setCheckpoint() {
+	checkpoints.push(JSON.stringify(board));
+}
 
 function drawCheckpoint(drawBoard, iterator) {
 	var drawString = '<div class="cpHolder" id="' + iterator + '" onclick="selectCP(' + iterator + ');">';
@@ -995,7 +998,7 @@ var selectedCP = null;
 
 function selectCP(i) {
 	if (selectedCP != null)
-		$('#'+selectedCP).css('background-color');
+		$('#'+selectedCP).css('background-color', 'transparent');
 	selectedCP = i;
 	$('#'+selectedCP).css('background-color', 'rgb(145, 253, 255)');
 }
