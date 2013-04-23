@@ -4,12 +4,15 @@ var imgLayer;
 var backCellLayer;
 var miniCellLayer;
 var cellLayer;
+var victory;
 var imgToolLayer;
 var cellToolLayer;
 
 var images = [];
 var loaded = 0;
 var loadedPuzzle = false;
+
+var victoryDancers = [];
 
 var erase;
 var zoomIn;
@@ -778,6 +781,41 @@ function Board() {
 		if(blank == 0 && errors == 0) {
 			$('#alerts').text('We have a winner!');
 			this.solved = true;
+			victory = new Kinetic.Layer();
+			victory.setClearBeforeDraw(false);
+			stage.add(victory);
+			for (i in images) {
+				//victoryDancers.push(
+				var newImg = new Kinetic.Image({
+					x: Math.floor(Math.random()*675),
+					y: -50,
+					height: Math.floor(imageSrc.height/imageSrc.divisor),
+					width: Math.floor(imageSrc.width/imageSrc.divisor),
+					image:images[i]
+				});
+				newImg.dx = Math.random()*10 - 5;
+				newImg.dy = Math.random()*10 - 5;
+				victoryDancers.push(newImg);
+				victory.add(newImg);
+			}
+			window.setInterval(function() {
+				for (i in victoryDancers) {
+					victoryDancers[i].setX(victoryDancers[i].dx + victoryDancers[i].getX());
+					victoryDancers[i].dy += .14;
+					victoryDancers[i].setY(victoryDancers[i].dy + victoryDancers[i].getY());
+					if (victoryDancers[i].getX() < -50) {
+						victoryDancers[i].setX(725);
+					}
+					if (victoryDancers[i].getX() > 725) {
+						victoryDancers[i].setX(-50);
+					}
+					if (victoryDancers[i].getY() > 725) {
+						victoryDancers[i].setY(-50);
+						victoryDancers[i].dy = Math.random()*10-5;
+					}
+				}
+				victory.draw();
+			}, 33);
 		}
 	}
 	this.set = function(x,y,val, perm) {
