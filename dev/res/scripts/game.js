@@ -788,9 +788,9 @@ function Board() {
 				//victoryDancers.push(
 				var newImg = new Kinetic.Image({
 					x: Math.floor(Math.random()*675),
-					y: -50,
-					height: Math.floor(imageSrc.height/imageSrc.divisor),
-					width: Math.floor(imageSrc.width/imageSrc.divisor),
+					y: -75,
+					height: Math.floor(images[i].height/images[i].divisor),
+					width: Math.floor(images[i].width/images[i].divisor),
 					image:images[i]
 				});
 				newImg.dx = Math.random()*10 - 5;
@@ -803,14 +803,14 @@ function Board() {
 					victoryDancers[i].setX(victoryDancers[i].dx + victoryDancers[i].getX());
 					victoryDancers[i].dy += .14;
 					victoryDancers[i].setY(victoryDancers[i].dy + victoryDancers[i].getY());
-					if (victoryDancers[i].getX() < -50) {
-						victoryDancers[i].setX(725);
+					if (victoryDancers[i].getX() < -74) {
+						victoryDancers[i].setX(675);
 					}
-					if (victoryDancers[i].getX() > 725) {
-						victoryDancers[i].setX(-50);
+					if (victoryDancers[i].getX() > 675) {
+						victoryDancers[i].setX(-75);
 					}
-					if (victoryDancers[i].getY() > 725) {
-						victoryDancers[i].setY(-50);
+					if (victoryDancers[i].getY() > 675) {
+						victoryDancers[i].setY(-75);
 						victoryDancers[i].dy = Math.random()*10-5;
 					}
 				}
