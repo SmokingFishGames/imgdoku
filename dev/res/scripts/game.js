@@ -109,7 +109,7 @@ $(document).ready(function() {
 	});
 	numStage = new Kinetic.Stage({
 		container: 'numStage',
-		width: 150,
+		width: 156,
 		height:675
 	});
 	if(typeof(specHash) !== 'undefined') {
@@ -562,9 +562,10 @@ function drawToolbar() {
 	cellToolLayer.removeChildren();
 	for (var i = 0; i < 9; i++) {
 		imageSrc = images[i];
-		var x = 0;
+		var x = 4;
 		var y = i;
 		y*=75;
+		y+=4*(i+1);
 		var imageToAdd;
 		if (drawImg) {
 			imageToAdd = new Kinetic.Image({
@@ -599,8 +600,8 @@ function drawToolbar() {
 			strokeWidth = 1;
 		}
 		var newCell = new Kinetic.Rect({
-			x: 0,
-			y: Math.floor(i*75),
+			x: 4,
+			y: Math.floor(i*75)+4*(i+1),
 			width: 75,
 			height: 75,
 			stroke: stroke,
@@ -618,8 +619,8 @@ function drawToolbar() {
 		image:erase,
 		height:75,
 		width:75,
-		x:75,
-		y:375
+		x:75 + 8,
+		y:375 + 24
 	});
 	imgToolLayer.add(imageToAdd);
 	
@@ -632,8 +633,8 @@ function drawToolbar() {
 		strokeWidth = 1;
 	}
 	var newCell = new Kinetic.Rect({
-		x: 75,
-		y: 375,
+		x: 75 + 8,
+		y: 375 + 24,
 		width: 75,
 		height: 75,
 		stroke: stroke,
@@ -651,8 +652,8 @@ function drawToolbar() {
 		image:zoomIn,
 		height:75,
 		width:75,
-		x:75,
-		y:225
+		x:75 + 8,
+		y:225 + 16
 	});
 	imgToolLayer.add(imageToAdd);
 	
@@ -665,8 +666,8 @@ function drawToolbar() {
 		strokeWidth = 1;
 	}
 	var newCell = new Kinetic.Rect({
-		x: 75,
-		y: 225,
+		x: 75 + 8,
+		y: 225 + 16,
 		width: 75,
 		height: 75,
 		stroke: stroke,
@@ -684,8 +685,8 @@ function drawToolbar() {
 		image:zoomOut,
 		height:75,
 		width:75,
-		x:75,
-		y:300
+		x:75 + 8,
+		y:300 + 20
 	});
 	imgToolLayer.add(imageToAdd);
 	
@@ -698,8 +699,8 @@ function drawToolbar() {
 		strokeWidth = 1;
 	}
 	var newCell = new Kinetic.Rect({
-		x: 75,
-		y: 300,
+		x: 75 + 8,
+		y: 300 + 20,
 		width: 75,
 		height: 75,
 		stroke: stroke,

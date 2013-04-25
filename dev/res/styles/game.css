@@ -4,10 +4,10 @@ canvas {
 #gameWrapper{
 	margin-left: auto;
 	margin-right:auto;
-	width:825px;
+	//width:825px;
 }
 #fullWrapper {
-	width:825px;
+	width:840px;
 }
 #gameStage {
 	width:675px;
@@ -15,7 +15,7 @@ canvas {
 	background-color:#FFF7C2;
 }
 #numStage {
-	width:150px;
+	width:156px;
 	display:inline-block;
 	background-color:#FFF7C2;
 }
