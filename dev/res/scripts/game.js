@@ -104,13 +104,13 @@ function loadUtil() {
 $(document).ready(function() {
 	stage = new Kinetic.Stage({
 		container: 'gameStage',
-		width: 675,
-		height: 675
+		width: 715,
+		height: 715
 	});
 	numStage = new Kinetic.Stage({
 		container: 'numStage',
-		width: 156,
-		height:675
+		width: 162,
+		height:715
 	});
 	if(typeof(specHash) !== 'undefined') {
 		hash = specHash;
@@ -455,12 +455,12 @@ function drawTiles() {
 	for (var i = 0; i < 3; i++) {
 		for (var j = 0; j < 3; j++) {
 			var newCell = new Kinetic.Rect({
-				x: Math.floor(225*i),
-				y: Math.floor(225*j),
+				x: Math.floor(225*i)+5*(i+1),
+				y: Math.floor(225*j)+5*(j+1),
 				width: 225,
 				height: 225,
 				stroke: 'black',
-				strokeWidth: 4
+				strokeWidth: 10
 			});
 			backCellLayer.add(newCell);
 		}
@@ -497,8 +497,8 @@ function drawTiles() {
 				strokeWidth = 1;
 			}
 			var newCell = new Kinetic.Rect({
-				x: Math.floor(75*i),
-				y: Math.floor(75*j),
+				x: Math.floor(75*i)+5*(Math.floor(i/3)+1),
+				y: Math.floor(75*j)+5*(Math.floor(j/3)+1),
 				width: 75,
 				height: 75,
 				stroke: strokeColor,
@@ -562,10 +562,10 @@ function drawToolbar() {
 	cellToolLayer.removeChildren();
 	for (var i = 0; i < 9; i++) {
 		imageSrc = images[i];
-		var x = 4;
+		var x = 2;
 		var y = i;
 		y*=75;
-		y+=4*(i+1);
+		y+=2*(i+1);
 		var imageToAdd;
 		if (drawImg) {
 			imageToAdd = new Kinetic.Image({

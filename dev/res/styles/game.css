@@ -7,15 +7,15 @@ canvas {
 	//width:825px;
 }
 #fullWrapper {
-	width:840px;
+	width:877px;
 }
 #gameStage {
-	width:675px;
+	width:715px;
 	display:inline-block;
 	background-color:#FFF7C2;
 }
 #numStage {
-	width:156px;
+	width:162px;
 	display:inline-block;
 	background-color:#FFF7C2;
 }
