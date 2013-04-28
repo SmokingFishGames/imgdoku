@@ -455,8 +455,8 @@ function drawTiles() {
 	for (var i = 0; i < 3; i++) {
 		for (var j = 0; j < 3; j++) {
 			var newCell = new Kinetic.Rect({
-				x: Math.floor(225*i)+5*(i+1),
-				y: Math.floor(225*j)+5*(j+1),
+				x: Math.floor(220*i)+5*(i+1),
+				y: Math.floor(220*j)+5*(j+1),
 				width: 225,
 				height: 225,
 				stroke: 'black',
@@ -565,7 +565,7 @@ function drawToolbar() {
 		var x = 2;
 		var y = i;
 		y*=75;
-		y+=2*(i+1);
+		y+=4*i+2;
 		var imageToAdd;
 		if (drawImg) {
 			imageToAdd = new Kinetic.Image({
@@ -597,11 +597,11 @@ function drawToolbar() {
 			strokeWidth = 4;
 		} else {
 			stroke = 'black';
-			strokeWidth = 1;
+			strokeWidth = 4;
 		}
 		var newCell = new Kinetic.Rect({
-			x: 4,
-			y: Math.floor(i*75)+4*(i+1),
+			x: 2,
+			y: Math.floor(i*75)+4*i+2,
 			width: 75,
 			height: 75,
 			stroke: stroke,
@@ -619,8 +619,8 @@ function drawToolbar() {
 		image:erase,
 		height:75,
 		width:75,
-		x:75 + 8,
-		y:375 + 24
+		x:75 + 6,
+		y:375 + 22
 	});
 	imgToolLayer.add(imageToAdd);
 	
@@ -630,11 +630,11 @@ function drawToolbar() {
 		strokeWidth = 4;
 	} else {
 		stroke = 'black';
-		strokeWidth = 1;
+		strokeWidth = 4;
 	}
 	var newCell = new Kinetic.Rect({
-		x: 75 + 8,
-		y: 375 + 24,
+		x: 75 + 6,
+		y: 375 + 22,
 		width: 75,
 		height: 75,
 		stroke: stroke,
@@ -652,8 +652,8 @@ function drawToolbar() {
 		image:zoomIn,
 		height:75,
 		width:75,
-		x:75 + 8,
-		y:225 + 16
+		x:75 + 6,
+		y:225 + 14
 	});
 	imgToolLayer.add(imageToAdd);
 	
@@ -663,11 +663,11 @@ function drawToolbar() {
 		strokeWidth = 4;
 	} else {
 		stroke = 'black';
-		strokeWidth = 1;
+		strokeWidth = 4;
 	}
 	var newCell = new Kinetic.Rect({
-		x: 75 + 8,
-		y: 225 + 16,
+		x: 75 + 6,
+		y: 225 + 14,
 		width: 75,
 		height: 75,
 		stroke: stroke,
@@ -685,8 +685,8 @@ function drawToolbar() {
 		image:zoomOut,
 		height:75,
 		width:75,
-		x:75 + 8,
-		y:300 + 20
+		x:75 + 6,
+		y:300 + 18
 	});
 	imgToolLayer.add(imageToAdd);
 	
@@ -696,11 +696,11 @@ function drawToolbar() {
 		strokeWidth = 4;
 	} else {
 		stroke = 'black';
-		strokeWidth = 1;
+		strokeWidth = 4;
 	}
 	var newCell = new Kinetic.Rect({
-		x: 75 + 8,
-		y: 300 + 20,
+		x: 75 + 6,
+		y: 300 + 18,
 		width: 75,
 		height: 75,
 		stroke: stroke,
