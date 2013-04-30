@@ -38,8 +38,10 @@ var albumURL;
 
 var mousedOver = {x:null, y:null};
 
+var debug = false;
+
 window.oncontextmenu = function() {
-        return false;
+        return debug;
 };
 
 $(document).keypress(function(e) {
@@ -145,6 +147,13 @@ $(document).ready(function() {
 		mess = -1;
 	} else {
 		mess = -1;
+	}
+	if (typeof(getUrlVars()['debug']) !== 'undefined') {
+		if (getUrlVars()['debug'] == 1) {
+			debug = true;
+		}
+	} else {
+		debug = false;
 	}
 	
 	if (mess != -1) {
