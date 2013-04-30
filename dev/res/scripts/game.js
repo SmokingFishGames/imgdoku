@@ -107,12 +107,12 @@ $(document).ready(function() {
 	stage = new Kinetic.Stage({
 		container: 'gameStage',
 		width: 715,
-		height: 715
+		height: 751
 	});
 	numStage = new Kinetic.Stage({
 		container: 'numStage',
-		width: 162,
-		height:715
+		width: 158,
+		height:751
 	});
 	if(typeof(specHash) !== 'undefined') {
 		hash = specHash;
@@ -574,7 +574,7 @@ function drawToolbar() {
 		var x = 2;
 		var y = i;
 		y*=75;
-		y+=4*i+2;
+		y+=4*i+2+20;
 		var imageToAdd;
 		if (drawImg) {
 			imageToAdd = new Kinetic.Image({
@@ -610,7 +610,7 @@ function drawToolbar() {
 		}
 		var newCell = new Kinetic.Rect({
 			x: 2,
-			y: Math.floor(i*75)+4*i+2,
+			y: Math.floor(i*75)+4*i+2+20,
 			width: 75,
 			height: 75,
 			stroke: stroke,
@@ -629,7 +629,7 @@ function drawToolbar() {
 		height:75,
 		width:75,
 		x:75 + 6,
-		y:375 + 22
+		y:375 + 22+20
 	});
 	imgToolLayer.add(imageToAdd);
 	
@@ -643,7 +643,7 @@ function drawToolbar() {
 	}
 	var newCell = new Kinetic.Rect({
 		x: 75 + 6,
-		y: 375 + 22,
+		y: 375 + 22+20,
 		width: 75,
 		height: 75,
 		stroke: stroke,
@@ -662,7 +662,7 @@ function drawToolbar() {
 		height:75,
 		width:75,
 		x:75 + 6,
-		y:225 + 14
+		y:225 + 14+20
 	});
 	imgToolLayer.add(imageToAdd);
 	
@@ -676,7 +676,7 @@ function drawToolbar() {
 	}
 	var newCell = new Kinetic.Rect({
 		x: 75 + 6,
-		y: 225 + 14,
+		y: 225 + 14+20,
 		width: 75,
 		height: 75,
 		stroke: stroke,
@@ -695,7 +695,7 @@ function drawToolbar() {
 		height:75,
 		width:75,
 		x:75 + 6,
-		y:300 + 18
+		y:300 + 18+20
 	});
 	imgToolLayer.add(imageToAdd);
 	
@@ -709,7 +709,7 @@ function drawToolbar() {
 	}
 	var newCell = new Kinetic.Rect({
 		x: 75 + 6,
-		y: 300 + 18,
+		y: 300 + 18+20,
 		width: 75,
 		height: 75,
 		stroke: stroke,
