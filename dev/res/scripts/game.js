@@ -106,7 +106,7 @@ function loadUtil() {
 $(document).ready(function() {
 	stage = new Kinetic.Stage({
 		container: 'gameStage',
-		width: 715,
+		width: 751,
 		height: 751
 	});
 	numStage = new Kinetic.Stage({
@@ -390,13 +390,13 @@ function drawUnsolved() {
 						image:imageSrc,
 						height: Math.floor(imageSrc.height/imageSrc.divisor),
 						width: Math.floor(imageSrc.width/imageSrc.divisor),
-						x: Math.floor((75*i)+(75-((imageSrc.width/imageSrc.divisor)))/2),
-						y: Math.floor((75*j)+(75-((imageSrc.height/imageSrc.divisor)))/2)
+						x: Math.floor((75*i)+10*(Math.floor(i/3)+1)+2*(i+1)+2*i+(75-((imageSrc.width/imageSrc.divisor)))/2),
+						y: Math.floor((75*j)+10*(Math.floor(j/3)+1)+2*(j+1)+2*j+(75-((imageSrc.height/imageSrc.divisor)))/2)
 					});
 				} else if (!drawImg) {
 					imageToAdd = new Kinetic.Text({
-						x: Math.floor(75*i),
-						y: Math.floor(75*j),
+						x: Math.floor(75*i)+10*(Math.floor(i/3)+1)+2*(i+1)+2*i,
+						y: Math.floor(75*j)+10*(Math.floor(j/3)+1)+2*(j+1)+2*j,
 						fontFamily: 'Liberation',
 						text: board.tiles[i][j].val,
 						fontSize: 75,
@@ -412,8 +412,8 @@ function drawUnsolved() {
 					if (board.tiles[i][j].poss[k]) {
 						imageSrc = images[k];
 						var x, y;
-						x = 75*i;
-						y = 75*j;
+						x = 75*i+10*(Math.floor(i/3)+1)+2*(i+1)+2*i;
+						y = 75*j+10*(Math.floor(j/3)+1)+2*(j+1)+2*j;
 						x += (k%3)*25;
 						y += Math.floor((k/3))*25;
 						var imageToAdd;
@@ -464,10 +464,10 @@ function drawTiles() {
 	for (var i = 0; i < 3; i++) {
 		for (var j = 0; j < 3; j++) {
 			var newCell = new Kinetic.Rect({
-				x: Math.floor(220*i)+5*(i+1),
-				y: Math.floor(220*j)+5*(j+1),
-				width: 225,
-				height: 225,
+				x: Math.floor(242*i)+5*(i+1),
+				y: Math.floor(242*j)+5*(j+1),
+				width: 247,
+				height: 247,
 				stroke: 'black',
 				strokeWidth: 10
 			});
@@ -480,8 +480,8 @@ function drawTiles() {
 				for (var k = 0; k < 3; k++) {
 					for (var l = 0; l < 3; l++) {
 						var newCell = new Kinetic.Rect({
-							X: Math.floor((75*i)+(k*25)),
-							y: Math.floor((75*j) + (l*25)),
+							X: Math.floor((75*i)+(k*25))+10*(Math.floor(i/3)+1)+2*(i+1)+2*i,
+							y: Math.floor((75*j) + (l*25))+10*(Math.floor(j/3)+1)+2*(j+1)+2*j,
 							width: 25,
 							height:25,
 							stroke:'black',
@@ -503,15 +503,15 @@ function drawTiles() {
 				strokeWidth = 4;
 			} else if (board.tiles[i][j].conf == 0) {
 				strokeColor = 'black';
-				strokeWidth = 1;
+				strokeWidth = 4;
 			}
 			var newCell = new Kinetic.Rect({
-				x: Math.floor(75*i)+5*(Math.floor(i/3)+1),
-				y: Math.floor(75*j)+5*(Math.floor(j/3)+1),
+				x: Math.floor(75*i)+10*(Math.floor(i/3)+1)+2*(i+1)+2*i,
+				y: Math.floor(75*j)+10*(Math.floor(j/3)+1)+2*(j+1)+2*j,
 				width: 75,
 				height: 75,
 				stroke: strokeColor,
-				strokeWidth: strokeWidth
+				strokeWidth: 4
 			});
 			newCell.ix = i;
 			newCell.iy = j;
@@ -520,7 +520,7 @@ function drawTiles() {
 			});
 			if (!board.tiles[i][j].perm) {
 				newCell.on('mouseover', function() {
-					this.setStroke('blue');
+					this.setStroke('rgb(145, 253, 255)');
 					this.setStrokeWidth(4);
 					this.moveToTop();
 					stage.draw();
@@ -549,7 +549,7 @@ function drawTiles() {
 				} else {
 					newCell.on('mouseout', function() {
 						this.setStroke('black');
-						this.setStrokeWidth(1);
+						this.setStrokeWidth(4);
 						this.moveToBottom();
 						stage.draw();
 					});
@@ -602,7 +602,7 @@ function drawToolbar() {
 	for (var i = 0; i < 9; i++) {
 		var stroke, strokeWidth;
 		if (i+1 == selected) {
-			stroke = 'blue';
+			stroke = 'rgb(145, 253, 255)';
 			strokeWidth = 4;
 		} else {
 			stroke = 'black';
@@ -924,11 +924,23 @@ function zoom(x,y, isZoomIn) {
 	currScale = stage.getScale();
 	if (currScale.x > 1) {
 		if (currScale.x == 3) {
-			stage.setX(-Math.floor(x/3)*3*75*currScale.x);
-			stage.setY(-Math.floor(y/3)*3*75*currScale.x);
+			stage.setX(-Math.floor(x/3)*3*75*currScale.x-(Math.floor(x/3)*75));
+			stage.setY(-Math.floor(y/3)*3*75*currScale.x-(Math.floor(y/3)*75));
+			if (Math.floor(x/3) == 0) {
+				stage.setX(stage.getX()-10);
+			} else if (Math.floor(x/3) == 2) {
+				stage.setX(stage.getX()+10);
+			}
+			if (Math.floor(y/3) == 0) {
+				stage.setY(stage.getY()-10);
+			} else if (Math.floor(y/3) == 2) {
+				stage.setY(stage.getY()+10);
+			}
 		} else {
-			stage.setX(-x*75*currScale.x);
-			stage.setY(-y*75*currScale.x);
+			//stage.setX(-x*75*currScale.x-(x*75)-(Math.floor(x/3)*10));
+			//stage.setY(-y*75*currScale.x-(y*75)-(Math.floor(y/3)*10));
+			stage.setX(((-79)*(x*9)-79)+(-10)*(Math.floor(x/3)*9)+10);
+			stage.setY(((-79)*(y*9)-79)+(-10)*(Math.floor(y/3)*9)+10);
 		}
 	} else {
 		stage.setX(0);
