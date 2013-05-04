@@ -556,11 +556,11 @@ function drawTiles() {
 				}
 			}
 			newCell.on('click tap', function(e) {
-					if(e.which == 1)
-						selectTile(this.ix, this.iy, true);
-					else if (e.which == 3)
-						selectTile(this.ix, this.iy, false);
-				});
+				if(e.which == 1 && e.ctrlKey == false)
+					selectTile(this.ix, this.iy, true);
+				else if (e.which == 3 || (e.which == 1 && e.ctrlKey == true))
+					selectTile(this.ix, this.iy, false);
+			});
 			cellLayer.add(newCell);
 		}
 	}
