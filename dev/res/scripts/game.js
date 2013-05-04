@@ -637,7 +637,7 @@ function drawToolbar() {
 	
 	var stroke, strokeWidth;
 	if ('.' == selected) {
-		stroke = 'blue';
+		stroke = 'rgb(145, 253, 255)';
 		strokeWidth = 4;
 	} else {
 		stroke = 'black';
@@ -670,7 +670,7 @@ function drawToolbar() {
 	
 	var stroke, strokeWidth;
 	if ('+' == selected) {
-		stroke = 'blue';
+		stroke = 'rgb(145, 253, 255)';
 		strokeWidth = 4;
 	} else {
 		stroke = 'black';
@@ -703,7 +703,7 @@ function drawToolbar() {
 	
 	var stroke, strokeWidth;
 	if ('-' == selected) {
-		stroke = 'blue';
+		stroke = 'rgb(145, 253, 255)';
 		strokeWidth = 4;
 	} else {
 		stroke = 'black';

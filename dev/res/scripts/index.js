@@ -139,8 +139,10 @@ function fetchFBAlbums(id) {
 			}
 		} else {
 			$('#fbalbums').html('');
+			var found = false;
 			for (i in response.data) {
 				if (response.data[i].count >= 9) {
+					found = true;
 					//entries++;
 					if (response.data[i].type != 'app') {
 						$('#fbalbums').append('<div class="albumThumbHolder" id="' + response.data[i].cover_photo + 'ath"><img id="' + response.data[i].cover_photo + '" class="fbalbumthumb" onclick="selectFBImg(\'' + String(response.data[i].id) + '\',\'' + String(response.data[i].cover_photo) + '\');" title="' + response.data[i].name + '" /><a href="' + response.data[i].link + '" target="_blank" class="albumLink">View Album</a></div>');
@@ -154,6 +156,15 @@ function fetchFBAlbums(id) {
 						});
 					}
 				}
+			}
+			if (!found) {
+				if (id == 'me') {
+				$('#fbalbums').text('You don\'t have any albums with enough images.');
+			} else {
+				FB.api('/' + id, function(response) {
+					$('#fbalbums').text(response.name + ' doesn\'t have any albums with enough images.');
+				});
+			}
 			}
 		}
 	});
