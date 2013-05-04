@@ -140,8 +140,9 @@ $(document).ready(function() {
 	} else if (typeof(getUrlVars()['pn']) !== 'undefined') {
 		if (getUrlVars()['pn'] == 1) {
 			$.get('/_static/pn/pnm.txt', function(data) {
-				$('#announceWrapper').html(data);
+				$('#announceWrapperMess').append(data);
 				$('#announceWrapper').css('padding-bottom', '20px');
+				$('#announceWrapper').css('display', 'block');
 			});
 		}
 		mess = -1;
@@ -157,8 +158,9 @@ $(document).ready(function() {
 	}
 	
 	if (mess != -1) {
-		$('#announceWrapper').html(mess);
+		$('#announceWrapperMess').append(mess);
 		$('#announceWrapper').css('padding-bottom', '20px');
+		$('#announceWrapper').css('display', 'block');
 	}
 	
 	
@@ -1080,6 +1082,9 @@ function retrieveCP() {
 function deleteCP() {
 	checkpoints.splice(selectedCP,1);
 	$.modal.close();
+}
+function hideAnnounce() {
+	$('#announceWrapper').slideUp();
 }
 //function zoom(zoomIn) {
 //	var zoomAmount;

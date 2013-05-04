@@ -50,6 +50,16 @@ canvas {
 #announceWrapper {
 	text-align:center;
 	font-size:30px;
+	position: relative;
+	border-radius:10px;
+	background-color: #FFF29C;
+	margin:5px;
+	padding:20px;
+	display:none;
+}
+#announceWrapperMess {
+	background-color:#FFF8C7;
+	border-radius:10px;
 }
 #controls {
 	text-align:center;
@@ -66,7 +76,14 @@ canvas {
 	margin-top:10px;
 	text-align:center;
 }
-
+.hideAnnounce {
+	position: absolute;
+	right: -10px;
+	top: -10px;
+	border-radius: 10px;
+	background-color: #5C5C5C;
+	border: 2px solid #8C8C8C;
+}
 .cp {
 	border: 1px solid black;
 	border-collapse: collapse;
