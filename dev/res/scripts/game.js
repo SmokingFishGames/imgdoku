@@ -211,8 +211,13 @@ $(document).ready(function() {
 	
 	document.addEventListener('mousewheel', zoomMouse, false);
 	
-	$.get('/res/php/puzzle.php', {d:diff}).done( function(data) {
-		var puzzle = $.parseJSON(data);
+	$.get('/res/py/puzzle.py', {d:diff}).done( function(data) {
+		//var puzzData = $.parseJSON(data);
+		var puzzData = data.board;
+		puzzData = puzzData.split('#');
+		var puzzle = {};
+		puzzle.Solved = puzzData[0];
+		puzzle.Unsolved = puzzData[1];
 		for (var i = 0; i < 9; i++) {
 			solved[i] = [];
 			unsolved[i] = [];
@@ -221,6 +226,9 @@ $(document).ready(function() {
 				solved[i][j] = puzzle.Solved.charAt(0);
 				puzzle.Unsolved = puzzle.Unsolved.substr(1);
 				puzzle.Solved = puzzle.Solved.substr(1);
+				if (unsolved[i][j] == '_') {
+					unsolved[i][j] = '.';
+				}
 			}
 		}
 		board = new Board();
