@@ -9,7 +9,7 @@ import pdb
 # enabled for test.  take it out otherwise
 #
 
-cgitb.enable()
+# cgitb.enable()
 
 
 #
@@ -134,27 +134,42 @@ class RowOrColOrSquare:
     #
 
 
-    def find_forced_values(self):
+    def find_forced_values(self, tracing = False):
         # Set up seen.  seen[0] is irrelevant, but twisting ourselves into
         # pretzels to make 1-based lists is ridiculous...
         seen = [[] for i in range(0, self.totalValues)]
-        # Fill the seen array.  Iterate over the entries; if
-        # len(entry.possibleValues) > 1, add entry to the list
+        # Fill the seen array.  Iterate over the entries; add entry to the list
         # seen[j] for each j in its possibleValues
         for entry in self.entries:
-            if len(entry.possibleValues) == 1: continue
             for value in entry.possibleValues:
                 seen[value].append(entry)
         results = []
         # At this point, seen[j] contains all the entries which
-        # could have j in them.  If there is only one, that entry
+        # could have j in them.  If there is only one, and
+        # that entry has multiple values, then the entry 
         # is forced to be j, so add the pair (j, entry) to the
         # result list
         for i in range(1, self.totalValues):
             if len(seen[i]) == 1:
-                results.append((i, seen[i][0]))
+                entry = seen[i][0]
+                if len(entry.possibleValues) > 1:
+                    results.append((i, seen[i][0]))
+                    if tracing:
+                        print "value %d forced for %s %d" % (i, self.aggregate_type, self.index)
                
         return results
+
+    #
+    # Set the forced values in this aggregate.  Just wraps finding them, then
+    # effectuating by setting the forced value
+    #
+    def set_forced_values(self, tracing = False):
+        new_known_values = self.find_forced_values(tracing)
+        if len(new_known_values) > 0:
+            for (value, entry) in new_known_values:
+                if tracing:
+                    "Setting value of %s to %d" % (str(entry), value)
+                entry.possibleValues = [value]
 
     #
     # Get the list of known values for this aggregate.
@@ -176,15 +191,24 @@ class RowOrColOrSquare:
     # again, deleting the known values from the list
     #
 
-    def propagate_known_values(self):
+    def propagate_known_values(self, tracing = False):
         known_values = self.get_known_values()
         if len(known_values) == 0: return
+        if tracing:
+            print "Known values for %s %d: %s" % (self.aggregate_type, self.index, known_values)
         known_values = set(known_values)
         # print known_values
         for entry in self.entries:
             if len(entry.possibleValues) == 1: continue
-            entry.possibleValues = list(set(entry.possibleValues) - known_values)
-            entry.possibleValues.sort()
+            if tracing:
+                new_possible_values = list(set(entry.possibleValues) - known_values)
+                new_possible_values.sort()
+                if len(new_possible_values) != len(entry.possibleValues):
+                    print "New Possible values for entry %s: %s" % (str(entry), new_possible_values)
+                    entry.possibleValues = new_possible_values
+            else:
+                entry.possibleValues = list(set(entry.possibleValues) - known_values)
+                entry.possibleValues.sort()
 
     #
     # Print this aggregate
@@ -364,7 +388,7 @@ class SudokuPuzzle:
             if len(init_string) != len(self.entries):
                 raise BadPuzzleException(init_string, 'Bad puzzle string %s, length %d.  required length is %d' % (init_string, len(init_string), len(self.entries)))
             ok_characters = [str(i) for i in range(1, self.total_values + 1)] + ['_']
-            string_ok = reduce(lambda x, y: x and (y in ok_characters))
+            string_ok = reduce(lambda x, y: x and (y in ok_characters), init_string)
             if not string_ok:
                 raise BadPuzzleException(init_string, 'Bad Puzzle string %s, all characters must be in the list %s' % (init_string, str(ok_characters)))
             for i in range(0, len(self.entries)):
@@ -480,11 +504,9 @@ class SudokuPuzzle:
         # for forced values in the aggregate.  If there are any, set them
         #
         for entry_list in self.aggregates:
-            entry_list.propagate_known_values()
-            new_known_values = entry_list.find_forced_values()
-            if len(new_known_values) > 0:
-                for (value, entry) in new_known_values:
-                    entry.possibleValues = [value]
+            entry_list.propagate_known_values(tracing)
+            entry_list.set_forced_values(tracing)
+            
         #
         # Done.  Print if we're debugging, and check if there is more work to do
         # First, check if we've changed the state of the puzzle: reduced the number of
@@ -501,10 +523,9 @@ class SudokuPuzzle:
     # keep calling this until it returns False.  Could be one routine, but transparency and atomicity
     #
                 
-    def do_forced_moves(self):
+    def do_forced_moves(self, tracing = False):
         new_fixed_value = True
         i = 0
-        tracing = False
         while new_fixed_value:
             new_fixed_value = self.do_forced_moves_step(tracing)
             i += 1
@@ -550,7 +571,7 @@ class SudokuPuzzle:
     # are no more solutions
     #
 
-    def get_next_solution(self):
+    def get_next_solution(self, tracing=False):
         while len(self.checkpoint_stack) > 0:
             #
             # get the next solution from the checkpoint stack. Pop the
@@ -563,6 +584,7 @@ class SudokuPuzzle:
             checkpoint.choice = next_value
             self.restore_from_checkpoint(checkpoint.checkpoint)
             entry = self.get_entry(checkpoint.row, checkpoint.col)
+            print "Setting entry %s to value %d" % (str(entry), value)
             entry.possibleValues = [next_value]
             #
             # If that was the last value in the checkpoint, remove the checkpoint
@@ -576,8 +598,9 @@ class SudokuPuzzle:
             # stack, if need be; we just want one with the fewest remaining possible
             # values
             #
-            self.do_forced_moves()
+            self.do_forced_moves(tracing)
             (success, failure) = (False, False)
+            self.print_puzzle()
             #
             # Check for inconsistent aggregates
             #
@@ -585,7 +608,9 @@ class SudokuPuzzle:
                 if not aggregate.meets_constraints():
                     failure = True
                     break
-            if failure: continue
+            if failure:
+                print "Inconsistent puzzle"
+                continue
             #
             # Now look for failure, success, or the next choice by counting
             # possible values in entries.  If any is 0, failure; if all are 1,
@@ -593,31 +618,41 @@ class SudokuPuzzle:
             # these entries will go on the stack
             #
             (success, failure, entry) = self.find_choice_entry_for_stack()
-            if failure: continue 
-            if success: return True 
+            if failure:
+                print "Inconsistent puzzle"
+                continue 
+            if success:
+                print "Solved!"
+                return True 
             #
             # Generate a new value and put it on the stack, then continue
             #
+            print "Adding entry %s to stack" % str(entry)
             self.checkpoint_stack.append(SolutionCheckpoint(self, entry))
         #
         # Sigh.  ran out of choices and didn't generate a solution.  False...
         # Should never get here...
         #
+        print "No solution!"
         return False
 
     #
     # generate the first solution.  Just set the problem up by restoring from the
     # master puzzle
     #
-    def get_first_solution(self):
+    def get_first_solution(self, tracing=False):
         self.restore_from_checkpoint(self.master_puzzle)
-        self.do_forced_moves()
+        self.do_forced_moves(tracing)
         (success, failure, entry) = self.find_choice_entry_for_stack()
         if success or failure:
             self.checkpoint_stack = []
+            if tracing:
+                print "Initial setup: success %s, failure %s" % (success, failure)
             return
         self.checkpoint_stack = [SolutionCheckpoint(self, entry)]
-        self.get_next_solution()
+        print "Setting up solution, puzzle is "
+        self.print_puzzle()
+        self.get_next_solution(tracing)
 
     #
     # check: is this solution actually a solution?  When it's not,
