@@ -36,7 +36,7 @@
 	<body>
 		<a href='/' class='goBack'>&larr; Homepage</a>
 		<div id='fullWrapper'>
-			<div id='announceWrapper'></div>
+			<div id='announceWrapper'><button class="hideAnnounce" onclick="hideAnnounce();">X</button><div id='announceWrapperMess'></div></div>
 			<div id='gameWrapper'>
 				<div id='controls'>
 					<button id='helpButton' type='button' onclick='help(true);'>Help/Tips</button> | <button type='button' onclick='checkErrors();'>Check</button><button type='button' onclick='solvePuzzle(false);'>Solve</button> | <button id='toggleDrawImg' type='button' onclick='toggleDrawImg();'>Switch to Numbers</button> | <button type='button' onclick='setCheckpoint();'>Set Checkpoint</button><button id='checkpointButton' type='button' onclick='openCheckpoints();'>View Checkpoints</button> | <button id='albumLink' onclick='viewAlbum();'>View Album</button>
