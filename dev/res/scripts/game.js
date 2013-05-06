@@ -13,6 +13,7 @@ var loaded = 0;
 var loadedPuzzle = false;
 
 var victoryDancers = [];
+var victoryDance;
 
 var erase;
 var zoomIn;
@@ -802,7 +803,18 @@ function Board() {
 			}
 		}
 		if(blank == 0 && errors == 0) {
-			$('#alerts').text('We have a winner!');
+			this.victoryDance(true);
+		}
+	}
+	this.set = function(x,y,val, perm) {
+		if (!this.solved) {
+			this.tiles[x][y].set(val, perm);
+			this.checkWin();
+		}
+	}
+	this.victoryDance = function() {
+		if (!this.dancing) {
+			$('#alerts').html('We have a winner!<br /><button type="button" onclick="board.victoryDance();">Toggle victory dance</button>');
 			this.solved = true;
 			victory = new Kinetic.Layer();
 			victory.setClearBeforeDraw(false);
@@ -821,7 +833,7 @@ function Board() {
 				victoryDancers.push(newImg);
 				victory.add(newImg);
 			}
-			window.setInterval(function() {
+			victoryDance = window.setInterval(function() {
 				for (i in victoryDancers) {
 					victoryDancers[i].setX(victoryDancers[i].dx + victoryDancers[i].getX());
 					victoryDancers[i].dy += .14;
@@ -839,14 +851,15 @@ function Board() {
 				}
 				victory.draw();
 			}, 33);
+			this.dancing = true;
+		} else {
+			window.clearInterval(victoryDance);
+			victory.removeChildren();
+			victory.clear();
+			this.dancing = false;
 		}
 	}
-	this.set = function(x,y,val, perm) {
-		if (!this.solved) {
-			this.tiles[x][y].set(val, perm);
-			this.checkWin();
-		}
-	}
+	this.dancing=false;
 }
 
 function Tile(val, sol, perm) {
@@ -1096,6 +1109,12 @@ function deleteCP() {
 }
 function hideAnnounce() {
 	$('#announceWrapper').slideUp();
+}
+
+function toggleVictory(on) {
+	if (on) {
+		
+	}
 }
 //function zoom(zoomIn) {
 //	var zoomAmount;
