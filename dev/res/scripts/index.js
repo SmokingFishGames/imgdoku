@@ -131,10 +131,10 @@ function fetchFBAlbums(id) {
 	FB.api('/' + id + '/albums', function(response) {
 		if (response.data.length == 0) {
 			if (id == 'me') {
-				$('#fbalbums').text('You don\'t have any albums available to this app.');
+				$('#fbalbums').text('You don\'t have any albums available to this app.  Try selecting a friend.');
 			} else {
 				FB.api('/' + id, function(response) {
-					$('#fbalbums').text(response.name + ' doesn\'t have any albums available to this app.');
+					$('#fbalbums').text(response.name + ' doesn\'t have any albums available to this app.  Try selecting a different friend.');
 				});
 			}
 		} else {
