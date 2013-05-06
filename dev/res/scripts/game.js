@@ -46,6 +46,9 @@ window.oncontextmenu = function() {
 
 $(document).keypress(function(e) {
 	switch (Number(e.which)) {
+		case 32:
+			selectTool('.');
+			break;
 		case 48:
 			selectTool('.');
 			break;
@@ -823,13 +826,13 @@ function Board() {
 					victoryDancers[i].setX(victoryDancers[i].dx + victoryDancers[i].getX());
 					victoryDancers[i].dy += .14;
 					victoryDancers[i].setY(victoryDancers[i].dy + victoryDancers[i].getY());
-					if (victoryDancers[i].getX() < -74) {
-						victoryDancers[i].setX(675);
+					if (victoryDancers[i].getX() < -75) {
+						victoryDancers[i].setX(stage.getWidth());
 					}
-					if (victoryDancers[i].getX() > 675) {
+					if (victoryDancers[i].getX() > stage.getWidth()) {
 						victoryDancers[i].setX(-75);
 					}
-					if (victoryDancers[i].getY() > 675) {
+					if (victoryDancers[i].getY() > stage.getHeight()) {
 						victoryDancers[i].setY(-75);
 						victoryDancers[i].dy = Math.random()*10-5;
 					}
