@@ -946,16 +946,16 @@ if __name__ == '__main__':
     response_type = 'html'
     status = '200 OK'
     form = cgi.FieldStorage()
-    response_type = form['response_type'].value
+    response_type = form['response_type'].value if 'response_type' in form else 'json'
+    rows = int(form['rows'].value) if 'rows' in form else 3
+    cols = int(form['cols'].value) if 'cols' in form else 3
+    level = form['level'].value if 'level' in form else 'easy'
+    
    
-    if response_type == 'html':
-        rows = int(form['rows'].value) if 'rows' in form else 3
-        cols = int(form['cols'].value) if 'cols' in form else 3
-        level = form['level'].value if 'level' in form else 'easy'
+    if response_type == 'html': 
         puzzle = SudokuPuzzle(rows, cols, init_string = None)
         puzzle.generate_board_and_puzzle(level=level)
         result = puzzle.generate_web_string()
-        
         print "Content-type:text/html\r\n\r\n"
         print "<html>"
         print "<head>"
@@ -1009,10 +1009,6 @@ if __name__ == '__main__':
         print "</html>"
     else:
         try:
-            rows = int(form['rows'].value)
-            cols = int(form['cols'].value)
-            level = form['level'].value
-            response_type = form['response_type']
             puzzle = SudokuPuzzle(rows, cols, init_string = None)
             puzzle.generate_board_and_puzzle(level=level)
             result = puzzle.generate_web_string()
