@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python2.7
 import random
 # Import modules for CGI handling 
 import cgi, cgitb 
@@ -946,10 +946,34 @@ if __name__ == '__main__':
     response_type = 'html'
     status = '200 OK'
     form = cgi.FieldStorage()
-    response_type = form['response_type'].value if 'response_type' in form else 'json'
-    rows = int(form['rows'].value) if 'rows' in form else 3
-    cols = int(form['cols'].value) if 'cols' in form else 3
-    level = form['level'].value if 'level' in form else 'easy'
+    response_type = 'json'
+    if 'response_type' in form:
+        response_type = form['response_type'].value
+    elif 'resp' in form:
+        response_type = form['resp'].value
+    rows = 3
+    if 'rows' in form:
+        rows = int(form['rows'].value)
+    elif 'r' in form:
+        rows = int(form['rows'].value)
+    cols = 3
+    if 'cols' in form:
+        cols = int(form['cols'].value)
+    elif 'c' in form:
+        cols = int(form['cols'].value)
+    level = 'easy'
+    if 'level' in form:
+        level = form['level'].value
+    elif 'd' in form:
+        diff = int(form['d'].value)
+        if diff == 4:
+            level = 'evil'
+        elif diff == 3:
+            level = 'hard'
+        elif diff == 2:
+            level = 'medium'
+        else:
+            level = 'easy'
     
    
     if response_type == 'html': 
