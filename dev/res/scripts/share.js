@@ -30,6 +30,10 @@ $(document).ready(function() {
 							imgID = 'http://i.imgur.com/' + imgID + '.jpg';
 							$('#albumHolder').append('<div class="albumThumbHolder"><a href="' + data.data.images[i].link + '" target="_blank"><img class="imguralbumthumb" title="' + data.data.images[i].id + '" src="' + imgID + '" /></a></div>');
 						}
+						$('.imguralbumthumb').powerTip({
+							followMouse: true,
+							smartPlacement: true
+						});
 					} else {
 						$('#shareLinkHolder').css('display', 'none');
 						$('#albumHolder').text('Not enough images in album.');

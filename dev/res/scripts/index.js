@@ -167,6 +167,10 @@ function fetchFBAlbums(id) {
 			}
 			}
 		}
+		$('.fbalbumthumb').powerTip({
+			followMouse: true,
+			smartPlacement: true
+		});
 	});
 }
 
@@ -437,4 +441,9 @@ $(document).ready(function() {
 	} else {
 		$('#createdPalettes').text('You haven\'t made any image sets yet.');
 	}
+	
+	$('.indexButton').powerTip({
+		placement:'se',
+		smartPlacement: true
+	});
 });
