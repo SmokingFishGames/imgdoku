@@ -584,7 +584,8 @@ class SudokuPuzzle:
             checkpoint.choice = next_value
             self.restore_from_checkpoint(checkpoint.checkpoint)
             entry = self.get_entry(checkpoint.row, checkpoint.col)
-            print "Setting entry %s to value %d" % (str(entry), value)
+            if tracing:
+                print "Setting entry %s to value %d" % (str(entry), next_value)
             entry.possibleValues = [next_value]
             #
             # If that was the last value in the checkpoint, remove the checkpoint
@@ -600,7 +601,7 @@ class SudokuPuzzle:
             #
             self.do_forced_moves(tracing)
             (success, failure) = (False, False)
-            self.print_puzzle()
+            if tracing: self.print_puzzle()
             #
             # Check for inconsistent aggregates
             #
@@ -609,7 +610,7 @@ class SudokuPuzzle:
                     failure = True
                     break
             if failure:
-                print "Inconsistent puzzle"
+                if tracing: print "Inconsistent puzzle"
                 continue
             #
             # Now look for failure, success, or the next choice by counting
@@ -619,21 +620,21 @@ class SudokuPuzzle:
             #
             (success, failure, entry) = self.find_choice_entry_for_stack()
             if failure:
-                print "Inconsistent puzzle"
+                if tracing: print "Inconsistent puzzle"
                 continue 
             if success:
-                print "Solved!"
+                if tracing: print "Solved!"
                 return True 
             #
             # Generate a new value and put it on the stack, then continue
             #
-            print "Adding entry %s to stack" % str(entry)
+            if tracing: print "Adding entry %s to stack" % str(entry)
             self.checkpoint_stack.append(SolutionCheckpoint(self, entry))
         #
         # Sigh.  ran out of choices and didn't generate a solution.  False...
         # Should never get here...
         #
-        print "No solution!"
+        if tracing: print "No solution!"
         return False
 
     #
@@ -650,8 +651,9 @@ class SudokuPuzzle:
                 print "Initial setup: success %s, failure %s" % (success, failure)
             return
         self.checkpoint_stack = [SolutionCheckpoint(self, entry)]
-        print "Setting up solution, puzzle is "
-        self.print_puzzle()
+        if tracing:
+            print "Setting up solution, puzzle is "
+            self.print_puzzle()
         self.get_next_solution(tracing)
 
     #
