@@ -151,6 +151,7 @@
 #submitUploadButtonHolder {
 	position:absolute;
 	right:0;
+	padding-top:3px;
 }
 #submitUploadHolder {
 	position:relative;
@@ -180,6 +181,14 @@
 }
 #upProgress img{
 	height:25px;
+}
+#uploadErrorHolder {
+	/*text-align: right;*/
+	font-size: 15px;
+	text-align:center;
+	height:15px;
+	padding: 4px;
+	color: red;
 }
 #imgDisp {
 	width:312px;

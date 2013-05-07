@@ -233,6 +233,8 @@ var currUploading = 0;
 var upDeleteHash;
 var upHash;
 var upHist = [];
+var uploadErrorQueue = [];
+var uploadErrorDisp = false;
 function imgurImg(ID, link, deletehash) {
 	this.ID = ID;
 	this.link = link;
@@ -269,8 +271,27 @@ function uploadImgur(string) {
 				if (currUploading == 0) {
 					$('#upProgress').css('display', 'none');
 				}
+				var respText = $.parseJSON(data.responseText);
+				uploadErrorQueue.push(respText.data.error);
+				processErrorQueue();
 			}
 		});
+	}
+}
+function processErrorQueue() {
+	if (!uploadErrorDisp) {
+		if (uploadErrorQueue.length > 0) {
+			$("#uploadErrorText").fadeOut(function() {
+				$(this).text(uploadErrorQueue.shift()).fadeIn();
+			});
+			uploadErrorDisp = true;
+			uploadErrorTimeout = window.setTimeout(function() {
+				uploadErrorDisp = false;
+				processErrorQueue();
+			}, 3000);
+		} else {
+			$('#uploadErrorText').fadeOut();
+		}
 	}
 }
 function submitImages() {
@@ -431,15 +452,19 @@ $(document).ready(function() {
 					imgID += 't';
 					imgID = 'http://i.imgur.com/' + imgID + '.jpg';
 					$('#createdPalettes').prepend('<div class="albumThumbHolder" id="' + data.data.id + '"><img class="imguralbumthumb" onclick="selectUpHist(\'' + data.data.id + '\');" title="' + data.data.id + '" src="' + imgID + '" /><img src="/res/img/cancel1.png" class="deleteImg" onclick="deleteUpHist(\'' + data.data.id + '\');"><a class="albumLink" target="_blank" href="' + data.data.link + '">View Album</a></div>');
+					$('.imguralbumthumb').powerTip({
+						followMouse: true,
+						smartPlacement: true	
+					})
 				},
 				error: function(data) { console.log(data); }
 			});
 		}
 		if (upHist.length == 0) {
-			$('#createdPalettes').text('You haven\'t made any image sets yet.');
+			$('#createdPalettes').text('You haven\'t created any albums yet.');
 		}
 	} else {
-		$('#createdPalettes').text('You haven\'t made any image sets yet.');
+		$('#createdPalettes').text('You haven\'t created any albums yet.');
 	}
 	
 	$('.indexButton').powerTip({
