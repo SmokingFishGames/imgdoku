@@ -440,10 +440,10 @@ $(document).ready(function() {
 			});
 		}
 		if (upHist.length == 0) {
-			$('#createdPalettes').text('You haven\'t made any image sets yet.');
+			$('#createdPalettes').text('You haven\'t created any albums yet.');
 		}
 	} else {
-		$('#createdPalettes').text('You haven\'t made any image sets yet.');
+		$('#createdPalettes').text('You haven\'t created any albums yet.');
 	}
 	
 	$('.indexButton').powerTip({
