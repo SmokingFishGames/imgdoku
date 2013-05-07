@@ -565,6 +565,32 @@ class SudokuPuzzle:
         return (False, False, random.choice(next_stack_entry_choice))
 
     #
+    # generate the best choice (the one that resolves the most entries)
+    # from the possible choices for entry
+    #
+    def choose_best_value(self, checkpoint, tracing = False):
+        self.restore_from_checkpoint(checkpoint.checkpoint)
+        if len(checkpoint.possible_values) == 1:
+            checkpoint.choice = checkpoint.possible_values.pop()
+            next_choice = checkpoint.choice
+        else:
+            total_values = sum([len(entry.possibleValues) for entry in self.entries])
+            for next_value in checkpoint.possible_values:
+                checkpoint.entry.possibleValues = [next_value]
+                self.do_forced_moves(False)
+                next_values = sum([len(entry.possibleValues) for entry in self.entries])
+                if next_values < total_values:
+                    total_values = next_values
+                    next_choice = next_value
+                self.restore_from_checkpoint(checkpoint.checkpoint)
+            checkpoint.choice = next_choice
+            checkpoint.possible_values.remove(next_choice)
+        if tracing:
+            print "Setting entry %s to %d " % (str(entry), next_choice)
+        checkpoint.entry.possibleValues = [next_choice]
+        
+
+    #
     # Solve a puzzle, with respect to the existing checkpoint stack.  This
     # method is designed to be re-entrant, so it doesn't clear the checkpoint stack.
     # This assumes the checkpoint stack has been initialized, so if it's empty there
@@ -574,19 +600,13 @@ class SudokuPuzzle:
     def get_next_solution(self, tracing=False):
         while len(self.checkpoint_stack) > 0:
             #
-            # get the next solution from the checkpoint stack. Pop the
-            # next value off the top entry on the stack.  Restore the saved
+            # get the next checkpoint from the checkpoint stack.   Restore the saved
             # state in the checkpoint, then set the checkpoint's row and column to
-            # the value we just popped.
+            # the best next value on the stack (the one that results in the fewest
+            # total possible values on the board after all forced moves are done)
             #
             checkpoint = self.checkpoint_stack[-1]
-            next_value = checkpoint.possible_values.pop()
-            checkpoint.choice = next_value
-            self.restore_from_checkpoint(checkpoint.checkpoint)
-            entry = self.get_entry(checkpoint.row, checkpoint.col)
-            if tracing:
-                print "Setting entry %s to value %d" % (str(entry), next_value)
-            entry.possibleValues = [next_value]
+            self.choose_best_value(checkpoint, tracing)
             #
             # If that was the last value in the checkpoint, remove the checkpoint
             # from the stack
@@ -863,6 +883,7 @@ class SudokuPuzzle:
             if i in dont_touch: continue
             ok_to_blank_squares.append(i)
 
+
         #
         # If there are fewer squares to blank than squares that are safe to blank, we are very happy;
         # just blank them and be done.  (Randomize the order, first, so we don't get artifacts like lots
@@ -955,6 +976,7 @@ class SolutionCheckpoint:
     def __init__(self, sudokuPuzzle, entry):
         self.row = entry.rowNum
         self.col = entry.colNum
+        self.entry = entry
         self.possible_values = list(entry.possibleValues)
         random.shuffle(self.possible_values)
         self.checkpoint = sudokuPuzzle.generate_checkpoint()
