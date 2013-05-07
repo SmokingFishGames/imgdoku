@@ -431,6 +431,10 @@ $(document).ready(function() {
 					imgID += 't';
 					imgID = 'http://i.imgur.com/' + imgID + '.jpg';
 					$('#createdPalettes').prepend('<div class="albumThumbHolder" id="' + data.data.id + '"><img class="imguralbumthumb" onclick="selectUpHist(\'' + data.data.id + '\');" title="' + data.data.id + '" src="' + imgID + '" /><img src="/res/img/cancel1.png" class="deleteImg" onclick="deleteUpHist(\'' + data.data.id + '\');"><a class="albumLink" target="_blank" href="' + data.data.link + '">View Album</a></div>');
+					$('.imguralbumthumb').powerTip({
+						followMouse: true,
+						smartPlacement: true	
+					})
 				},
 				error: function(data) { console.log(data); }
 			});
