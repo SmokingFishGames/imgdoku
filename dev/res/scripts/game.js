@@ -1105,7 +1105,13 @@ function retrieveCP() {
 }
 function deleteCP() {
 	checkpoints.splice(selectedCP,1);
-	$.modal.close();
+	//$.modal.close();
+	//openCheckpoints();
+	$('#checkpoints').html('');
+	for (i in checkpoints) {
+		var newBoard = JSON.parse(checkpoints[i]);
+		$('#checkpoints').prepend(drawCheckpoint(newBoard, i));
+	}
 }
 function hideAnnounce() {
 	$('#announceWrapper').slideUp();
