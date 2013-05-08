@@ -1104,10 +1104,12 @@ function retrieveCP() {
 	drawUnsolved();
 }
 function deleteCP() {
-	checkpoints.splice(selectedCP,1);
+	if (selectedCP != null)
+		checkpoints.splice(selectedCP,1);
 	//$.modal.close();
 	//openCheckpoints();
 	$('#checkpoints').html('');
+	selectedCP = null;
 	for (i in checkpoints) {
 		var newBoard = JSON.parse(checkpoints[i]);
 		$('#checkpoints').prepend(drawCheckpoint(newBoard, i));
