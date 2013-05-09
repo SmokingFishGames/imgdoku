@@ -23,6 +23,7 @@ var diff;
 var hash;
 var origin;
 var mess;
+var playNow = false;
 
 var solved = [];
 var unsolved = [];
@@ -44,6 +45,78 @@ var debug = false;
 window.oncontextmenu = function() {
         return debug;
 };
+
+window.onpopstate = function(e) {
+	if (e.state !== null) {
+		loaded = 3;
+		hash = e.state.h;
+		origin = e.state.o;
+		diff = e.state.d;
+		$('#alerts').text('Loading...');
+		if (origin == 'i')
+			getImgurImages(hash);
+		else if (origin == 'fb')
+			getFBAlbumFromStatePop(hash);
+	} else {
+		if(typeof(specHash) !== 'undefined') {
+			hash = specHash;
+		} else if (typeof(getUrlVars()['h']) !== 'undefined') {
+			hash = getUrlVars()['h'];
+		} else {
+			hash = '6EsqA';
+		}
+		if(typeof(specOrigin) !== 'undefined') {
+			origin = specOrigin;
+		} else if (typeof(getUrlVars()['o']) !== 'undefined') {
+			origin = getUrlVars()['o'];
+		} else {
+			origin = 'i';
+		}
+		if(typeof(specDiff) !== 'undefined') {
+			diff = specDiff;
+		} else if (typeof(getUrlVars()['d']) !== 'undefined') {
+			diff = getUrlVars()['d'];
+		} else {
+			diff = 2;
+		}
+		if (typeof(specMess) !== 'undefined') {
+			mess = specMess;
+		} else if (typeof(getUrlVars()['pn']) !== 'undefined') {
+			if (getUrlVars()['pn'] == 1) {
+				playNow = true;
+				$.get('/_static/pn/pnm.txt', function(data) {
+					$('#announceWrapperMess').append(data);
+					$('#announceWrapper').css('padding-bottom', '20px');
+					$('#announceWrapper').css('display', 'block');
+				});
+			}
+			mess = -1;
+		} else {
+			mess = -1;
+		}
+		
+		var stateObj = {h:hash, o:origin, d:diff};
+		if (!playNow)
+			history.replaceState(stateObj, "Play Imagedoku", "game.html?o=" + origin + "&h="+hash+"&d="+(diff));
+		else
+			history.replaceState(stateObj, "Play Imagedoku", "game.html?o=" + origin + "&h="+hash+"&d="+(diff)+"&pn=1");
+		
+		if (mess != -1) {
+			$('#announceWrapperMess').append(mess);
+			$('#announceWrapper').css('padding-bottom', '20px');
+			$('#announceWrapper').css('display', 'block');
+		}
+		
+		
+		if (origin=='i') {
+			getImgurImages(hash);
+		} else if (origin == 'fb') {
+			console.log('calling here');
+		}
+	}
+}
+
+
 
 $(document).keypress(function(e) {
 	switch (Number(e.which)) {
@@ -118,61 +191,13 @@ $(document).ready(function() {
 		width: 158,
 		height:751
 	});
-	if(typeof(specHash) !== 'undefined') {
-		hash = specHash;
-	} else if (typeof(getUrlVars()['h']) !== 'undefined') {
-		hash = getUrlVars()['h'];
-	} else {
-		hash = '6EsqA';
-	}
-	if(typeof(specOrigin) !== 'undefined') {
-		origin = specOrigin;
-	} else if (typeof(getUrlVars()['o']) !== 'undefined') {
-		origin = getUrlVars()['o'];
-	} else {
-		origin = 'i';
-	}
-	if(typeof(specDiff) !== 'undefined') {
-		diff = specDiff;
-	} else if (typeof(getUrlVars()['d']) !== 'undefined') {
-		diff = getUrlVars()['d'];
-	} else {
-		diff = 2;
-	}
-	if (typeof(specMess) !== 'undefined') {
-		mess = specMess;
-	} else if (typeof(getUrlVars()['pn']) !== 'undefined') {
-		if (getUrlVars()['pn'] == 1) {
-			$.get('/_static/pn/pnm.txt', function(data) {
-				$('#announceWrapperMess').append(data);
-				$('#announceWrapper').css('padding-bottom', '20px');
-				$('#announceWrapper').css('display', 'block');
-			});
-		}
-		mess = -1;
-	} else {
-		mess = -1;
-	}
+	
 	if (typeof(getUrlVars()['debug']) !== 'undefined') {
 		if (getUrlVars()['debug'] == 1) {
 			debug = true;
 		}
 	} else {
 		debug = false;
-	}
-	
-	if (mess != -1) {
-		$('#announceWrapperMess').append(mess);
-		$('#announceWrapper').css('padding-bottom', '20px');
-		$('#announceWrapper').css('display', 'block');
-	}
-	
-	
-	if (origin=='i') {
-		$('#albumShare').css('display', 'inline');
-		getImgurImages(hash);
-	} else if (origin == 'fb') {
-		getFBAlbum(hash);
 	}
 	
 	erase = new Image();
@@ -245,6 +270,8 @@ $(document).ready(function() {
 });
 
 function getImgurImages(hash) {
+	$('#albumShare').css('display', 'inline');
+	document.title = 'Imagedoku - ' + hash + ' (Imgur)';
 	$.ajax({
 		url: 'https://api.imgur.com/3/album/'+hash,
 		type: 'GET',
@@ -287,6 +314,8 @@ function getImgurImages(hash) {
 }
 
 function getFBAlbum(hash) {
+	console.log('called');
+	$('#albumShare').css('display', 'none');
 	// Load the SDK Asynchronously
 	(function(d){
 		var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
@@ -327,6 +356,23 @@ function getFBAlbum(hash) {
 		// Additional init code here
 		
 	};
+}
+
+function getFBAlbumFromStatePop(hash) {
+	console.log('called');
+	if (typeof(FB) === 'undefined') {
+		getFBAlbum(hash);
+		console.log('calling');
+	} else {
+		console.log('here');
+		FB.api('/' + hash, function(newResp) {
+			document.title = 'Imagedoku - ' + newResp.name + ' (Facebook)';
+			albumURL = newResp.link;
+		});
+		FB.api('/' + hash + '/photos', function(newResp) {
+			getFBImages(newResp);
+		});
+	}
 }
 
 function getFBImages(api) {
@@ -1122,6 +1168,8 @@ function change() {
 function changeAlbum() {
 	loaded -= 9;
 	hash = parseImgurURL($('#imgurinput').val());
+	var stateObj = {h:hash, o:'i', d:diff};
+	history.pushState(stateObj, "Play Imagedoku", "game.html?o=i&h="+hash+"&d="+(diff));
 	$.modal.close();
 	$('#alerts').text('Loading...');
 	getImgurImages(hash);
