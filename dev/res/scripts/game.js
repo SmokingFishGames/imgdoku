@@ -111,7 +111,7 @@ window.onpopstate = function(e) {
 		if (origin=='i') {
 			getImgurImages(hash);
 		} else if (origin == 'fb') {
-			console.log('calling here');
+			getFBAlbum(hash);
 		}
 	}
 }
@@ -314,7 +314,6 @@ function getImgurImages(hash) {
 }
 
 function getFBAlbum(hash) {
-	console.log('called');
 	$('#albumShare').css('display', 'none');
 	// Load the SDK Asynchronously
 	(function(d){
@@ -359,12 +358,10 @@ function getFBAlbum(hash) {
 }
 
 function getFBAlbumFromStatePop(hash) {
-	console.log('called');
+	$('#albumShare').css('display', 'none');
 	if (typeof(FB) === 'undefined') {
 		getFBAlbum(hash);
-		console.log('calling');
 	} else {
-		console.log('here');
 		FB.api('/' + hash, function(newResp) {
 			document.title = 'Imagedoku - ' + newResp.name + ' (Facebook)';
 			albumURL = newResp.link;
