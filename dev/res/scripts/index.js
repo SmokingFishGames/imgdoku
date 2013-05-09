@@ -19,17 +19,6 @@ function submitImgurURL(isConf) {
 	}
 }
 
-function parseImgurURL(url) {
-	if (url.length == 5) {
-	} else {
-		var urlcomponents = url.split('a/');
-		url = urlcomponents[urlcomponents.length-1];
-		url = url.split('#')[0];
-		url = url.split('/')[0];
-	}
-	return url;
-}
-
 function submitFB() {
 	if (selectedFB.empty == true) {
 		$('#fbUnselectedError').modal({

@@ -216,7 +216,6 @@ $(document).ready(function() {
 	document.addEventListener('mousewheel', zoomMouse, false);
 	
 	$.get('/res/py/puzzle.py', {d:diff}).done( function(data) {
-		//var puzzData = $.parseJSON(data);
 		var puzzData = data.board;
 		puzzData = puzzData.split('#');
 		var puzzle = {};
@@ -239,7 +238,6 @@ $(document).ready(function() {
 		checkpoints.push(JSON.stringify(board));
 		loadedPuzzle = true;
 		if (loaded == 12) {
-			//drawSolved();
 			drawUnsolved();
 			drawToolbar();
 		}
@@ -269,10 +267,6 @@ function getImgurImages(hash) {
 						} else {
 							this.divisor = this.height/75;
 						}
-						//$('body').append('<img src='' + this.src + ''></img>');
-						//$('#h'+this.index).attr('src', this.src);
-						//$('#h'+this.index).attr('height', this.height/this.divisor);
-						//$('#h'+this.index).attr('width', this.width/this.divisor);
 						if (loaded==12) {
 							$('#alerts').text('Loaded!  Enjoy your game.');
 							if (loadedPuzzle) {
@@ -820,7 +814,6 @@ function Board() {
 			victory.setClearBeforeDraw(false);
 			stage.add(victory);
 			for (i in images) {
-				//victoryDancers.push(
 				var newImg = new Kinetic.Image({
 					x: Math.floor(Math.random()*675),
 					y: -75,
@@ -1068,10 +1061,7 @@ function drawCheckpoint(drawBoard, iterator) {
 			} else if (j == 2 || j == 5 || j == 8) {
 				drawString += ' outlineRight';
 			}
-			//if (drawBoard.tiles[i][j].val != '.')
-				drawString += '">' + drawBoard.tiles[j][i].val + '</td>';
-			//else
-			//	drawString += '">_</td>';
+			drawString += '">' + drawBoard.tiles[j][i].val + '</td>';
 		}
 		drawString += '</tr>';
 	}
@@ -1106,8 +1096,6 @@ function retrieveCP() {
 function deleteCP() {
 	if (selectedCP != null)
 		checkpoints.splice(selectedCP,1);
-	//$.modal.close();
-	//openCheckpoints();
 	$('#checkpoints').html('');
 	selectedCP = null;
 	for (i in checkpoints) {
@@ -1119,23 +1107,29 @@ function hideAnnounce() {
 	$('#announceWrapper').slideUp();
 }
 
-function toggleVictory(on) {
-	if (on) {
-		
-	}
+//OPTION MODAL FOR DIFFICULTY/IMAGES
+function change() {
+	$('input[name=difficulty]:eq(' + (diff-1) + ')', '#changeForm').attr('checked', 'checked');
+	$('#options').modal({
+		overlayClose: true,
+		onShow: function() {
+			$('#simplemodal-container').css('height', 'auto');
+			$('#simplemodal-container').css('width', 'auto');
+		},
+		autoResize: true
+	});
 }
-//function zoom(zoomIn) {
-//	var zoomAmount;
-//	if (zoomIn)
-//		zoomAmount = 1;
-//	else
-//		zoomAmount = -1;
-//	if (imgLayer.getScale().x+zoomAmount > 0) {
-//		imgLayer.setScale(imgLayer.getScale().x+zoomAmount);
-//		backCellLayer.setScale(imgLayer.getScale().x+zoomAmount);
-//		cellLayer.setScale(imgLayer.getScale().x+zoomAmount);
-//	}
-//	imgLayer.draw();
-//	backCellLayer.draw();
-//	cellLayer.draw();
-//}
+function changeAlbum() {
+	loaded -= 9;
+	hash = parseImgurURL($('#imgurinput').val());
+	$.modal.close();
+	$('#alerts').text('Loading...');
+	getImgurImages(hash);
+}
+function changeDiff() {
+	window.location = '/game.html?o=' + origin + '&h=' + hash + '&d='+getDiff();
+}
+function getDiff() {
+	$.cookie('diff',  $('input[name=difficulty]:checked', '#changeForm').val(), {expires: 999, path: '/'});
+	return $('input[name=difficulty]:checked', '#changeForm').val();
+}
