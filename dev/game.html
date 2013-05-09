@@ -147,13 +147,13 @@
 			<div class='defaultModalTitle'>Options</div>
 			<hr />
 			<div class='defaultModalContent'>
-				<form id='changeForm'>
+				<div id='changeForm'>
 					<div class='difficultyHolder'>Difficulty: <span class='difficulty'><input type='radio' name='difficulty' value='1'> Easy <input type='radio' name='difficulty' value='2' checked> Medium <input type='radio' name='difficulty' value='3'> Hard <input type='radio' name='difficulty' value='4'> Expert</span></div>
 					<div style='text-align: right;'><span style='color:red;font-size:15px;'>Warning: will reload page.</span><button type='button' onclick='changeDiff();'>Change Difficulty</button></div>
 					<br />
 					Imgur Album URL: <input id='imgurinput' />
 					<div style='text-align:right;'><button type='button' onclick='changeAlbum();'>Change Album</button></div>
-				</form>
+				</div>
 			</div>
 			<div class='defaultModalButtons'>
 				<button type='button' onclick='$.modal.close();'>Close</button>

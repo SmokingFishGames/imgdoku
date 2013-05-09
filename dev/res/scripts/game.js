@@ -1161,6 +1161,11 @@ function change() {
 		},
 		autoResize: true
 	});
+	$('#imgurinput').keyup(function(e){
+		if(e.keyCode == 13) {
+			changeAlbum();
+		}
+	});
 }
 function changeAlbum() {
 	loaded -= 9;

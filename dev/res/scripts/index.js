@@ -75,18 +75,6 @@ function finishFBLogin() {
 	});
 }
 
-function submitCustom() {
-	var origin = getOrigin();
-	switch (origin) {
-		case 'fb':
-			submitFB();
-			break;
-		case 'i':
-			submitImgurURL();
-			break;
-	}
-}
-
 function initFBAlbums() {
 	$('#fbfriendmenu').append('<option value="me">' + 'Me' + '</option>');
 	FB.api('/me/friends', function(friends) {
@@ -459,5 +447,11 @@ $(document).ready(function() {
 	$('.indexButton').powerTip({
 		placement:'se',
 		smartPlacement: true
+	});
+	
+	$('#imgurinput').keyup(function(e){
+		if(e.keyCode == 13) {
+			submitImgurURL(false);
+		}
 	});
 });
