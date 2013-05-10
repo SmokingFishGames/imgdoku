@@ -60,7 +60,7 @@
 				<!--<input type='radio' name='origin' value='fb' checked> Use <a href='http://facebook.com' target='_blank'>Facebook</a>-->
 				<div id='fbholder'>
 					<div class='originHolder'  id='fbaccountholder'>
-						<div class="fb-login-button" data-show-faces="true" data-width="500" data-max-rows="1" scope="user_photos, friends_photos" onlogin="finishFBLogin();"></div><select id='fbfriendmenu' class='fbfriendselections'></select><button id='fbfriendselect' type='button' onclick='selectFriend();' class='fbfriendselections'>Select</button><div id='fbalbums'>Loading...</div>
+						<div class="fb-login-button" data-show-faces="true" data-width="500" data-max-rows="1" scope="user_photos, friends_photos" onlogin="finishFBLogin();"></div><select id='fbfriendmenu' class='fbfriendselections' onchange='selectFriend();'></select><!--<button id='fbfriendselect' type='button' onclick='selectFriend();' class='fbfriendselections'>Select</button>--><div id='fbalbums'>Loading...</div>
 					</div>
 				</div>
 				<div class='buttonHolder'><button type='button' class='submit indexButton' onclick='submitFB();' title="Use your own or a friend's Facebook album">Use Facebook</button></div>
