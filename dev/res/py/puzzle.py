@@ -4,6 +4,7 @@ import random
 import cgi, cgitb 
 import json
 import pdb
+from operator import itemgetter
 
 #
 # enabled for test.  take it out otherwise
@@ -278,6 +279,12 @@ class RowOrColOrSquare:
             print seen_values
             raise BadAggregateException(self, "Missing value %d in aggregate %s, index %d" % (1 + (seen_values[1:].index(False)),  self.aggregate_type, self.index))
 
+    #
+    # The total number of possible values in this aggregate
+    #
+    def all_possible_values(self):
+        return sum([len(entry.possibleValues) for entry in self.entries])
+
 #
 # A short test of aggregate operations...
 #
@@ -533,6 +540,62 @@ class SudokuPuzzle:
                 print 'oops! infinite loop!'
                 tracing = True
                 self.print_puzzle()
+    #
+    # Get all of the possible values for all neighbors of entry, using
+    # possible_values_in_aggregates; a list containing the sum of the possible
+    # values for each entry in an aggregate; so
+    # possible_values_in_aggregates[0] = sum([len(entry.possibleValues) for entry in aggregate 0])
+    # We assume the same order as in the list for self.aggregates.  This is a utility function
+    # for find_best_entry, so we assume that possible_values_in_aggregates has been computed
+    # there.  Really part of that routine, and broken out for readability.
+    #
+    def find_all_neighbors_of_entry(self, entry, possible_values_in_aggregates):
+        values_in_row = possible_values_in_aggregates[entry.rowNum * 3]
+        values_in_col = possible_values_in_aggregates[1 + entry.colNum * 3]
+        values_in_square = possible_values_in_aggregates[2 + entry.squareNum * 3]
+        # result is just the sum - 3 * the possible values in entry; the possible values
+        # in entry should be counted 0 times, but have been counted once in each sum.
+        return values_in_row + values_in_col + values_in_square - 3 * len(entry.possibleValues)
+
+    #
+    # get the total of all possible values for all neighbors for each entry.  A
+    # neighbor of an entry A is defined as an entry B which shares a row, column,
+    # or square with A; so the neighbors of the entry at (1, 1) in a classic 3x3
+    # are the entries in row 1, the entries in col 1, or the entries in square 0
+    # The idea is that we will choose (for the next entry to put on the stack) the
+    # entry with the fewest possible values in all neighbors, breaking ties by fewest
+    # entries
+    #
+    def find_best_entry(self):
+        possible_values_in_aggregates = [aggregate.all_possible_values() for aggregate in self.aggregates]
+        entries_to_consider = filter(lambda entry: len(entry.possibleValues) > 1, self.entries)
+        entries_by_metric = map(lambda entry:
+                                (self.find_all_neighbors_of_entry(entry, possible_values_in_aggregate),
+                                 len(entry.possibleValues), entry), entries_to_consider)
+        #
+        # We now have a list of tuples of the form (# neighbors, # possible values, entries), 
+        # for entries with # values == 1.  Sort in ascending order, first by number of neighbors, then
+        # by number of values.
+        #
+        entries_by_metric.sort(key=itemgetter(0, 1))
+        # The min of neighbors, values is in entries_by_metric[0]; we want all entries with these two
+        # values as keys.  So first get the pair of values, then use filter to dig them out.  This
+        # could be made slightly faster if less Pythonic by putting in an explicit loop
+        (neighbors, values, entry) = entries_by_metric[0]
+        eligible_entries = filter(lambda x: x[0] == neigbors and x[1] == values, entries_by_metric)
+        # throw out the first two values in each tuple, returning a list of entries alone
+        return [value[2] for value in eligible_entries]
+
+    #
+    # get the entries with the minimum number of possible values, as long as the # of poss values > 1
+    #
+    def find_entries_with_min_vals(self):
+        entries_to_consider = filter(lambda entry: len(entry.possibleValues) > 1, self.entries)
+        entries_by_poss_values = map(lambda entry: (entry, len(entry.possibleValues)), entries_to_consider)
+        entries_by_poss_values.sort(key=itemgetter(1))
+        (entry, num_values) = entries_by_poss_values[0]
+        eligible_entries = filter(lambda x: x[1] == num_values, entries_by_poss_values)
+        return [value[0] for value in eligible_entries]
 
     #
     # Find an entry with a minimum number of choices to put on the stack, returning
@@ -548,16 +611,10 @@ class SudokuPuzzle:
         if values_in_entries[0] == 0: return (False, True, None)
         if values_in_entries[-1] == 1: return (True, False, None)
         #
-        # Throw out all the 1 entries, sort again, just in case, then
-        # pick the minimum
-        #
-        values_in_entries = [value for value in values_in_entries if value > 1]
-        values_in_entries.sort()
-        min_num_values = values_in_entries[0]
-        #
         # list of entries to pick from
         #
-        next_stack_entry_choice = [entry for entry in self.entries if len(entry.possibleValues) == min_num_values]
+        # next_stack_entry_choice = self.find_best_entry()
+        next_stack_entry_choice = self.find_entries_with_min_vals()
         #
         # Return a random entry from the list; prevents us from artifacts like
         # focussing on the top rows...
@@ -566,7 +623,11 @@ class SudokuPuzzle:
 
     #
     # generate the best choice (the one that resolves the most entries)
-    # from the possible choices for entry
+    # from the possible choices for entry.  Very simple: if there is only
+    # one choice, simply take it.  Otherwise, try each value separately and
+    # do the forced moves; pick the value that leads to the fewest remaining
+    # choices on the board.  If we find that a choice is infeasible, don't take
+    # it, and remove it from the set of possible values to try.
     #
     def choose_best_value(self, checkpoint, tracing = False):
         self.restore_from_checkpoint(checkpoint.checkpoint)
@@ -575,16 +636,27 @@ class SudokuPuzzle:
             next_choice = checkpoint.choice
         else:
             total_values = sum([len(entry.possibleValues) for entry in self.entries])
+            next_choice = checkpoint.possible_values[0] # default in case we don't find a good value
             for next_value in checkpoint.possible_values:
                 checkpoint.entry.possibleValues = [next_value]
                 self.do_forced_moves(False)
-                next_values = sum([len(entry.possibleValues) for entry in self.entries])
-                if next_values < total_values:
-                    total_values = next_values
-                    next_choice = next_value
+                if  self.test_feasible():
+                    next_values = sum([len(entry.possibleValues) for entry in self.entries])
+                    if next_values < total_values:
+                        total_values = next_values
+                        next_choice = next_value         
+                else:
+                    # this value will NEVER lead to a good solution; remove it from the list and continue
+                    # One note here: if every value is infeasible, we just want to pop this checkpoint.
+                    # so if we get here for every value in the list, we don't want to do anything.  Accomplishing
+                    # this directly is complex, so what we do is shove in an arbitrary value.  (In this case,
+                    # the first in the list).  What will happen is that in get_next_solution, this will be
+                    # discovered to be infeasible, and we'll simply pop up to the next checkpoint.
+                    checkpoint.possible_values.remove(next_value)                
                 self.restore_from_checkpoint(checkpoint.checkpoint)
             checkpoint.choice = next_choice
-            checkpoint.possible_values.remove(next_choice)
+            if next_choice in checkpoint.possible_values:
+                checkpoint.possible_values.remove(next_choice)
         if tracing:
             print "Setting entry %s to %d " % (str(entry), next_choice)
         checkpoint.entry.possibleValues = [next_choice]
@@ -635,8 +707,7 @@ class SudokuPuzzle:
             #
             # Now look for failure, success, or the next choice by counting
             # possible values in entries.  If any is 0, failure; if all are 1,
-            # success; otherwise, find the smallest number of entries; one of
-            # these entries will go on the stack
+            # success; otherwise, find the best entry to put on the stack
             #
             (success, failure, entry) = self.find_choice_entry_for_stack()
             if failure:
@@ -882,6 +953,9 @@ class SudokuPuzzle:
         for i in range(0, len(self.entries)):
             if i in dont_touch: continue
             ok_to_blank_squares.append(i)
+
+        # Only uncomment this when I'm measuring the effect of a heuristic on the stack
+        print len(ok_to_blank_squares)
 
 
         #
