@@ -955,7 +955,7 @@ class SudokuPuzzle:
             ok_to_blank_squares.append(i)
 
         # Only uncomment this when I'm measuring the effect of a heuristic on the stack
-        print len(ok_to_blank_squares)
+        # print len(ok_to_blank_squares), blank_squares
 
 
         #
@@ -997,6 +997,7 @@ class SudokuPuzzle:
                     number_remaining -= 1
                 self.restore_from_checkpoint(self.master_puzzle)
                 if number_remaining == 0: break
+            # print 'total number remaining %d' % number_remaining
 
    #
    # Test: does this puzzle have no unique solution?  Just iterate over all solutions;
