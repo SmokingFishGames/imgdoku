@@ -46,8 +46,12 @@ window.oncontextmenu = function() {
         return debug;
 };
 
+var popped = false;
+
 window.onpopstate = function(e) {
+	console.log(e);
 	if (e.state !== null) {
+		popped = true;
 		loaded = 3;
 		hash = e.state.h;
 		origin = e.state.o;
@@ -58,61 +62,65 @@ window.onpopstate = function(e) {
 		else if (origin == 'fb')
 			getFBAlbumFromStatePop(hash);
 	} else {
-		if(typeof(specHash) !== 'undefined') {
-			hash = specHash;
-		} else if (typeof(getUrlVars()['h']) !== 'undefined') {
-			hash = getUrlVars()['h'];
-		} else {
-			hash = '6EsqA';
+		nonPopState;
+	}
+}
+
+function nonPopState() {
+	if(typeof(specHash) !== 'undefined') {
+		hash = specHash;
+	} else if (typeof(getUrlVars()['h']) !== 'undefined') {
+		hash = getUrlVars()['h'];
+	} else {
+		hash = '6EsqA';
+	}
+	if(typeof(specOrigin) !== 'undefined') {
+		origin = specOrigin;
+	} else if (typeof(getUrlVars()['o']) !== 'undefined') {
+		origin = getUrlVars()['o'];
+	} else {
+		origin = 'i';
+	}
+	if(typeof(specDiff) !== 'undefined') {
+		diff = specDiff;
+	} else if (typeof(getUrlVars()['d']) !== 'undefined') {
+		diff = getUrlVars()['d'];
+	} else {
+		diff = 2;
+	}
+	if (typeof(specMess) !== 'undefined') {
+		mess = specMess;
+	} else if (typeof(getUrlVars()['pn']) !== 'undefined') {
+		if (getUrlVars()['pn'] == 1) {
+			playNow = true;
+			$.get('/_static/pn/pnm.txt', function(data) {
+				$('#announceWrapperMess').append(data);
+				$('#announceWrapper').css('padding-bottom', '20px');
+				$('#announceWrapper').css('display', 'block');
+			});
 		}
-		if(typeof(specOrigin) !== 'undefined') {
-			origin = specOrigin;
-		} else if (typeof(getUrlVars()['o']) !== 'undefined') {
-			origin = getUrlVars()['o'];
-		} else {
-			origin = 'i';
-		}
-		if(typeof(specDiff) !== 'undefined') {
-			diff = specDiff;
-		} else if (typeof(getUrlVars()['d']) !== 'undefined') {
-			diff = getUrlVars()['d'];
-		} else {
-			diff = 2;
-		}
-		if (typeof(specMess) !== 'undefined') {
-			mess = specMess;
-		} else if (typeof(getUrlVars()['pn']) !== 'undefined') {
-			if (getUrlVars()['pn'] == 1) {
-				playNow = true;
-				$.get('/_static/pn/pnm.txt', function(data) {
-					$('#announceWrapperMess').append(data);
-					$('#announceWrapper').css('padding-bottom', '20px');
-					$('#announceWrapper').css('display', 'block');
-				});
-			}
-			mess = -1;
-		} else {
-			mess = -1;
-		}
-		
-		var stateObj = {h:hash, o:origin, d:diff};
-		if (!playNow)
-			history.replaceState(stateObj, "Play Imagedoku", "game.html?o=" + origin + "&h="+hash+"&d="+(diff));
-		else
-			history.replaceState(stateObj, "Play Imagedoku", "game.html?o=" + origin + "&h="+hash+"&d="+(diff)+"&pn=1");
-		
-		if (mess != -1) {
-			$('#announceWrapperMess').append(mess);
-			$('#announceWrapper').css('padding-bottom', '20px');
-			$('#announceWrapper').css('display', 'block');
-		}
-		
-		
-		if (origin=='i') {
-			getImgurImages(hash);
-		} else if (origin == 'fb') {
-			getFBAlbum(hash);
-		}
+		mess = -1;
+	} else {
+		mess = -1;
+	}
+	
+	var stateObj = {h:hash, o:origin, d:diff};
+	if (!playNow)
+		history.replaceState(stateObj, "Play Imagedoku", "game.html?o=" + origin + "&h="+hash+"&d="+(diff));
+	else
+		history.replaceState(stateObj, "Play Imagedoku", "game.html?o=" + origin + "&h="+hash+"&d="+(diff)+"&pn=1");
+	
+	if (mess != -1) {
+		$('#announceWrapperMess').append(mess);
+		$('#announceWrapper').css('padding-bottom', '20px');
+		$('#announceWrapper').css('display', 'block');
+	}
+	
+	
+	if (origin=='i') {
+		getImgurImages(hash);
+	} else if (origin == 'fb') {
+		getFBAlbum(hash);
 	}
 }
 
@@ -181,6 +189,9 @@ function loadUtil() {
 }
 
 $(document).ready(function() {
+	if (!popped) {
+		nonPopState();
+	}
 	stage = new Kinetic.Stage({
 		container: 'gameStage',
 		width: 751,
