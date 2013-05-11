@@ -31,6 +31,9 @@
 	width:250px;
 }
 #createdPalettes {
+	
+}
+.albumHist {
 	width:750px;
 	/*height:115px;*/
 	display:inline-block;
@@ -70,6 +73,10 @@
 	/*border:0px;*/
 	/*border-style: solid;*/
 	/*border-color: blue;*/
+}
+.playedfbalbumthumb {
+	height: 125px;
+	vertical-align: middle;
 }
 .imguralbumthumb {
 	height:125px;

@@ -54,9 +54,12 @@
 				<div class='originDivider'>OR</div>
 				<div class='buttonHolder'><button type='button' class='uploadOwn indexButton' onclick='openModal();' title='Upload your own album from your computer and the web'>Create Your Own</button></div>
 				<div class='originDivider'>OR</div>
-				<div class='originHolder'><div id='createdPalettes'></div></div>
-				<div class='buttonHolder'><button type='button' class='submit indexButton' onclick='submitUpHist();' title='Use a previously uploaded album'>Use Previously Created</button></div>
+				<div class='originHolder'><div id='playedImgurAlbums' class='albumHist'></div><div id='playedFBAlbums' class='albumHist'></div></div>
+				<div class='buttonHolder'><button type='button' class='submit indexButton' onclick='submitPlayHist();' title='Use a previously played album'>Use Previously Played</button></div>
 				<div class='originDivider'>OR</div>
+				<!--<div class='originHolder'><div id='createdPalettes' class='albumHist'></div></div>
+				<div class='buttonHolder'><button type='button' class='submit indexButton' onclick='submitUpHist();' title='Use a previously uploaded album'>Use Previously Created</button></div>
+				<div class='originDivider'>OR</div>-->
 				<!--<input type='radio' name='origin' value='fb' checked> Use <a href='http://facebook.com' target='_blank'>Facebook</a>-->
 				<div id='fbholder'>
 					<div class='originHolder'  id='fbaccountholder'>
@@ -101,6 +104,17 @@
 			<hr />
 			<div class='defaultModalContent'>
 				You haven't selected a previously created image set yet.  Please select one, then try again.
+			</div>
+			<div class='defaultModalButtons'>
+				<button type='button' onclick='$.modal.close();'>OK</button>
+			</div>
+			<button class='defaultModalCloseButton' onclick='$.modal.close();'>X</button>
+		</div>
+		<div id='prevPlayedUnselectedError' style='display:none;'>
+			<div class='defaultModalTitle'>Error</div>
+			<hr />
+			<div class='defaultModalContent'>
+				You haven't selected a previously played image set yet.  Please select one, then try again.
 			</div>
 			<div class='defaultModalButtons'>
 				<button type='button' onclick='$.modal.close();'>OK</button>

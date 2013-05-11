@@ -1,4 +1,3 @@
-var imgurClientID = '60512304ac2e7ce';
 var sharedAlbumID;
 
 $(document).ready(function() {

@@ -1,6 +1,11 @@
 var fbalbums;
 var selectedFB = {empty:true};
 var selectedUpHist = {empty:true};
+var selectedPlayHist = {empty:true};
+var playedFBAlbums = [];
+var playedImgurAlbums = 0;
+var loadedPlayedFBAlbums = 0;
+var loadedPlayedImgurAlbums = 0;
 
 function submitImgurURL(isConf) {
 	var val = $('#imgurinput').val();
@@ -59,6 +64,7 @@ window.fbAsyncInit = function() {
 	FB.getLoginStatus(function(response) {
 		if (response.status === 'connected') {
 			initFBAlbums();
+			fetchPlayedFBAlbums();
 		} else if (response.status === 'not_authorized') {
 			$('#fbalbums').text('You need to log in.');
 		} else {
@@ -71,6 +77,7 @@ function finishFBLogin() {
 	FB.getLoginStatus(function(response) {
 		if (response.status=="connected") {
 			initFBAlbums();
+			fetchPlayedFBAlbums();
 		}
 	});
 }
@@ -150,6 +157,32 @@ function fetchFBAlbums(id) {
 		});
 	});
 }
+function fetchPlayedFBAlbums() {
+	if (playedFBAlbums.length == 0) {
+		$('#playedFBAlbums').text('You haven\'t played any Facebook albums yet.');
+	} else {
+		for (i in playedFBAlbums) {
+			FB.api(playedFBAlbums[i], function(response) {
+				$('#playedFBAlbums').append('<div class="albumThumbHolder" id="' + 'fb-' + response.id + '"><img class="playedfbalbumthumb ' + response.cover_photo + '" onclick="selectPlayHist(\'' + 'fb-' + response.id + '\');" title="' + response.name + '" /><img src="/res/img/cancel1.png" class="deleteImg" onclick="deletePlayHist(\'' + 'fb-' + response.id + '\');"><a class="albumLink" target="_blank" href="' + response.link + '">View Album</a></div>');
+				loadedPlayedFBAlbums++;
+				if (loadedPlayedFBAlbums == playedFBAlbums.length) {
+					$('.playedfbalbumthumb').powerTip({
+						followMouse: true,
+						smartPlacement: true	
+					});
+				}
+				FB.api(response.cover_photo, function(response) {
+					for (i in response.images) {
+						if (response.images[i].height < 200 || response.images[i].width < 200) {
+							$('.' + response.id).attr('src', response.images[i].source);
+							break;
+						}
+					}
+				});
+			});
+		}
+	}
+}
 
 function selectFBImg(albumID, coverID) {
 	if (selectedFB.empty == true) {
@@ -204,7 +237,6 @@ function closeModal() {
 	$('#inurlButton').prop('disabled', false);
 	$('#submitUpload').prop('disabled', true);
 }
-var imgurClientID = '60512304ac2e7ce';
 var uploadedImgs = [];
 var currUploading = 0;
 var upDeleteHash;
@@ -382,7 +414,7 @@ function submitUpHist() {
 }
 
 function selectUpHist(ID) {
-	if (selectedUpHist.empty == true) {
+	if (selectedUpHist.empty) {
 	} else {
 		$('#'+selectedUpHist.ID).css('border','0px');
 		$('#'+selectedUpHist.ID).css('margin','5px');
@@ -405,11 +437,49 @@ function deleteUpHist(ID) {
 	}
 }
 
+//HISTORY CODE
+var playHist = [];
+function submitPlayHist() {
+	if (selectedPlayHist.empty == true) {
+		$('#prevPlayedUnselectedError').modal({
+			overlayClose: true
+		});
+		//alert('You haven\'t selected a Facebook album yet.  Please select one, then try again.');
+	} else {
+		var partsOfId = selectedPlayHist.ID.split('-');
+		window.location = 'game.html?o=' + partsOfId[0] + '&h=' + partsOfId[1] + '&d='+getDiff();
+	}
+}
+function selectPlayHist(ID) {
+	if (selectedPlayHist.empty) {
+	} else {
+		$('#'+selectedPlayHist.ID).css('border','0px');
+		$('#'+selectedPlayHist.ID).css('margin','5px');
+	}
+	selectedPlayHist.ID = ID;
+	selectedPlayHist.empty = false;
+	$('#'+selectedPlayHist.ID).css('border','5px solid #91FDFF');
+	$('#'+selectedPlayHist.ID).css('margin','0px');
+}
+function deletePlayHist(ID) {
+	var partsOfId = ID.split('-');
+	for (var i in playHist) {
+		if (playHist[i].o == partsOfId[0] && playHist[i].h == partsOfId[1]) {
+			playHist.splice(i, 1);
+			$('#' + ID).css('display', 'none');
+			var jsonPlayHist = JSON.stringify(playHist);
+			$.cookie('userPlayed', jsonPlayHist, {expires: 999, path: '/'});
+			break;
+		}
+	}
+}
+
+//INIT CODE
 $(document).ready(function() {
 	if (typeof($.cookie('diff') != 'undefined')) {
 		$('input[name=difficulty]:eq(' + (Number($.cookie('diff'))-1) + ')', '#mainForm').attr('checked', 'checked');
 	}
-	if (typeof($.cookie('userUpped')) != 'undefined') {
+	/*if (typeof($.cookie('userUpped')) != 'undefined') {
 		var prevHist = $.cookie('userUpped');
 		prevHist = $.parseJSON(prevHist);
 		if (typeof(prevHist) == 'string') {
@@ -442,6 +512,48 @@ $(document).ready(function() {
 		}
 	} else {
 		$('#createdPalettes').text('You haven\'t created any albums yet.');
+	}*/
+	if (typeof($.cookie('userPlayed')) != 'undefined') {
+		var prevHist = $.cookie('userPlayed');
+		prevHist = $.parseJSON(prevHist);
+		if (typeof(prevHist) == 'string') {
+			playHist = [prevHist];
+		} else {
+			playHist = prevHist;
+		}
+		for (i in playHist) {
+			if (playHist[i].o == 'i') {
+				playedImgurAlbums++;
+				$.ajax({
+					url: 'https://api.imgur.com/3/album/' + playHist[i].h,
+					type: 'GET',
+					dataType: 'json',
+					cache: false,
+					beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'Client-ID '+imgurClientID);},
+					success: function(data) {
+						var imgID = data.data.cover;
+						imgID += 't';
+						imgID = 'http://i.imgur.com/' + imgID + '.jpg';
+						$('#playedImgurAlbums').prepend('<div class="albumThumbHolder" id="' + 'i-' + data.data.id + '"><img class="imguralbumthumb" onclick="selectPlayHist(\'' + 'i-' + data.data.id + '\');" title="' + data.data.id + '" src="' + imgID + '" /><img src="/res/img/cancel1.png" class="deleteImg" onclick="deletePlayHist(\'' + 'i-' + data.data.id + '\');"><a class="albumLink" target="_blank" href="' + data.data.link + '">View Album</a></div>');
+						loadedPlayedImgurAlbums++;
+						if (playedImgurAlbums == loadedPlayedImgurAlbums) {
+							$('.imguralbumthumb').powerTip({
+								followMouse: true,
+								smartPlacement: true	
+							});
+						}
+					},
+					error: function(data) { console.log(data); }
+				});
+			} else if (playHist[i].o == 'fb') {
+				playedFBAlbums.push(playHist[i].h);
+			}
+		}
+		if (playHist.length == 0) {
+			$('#playedImgurAlbums').text('You haven\'t played any Imgur albums yet.');
+		}
+	} else {
+		$('#playedImgurAlbums').text('You haven\'t played any Imgur albums yet.');
 	}
 	
 	$('.indexButton').powerTip({

@@ -42,6 +42,8 @@ var mousedOver = {x:null, y:null};
 
 var debug = false;
 
+var playHist = [];
+
 window.oncontextmenu = function() {
         return debug;
 };
@@ -288,7 +290,7 @@ function getImgurImages(hash) {
 		type: 'GET',
 		dataType: 'json',
 		cache: false,
-		beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'Client-ID 60512304ac2e7ce');},
+		beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'Client-ID '+imgurClientID);},
 		success: function(data) {
 			albumURL = data.data.link;
 			if (data.data.images.length >= 9) {
@@ -322,6 +324,7 @@ function getImgurImages(hash) {
 			$('#imgurMalformedError').modal();
 		}
 	});
+	addAlbumToHist(hash, 0);
 }
 
 function getFBAlbum(hash) {
@@ -366,6 +369,7 @@ function getFBAlbum(hash) {
 		// Additional init code here
 		
 	};
+	addAlbumToHist(hash, 1);
 }
 
 function getFBAlbumFromStatePop(hash) {
@@ -381,6 +385,7 @@ function getFBAlbumFromStatePop(hash) {
 			getFBImages(newResp);
 		});
 	}
+	addAlbumToHist(hash, 1);
 }
 
 function getFBImages(api) {
@@ -409,6 +414,33 @@ function getFBImages(api) {
 	} else {
 		$('#insufficientImagesError').modal();
 	}
+}
+
+//Origin of hash -- 0 is Imgur, 1 is Facebook
+function addAlbumToHist(hashToAdd, originOfHash) {
+	if (typeof($.cookie('userPlayed')) != 'undefined') {
+		var prevHist = $.cookie('userPlayed');
+		prevHist = $.parseJSON(prevHist);
+		playHist = prevHist;
+	}
+	var albumHist;
+	switch (originOfHash) {
+		case 0:
+			albumHist = new albumHistObj('i', hashToAdd);
+			break;
+		case 1:
+			albumHist = new albumHistObj('fb', hashToAdd);
+			break;
+	}
+	for (i in playHist) {
+		if (playHist[i].o == albumHist.o && playHist[i].h == albumHist.h) {
+			playHist.splice(i,1);
+			break;
+		}
+	}
+	playHist.push(albumHist);
+	var jsonUpHist = JSON.stringify(playHist);
+	$.cookie('userPlayed', jsonUpHist, {expires: 999, path: '/'});
 }
 
 //function drawSolved() {

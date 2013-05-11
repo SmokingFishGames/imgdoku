@@ -17,6 +17,11 @@ function parseImgurURL(url) {
 	return url;
 }
 
+function albumHistObj(o, h) {
+	this.o = o;
+	this.h = h;
+}
+
 $(document).ready(function() {
 	console.log('checking browser...');
 	console.log($.browser.name + ' ' + $.browser.versionNumber);
@@ -57,3 +62,6 @@ String.prototype.hashCode = function(){
 	}
 	return hash;
 }
+
+//GLOBAL VARS
+var imgurClientID = '60512304ac2e7ce';
