@@ -163,7 +163,7 @@ function fetchPlayedFBAlbums() {
 	} else {
 		for (i in playedFBAlbums) {
 			FB.api(playedFBAlbums[i], function(response) {
-				$('#playedFBAlbums').append('<div class="albumThumbHolder" id="' + 'fb-' + response.id + '"><img class="playedfbalbumthumb ' + response.cover_photo + '" onclick="selectPlayHist(\'' + 'fb-' + response.id + '\');" title="' + response.name + '" /><img src="/res/img/cancel1.png" class="deleteImg" onclick="deletePlayHist(\'' + 'fb-' + response.id + '\');"><a class="albumLink" target="_blank" href="' + response.link + '">View Album</a></div>');
+				$('#playedFBAlbums').prepend('<div class="albumThumbHolder" id="' + 'fb-' + response.id + '"><img class="playedfbalbumthumb ' + response.cover_photo + '" onclick="selectPlayHist(\'' + 'fb-' + response.id + '\');" title="' + response.name + '" /><img src="/res/img/cancel1.png" class="deleteImg" onclick="deletePlayHist(\'' + 'fb-' + response.id + '\');"><a class="albumLink" target="_blank" href="' + response.link + '">View Album</a></div>');
 				loadedPlayedFBAlbums++;
 				if (loadedPlayedFBAlbums == playedFBAlbums.length) {
 					$('.playedfbalbumthumb').powerTip({
@@ -521,8 +521,10 @@ $(document).ready(function() {
 		} else {
 			playHist = prevHist;
 		}
+		var imgurPlayed = false;
 		for (i in playHist) {
 			if (playHist[i].o == 'i') {
+				imgurPlayed = true;
 				playedImgurAlbums++;
 				$.ajax({
 					url: 'https://api.imgur.com/3/album/' + playHist[i].h,
@@ -549,11 +551,12 @@ $(document).ready(function() {
 				playedFBAlbums.push(playHist[i].h);
 			}
 		}
-		if (playHist.length == 0) {
+		if (!imgurPlayed)
 			$('#playedImgurAlbums').text('You haven\'t played any Imgur albums yet.');
-		}
 	} else {
 		$('#playedImgurAlbums').text('You haven\'t played any Imgur albums yet.');
+		$('#playedFBAlbums').text('You haven\'t played any Facebook albums yet.');
+
 	}
 	
 	$('.indexButton').powerTip({
