@@ -51,7 +51,7 @@
 				<div id='controls'>
 					<button id='helpButton' type='button' onclick='help(true);'>Help/Tips</button><button id='changeButton' type='button' onclick='change();'>Options</button> | <button type='button' onclick='checkErrors();'>Check</button><button type='button' onclick='solvePuzzle(false);'>Solve</button> | <button id='toggleDrawImg' type='button' onclick='toggleDrawImg();'>Switch to Numbers</button> | <button type='button' onclick='setCheckpoint();'>Set Checkpoint</button><button id='checkpointButton' type='button' onclick='openCheckpoints();'>View Checkpoints</button> | <button id='albumLink' onclick='viewAlbum();'>View Album</button><button id='albumShare' onclick='shareAlbum();' style='display:none;'>Share Album</button>
 				</div>
-				<div id='numStage'></div><div id='gameStage'></div>
+				<div id='stageWrapper'><div id='numStage'></div><div id='gameStage'></div></div>
 				<!--Zoom: <button type='button' onclick='zoom(true);'>+</button><button type='button' onclick='zoom(false);'>-</button>     -->
 				<div id='alerts'></div>
 			</div>
@@ -151,8 +151,11 @@
 					<div class='difficultyHolder'>Difficulty: <span class='difficulty'><input type='radio' name='difficulty' value='1'> Easy <input type='radio' name='difficulty' value='2' checked> Medium <input type='radio' name='difficulty' value='3'> Hard <input type='radio' name='difficulty' value='4'> Expert</span></div>
 					<div style='text-align: right;'><span style='color:red;font-size:15px;'>Warning: will reload page.</span><button type='button' onclick='changeDiff();'>Change Difficulty</button></div>
 					<br />
-					Imgur Album URL: <input id='imgurinput' />
+					Imgur Album URL: <input  type='text' id='imgurinput' />
 					<div style='text-align:right;'><button type='button' onclick='changeAlbum();'>Change Album</button></div>
+					<br />
+					Board Size: <input type='text' id='sizeinput' placeholder='751' />px<sup>2</sup>
+					<div style='text-align:right;'><span style='color:red;font-size:15px;'>Zoom will be disabled unless the board is at default size.</span><button type='button' onclick='resetBoardSize();'>Reset Board Size</button><button type='button' onclick='resizeBoard();'>Resize Board</button><div>
 				</div>
 			</div>
 			<div class='defaultModalButtons'>

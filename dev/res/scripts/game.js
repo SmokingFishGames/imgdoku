@@ -939,6 +939,7 @@ function Board() {
 		}
 	}
 	this.dancing=false;
+	this.canZoom = true;
 }
 
 function Tile(val, sol, perm) {
@@ -1016,42 +1017,46 @@ function selectTool(val) {
 }
 
 function zoom(x,y, isZoomIn) {
-	var currScale = stage.getScale();
-	if (isZoomIn) {
-		if (currScale.x < 9) {
-			stage.setScale(currScale.x*3);
-		}
-	} else if (!isZoomIn) {
-		if (currScale.x > 1) {
-			stage.setScale(currScale.x/3);
-		}
-	}
-	currScale = stage.getScale();
-	if (currScale.x > 1) {
-		if (currScale.x == 3) {
-			stage.setX(-Math.floor(x/3)*3*75*currScale.x-(Math.floor(x/3)*75));
-			stage.setY(-Math.floor(y/3)*3*75*currScale.x-(Math.floor(y/3)*75));
-			if (Math.floor(x/3) == 0) {
-				stage.setX(stage.getX()-10);
-			} else if (Math.floor(x/3) == 2) {
-				stage.setX(stage.getX()+10);
+	if (board.canZoom) {
+		var currScale = stage.getScale();
+		if (isZoomIn) {
+			if (currScale.x < 9) {
+				stage.setScale(currScale.x*3);
 			}
-			if (Math.floor(y/3) == 0) {
-				stage.setY(stage.getY()-10);
-			} else if (Math.floor(y/3) == 2) {
-				stage.setY(stage.getY()+10);
+		} else if (!isZoomIn) {
+			if (currScale.x > 1) {
+				stage.setScale(currScale.x/3);
+			}
+		}
+		currScale = stage.getScale();
+		if (currScale.x > 1) {
+			if (currScale.x == 3) {
+				stage.setX(-Math.floor(x/3)*3*75*currScale.x-(Math.floor(x/3)*75));
+				stage.setY(-Math.floor(y/3)*3*75*currScale.x-(Math.floor(y/3)*75));
+				if (Math.floor(x/3) == 0) {
+					stage.setX(stage.getX()-10);
+				} else if (Math.floor(x/3) == 2) {
+					stage.setX(stage.getX()+10);
+				}
+				if (Math.floor(y/3) == 0) {
+					stage.setY(stage.getY()-10);
+				} else if (Math.floor(y/3) == 2) {
+					stage.setY(stage.getY()+10);
+				}
+			} else {
+				//stage.setX(-x*75*currScale.x-(x*75)-(Math.floor(x/3)*10));
+				//stage.setY(-y*75*currScale.x-(y*75)-(Math.floor(y/3)*10));
+				stage.setX(((-79)*(x*9)-79)+(-10)*(Math.floor(x/3)*9)+10);
+				stage.setY(((-79)*(y*9)-79)+(-10)*(Math.floor(y/3)*9)+10);
 			}
 		} else {
-			//stage.setX(-x*75*currScale.x-(x*75)-(Math.floor(x/3)*10));
-			//stage.setY(-y*75*currScale.x-(y*75)-(Math.floor(y/3)*10));
-			stage.setX(((-79)*(x*9)-79)+(-10)*(Math.floor(x/3)*9)+10);
-			stage.setY(((-79)*(y*9)-79)+(-10)*(Math.floor(y/3)*9)+10);
+			stage.setX(0);
+			stage.setY(0);
 		}
+		stage.draw();
 	} else {
-		stage.setX(0);
-		stage.setY(0);
+		console.log('Can\'t zoom due to board size.');
 	}
-	stage.draw();
 }
 
 function checkErrors() {
@@ -1225,4 +1230,39 @@ function changeDiff() {
 function getDiff() {
 	$.cookie('diff',  $('input[name=difficulty]:checked', '#changeForm').val(), {expires: 999, path: '/'});
 	return $('input[name=difficulty]:checked', '#changeForm').val();
+}
+
+//Resize board.  Seriously though, get a bigger sceen.
+function resizeBoard() {
+	var defaultSize = 751;
+	var newSize = Number($('#sizeinput').val());
+	console.log(newSize, newSize/defaultSize);
+	stage.setScale(newSize/defaultSize);
+	numStage.setScale(newSize/defaultSize);
+	stage.draw();
+	numStage.draw();
+	var newNumStageWidth = (158) * (newSize/defaultSize);
+	$('#gameStage').css('height', newSize);
+	$('#gameStage').css('width', newSize);
+	$('#numStage').css('height', newSize);
+	$('#numStage').css('width', newNumStageWidth);
+	$('#stageWrapper').css('width', newNumStageWidth+newSize);
+	if (newSize/defaultSize == 1) board.canZoom = true; //This is here just because the current method of zooming is the same as resizing the board, meaning they don't coexist at present.  Will work it out later.
+	else board.canZoom = false;
+	$.modal.close();
+	$('#sizeinput').attr('placeholder', newSize);
+}
+function resetBoardSize() {
+	stage.setScale(1);
+	numStage.setScale(1);
+	stage.draw();
+	numStage.draw();
+	$('#gameStage').css('height', '751px');
+	$('#gameStage').css('width', '751px');
+	$('#numStage').css('height', '751px');
+	$('#numStage').css('width', '158px');
+	$('#stageWrapper').css('width', '909px');
+	board.canZoom = true; //This is here just because the current method of zooming is the same as resizing the board, meaning they don't coexist at present.  Will work it out later.
+	$.modal.close();
+	$('#sizeinput').attr('placeholder', 751);
 }

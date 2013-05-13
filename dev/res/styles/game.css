@@ -9,6 +9,11 @@ canvas {
 #fullWrapper {
 	width:909px;
 }
+#stageWrapper {
+	width:909px;
+	margin-left:auto;
+	margin-right:auto;
+}
 #gameStage {
 	width:751px;
 	height:751px;
