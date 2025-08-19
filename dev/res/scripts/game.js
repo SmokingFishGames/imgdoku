@@ -253,33 +253,62 @@ $(document).ready(function() {
 	
 	document.addEventListener('mousewheel', zoomMouse, false);
 	
-	$.get('/res/py/puzzle.py', {d:diff}).done( function(data) {
-		var puzzData = data.board;
-		puzzData = puzzData.split('#');
-		var puzzle = {};
-		puzzle.Solved = puzzData[0];
-		puzzle.Unsolved = puzzData[1];
-		for (var i = 0; i < 9; i++) {
-			solved[i] = [];
-			unsolved[i] = [];
-			for (var j = 0; j < 9; j++) {
-				unsolved[i][j] = puzzle.Unsolved.charAt(0);
-				solved[i][j] = puzzle.Solved.charAt(0);
-				puzzle.Unsolved = puzzle.Unsolved.substr(1);
-				puzzle.Solved = puzzle.Solved.substr(1);
-				if (unsolved[i][j] == '_') {
-					unsolved[i][j] = '.';
-				}
+	var puzzleGenerator = new SudokuPuzzle();
+	puzzleGenerator.generateBoardAndPuzzle();
+	var puzzData = puzzleGenerator.generateWebString();
+	puzzData = puzzData.split('#');
+
+	var puzzle = {};
+	puzzle.Solved = puzzData[0];
+	puzzle.Unsolved = puzzData[1];
+	for (var i = 0; i < 9; i++) {
+		solved[i] = [];
+		unsolved[i] = [];
+		for (var j = 0; j < 9; j++) {
+			unsolved[i][j] = puzzle.Unsolved.charAt(0);
+			solved[i][j] = puzzle.Solved.charAt(0);
+			puzzle.Unsolved = puzzle.Unsolved.substr(1);
+			puzzle.Solved = puzzle.Solved.substr(1);
+			if (unsolved[i][j] == '_') {
+				unsolved[i][j] = '.';
 			}
 		}
-		board = new Board();
-		checkpoints.push(JSON.stringify(board));
-		loadedPuzzle = true;
-		if (loaded == 12) {
-			drawUnsolved();
-			drawToolbar();
-		}
-	});
+	}
+	board = new Board();
+	checkpoints.push(JSON.stringify(board));
+	loadedPuzzle = true;
+	if (loaded == 12) {
+		drawUnsolved();
+		drawToolbar();
+	}
+
+	// $.get('/res/py/puzzle.py', {d:diff}).done( function(data) {
+	// 	var puzzData = data.board;
+	// 	puzzData = puzzData.split('#');
+	// 	var puzzle = {};
+	// 	puzzle.Solved = puzzData[0];
+	// 	puzzle.Unsolved = puzzData[1];
+	// 	for (var i = 0; i < 9; i++) {
+	// 		solved[i] = [];
+	// 		unsolved[i] = [];
+	// 		for (var j = 0; j < 9; j++) {
+	// 			unsolved[i][j] = puzzle.Unsolved.charAt(0);
+	// 			solved[i][j] = puzzle.Solved.charAt(0);
+	// 			puzzle.Unsolved = puzzle.Unsolved.substr(1);
+	// 			puzzle.Solved = puzzle.Solved.substr(1);
+	// 			if (unsolved[i][j] == '_') {
+	// 				unsolved[i][j] = '.';
+	// 			}
+	// 		}
+	// 	}
+	// 	board = new Board();
+	// 	checkpoints.push(JSON.stringify(board));
+	// 	loadedPuzzle = true;
+	// 	if (loaded == 12) {
+	// 		drawUnsolved();
+	// 		drawToolbar();
+	// 	}
+	// });
 });
 
 function getImgurImages(hash) {
@@ -477,7 +506,7 @@ function drawUnsolved() {
 	for (var i = 0; i < 9; i++) {
 		for (var j = 0; j < 9; j++) {
 			if (board.tiles[i][j].val != '.' && board.tiles[i][j].val != '*') {
-				imageSrc = images[board.tiles[i][j].val-1];
+				var imageSrc = images[board.tiles[i][j].val-1];
 				var imageToAdd;
 				if (drawImg) {
 					imageToAdd = new Kinetic.Image({
@@ -504,7 +533,7 @@ function drawUnsolved() {
 			} else if (board.tiles[i][j].val == '*') {
 				for (k in board.tiles[i][j].poss) {
 					if (board.tiles[i][j].poss[k]) {
-						imageSrc = images[k];
+						var imageSrc = images[k];
 						var x, y;
 						x = 75*i+10*(Math.floor(i/3)+1)+2*(i+1)+2*i;
 						y = 75*j+10*(Math.floor(j/3)+1)+2*(j+1)+2*j;
@@ -664,7 +693,7 @@ function drawToolbar() {
 	imgToolLayer.removeChildren();
 	cellToolLayer.removeChildren();
 	for (var i = 0; i < 9; i++) {
-		imageSrc = images[i];
+		var imageSrc = images[i];
 		var x = 2;
 		var y = i;
 		y*=75;
