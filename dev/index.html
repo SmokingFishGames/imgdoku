@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
-	<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# imgdoku: http://ogp.me/ns/fb/imgdoku#">
+	<head prefix="og: https://ogp.me/ns# fb: https://ogp.me/ns/fb# imgdoku: https://ogp.me/ns/fb/imgdoku#">
 		<title>Imagedoku</title>
 		
 		<meta property="fb:app_id" content="154174584743698" />
 		<meta property="og:type"   content="game" />
-		<meta property="og:url"    content="http://imagedoku.com/" />
+		<meta property="og:url"    content="https://imagedoku.com/" />
 		<meta property="og:title"  content="Imagedoku" />
-		<meta property="og:image"  content="http://imagedoku.com/res/img/logo.png" />
+		<meta property="og:image"  content="https://imagedoku.com/res/img/logo.png" />
 		<meta property="og:description" content="Imagedoku is a version of sudoku that's played with your images." />
 		<meta property="og:site_name" content="Imagedoku" />
 		
@@ -16,7 +16,7 @@
 
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 		
-		<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js'></script>
+		<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js'></script>
 		<script src='/libs/simplemodal-1.4.3.min.js' type='text/javascript'></script>
 		<script src='/libs/jquery.cookie.min.js' type='text/javascript'></script>
 		<script src='/libs/jquery.browser.min.js' type='text/javascript'></script>
@@ -46,7 +46,7 @@
 	<body>
 		<a href="https://github.com/SmokingFishGames/imgdoku" target="_blank"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
 		<div id='fullWrapper'>
-			<div id='titleHead'><a href='/' class='undecLink'>Imagedoku</a><div id="titleSubhead">by <a href='http://smokingfishgames.com' target='_blank' class='titleSubheadLink'>Smoking Fish Games</a></div></div>
+			<div id='titleHead'><a href='/' class='undecLink'>Imagedoku</a><div id="titleSubhead">by <a href='https://smokingfishgames.com' target='_blank' class='titleSubheadLink'>Smoking Fish Games</a></div></div>
 			<div id='mainForm'>
 				<div class='difficultyHolder'>Difficulty: <span class='difficulty'><input type='radio' name='difficulty' value='1'> Easy <input type='radio' name='difficulty' value='2' checked> Medium <input type='radio' name='difficulty' value='3'> Hard <input type='radio' name='difficulty' value='4'> Expert</span></div>
 				<hr />
@@ -60,7 +60,7 @@
 				<!--<div class='originHolder'><div id='createdPalettes' class='albumHist'></div></div>
 				<div class='buttonHolder'><button type='button' class='submit indexButton' onclick='submitUpHist();' title='Use a previously uploaded album'>Use Previously Created</button></div>
 				<div class='originDivider'>OR</div>-->
-				<!--<input type='radio' name='origin' value='fb' checked> Use <a href='http://facebook.com' target='_blank'>Facebook</a>-->
+				<!--<input type='radio' name='origin' value='fb' checked> Use <a href='https://facebook.com' target='_blank'>Facebook</a>-->
 				<div id='fbholder'>
 					<div class='originHolder'  id='fbaccountholder'>
 						<div class="fb-login-button" data-show-faces="true" data-width="500" data-max-rows="1" scope="user_photos, friends_photos" onlogin="finishFBLogin();"></div><select id='fbfriendmenu' class='fbfriendselections' onchange='selectFriend();'></select><!--<button id='fbfriendselect' type='button' onclick='selectFriend();' class='fbfriendselections'>Select</button>--><div id='fbalbums'>Loading...</div>
@@ -68,7 +68,7 @@
 				</div>
 				<div class='buttonHolder'><button type='button' class='submit indexButton' onclick='submitFB();' title="Use your own or a friend's Facebook album">Use Facebook</button></div>
 				<div class='originDivider'>OR</div>
-				<!--<input type='radio' name='origin' value='i'> Use <a href='http://imgur.com' target='_blank'>Imgur</a>-->
+				<!--<input type='radio' name='origin' value='i'> Use <a href='https://imgur.com' target='_blank'>Imgur</a>-->
 				<div class='originHolder' id='imgurholder'>
 					 Album URL: <input id='imgurinput' /><br />
 				</div>
@@ -77,7 +77,7 @@
 				<div class='buttonHolder'><button type='button' class='submit indexButton' onclick='submitCustom();'>Use Custom Album</button></div>-->
 			</div>
 		</div>
-		<div id='footer'>&#169; 2013 <a href='http://smokingfishgames.com' target='_blank'>Smoking Fish Games</a> -- <a href='https://github.com/SmokingFishGames/imgdoku' target='_blank'>Open source on GitHub</a> -- <a href='mailto:contact@smokingfishgames.com'>Contact SFG</a> -- <a href='https://github.com/SmokingFishGames/imgdoku/issues/new' target='_blank'>Report a bug</a>
+		<div id='footer'>&#169; 2013 <a href='https://smokingfishgames.com' target='_blank'>Smoking Fish Games</a> -- <a href='https://github.com/SmokingFishGames/imgdoku' target='_blank'>Open source on GitHub</a> -- <a href='mailto:contact@smokingfishgames.com'>Contact SFG</a> -- <a href='https://github.com/SmokingFishGames/imgdoku/issues/new' target='_blank'>Report a bug</a>
 		</div>
 		<div id='uploadHolder' style='display:none;'>
 			<input type='file' id='infile' accept='image/*' multiple /><br />
