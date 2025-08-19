@@ -44,7 +44,7 @@ $(document).ready(function() {
 			browserInfo: {  
 				msie: { // Specifies browser name and image name (browser_konqueror.gif)  
 					text: 'Internet Explorer 10', // Text Link  
-					url: 'http://windows.microsoft.com/en-US/internet-explorer/download-ie' // URL To link to  
+					url: 'https://windows.microsoft.com/en-US/internet-explorer/download-ie' // URL To link to  
 				}
 			},
 			closeCookie: true

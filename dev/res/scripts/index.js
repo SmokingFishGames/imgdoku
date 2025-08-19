@@ -220,7 +220,7 @@ function openModal() {
 		success: function(data) {
 			upDeleteHash = data.data.deletehash;
 			upHash = data.data.id;
-			$('#albumLink').html('<a href="http://imgur.com/a/' + upHash + '" target="_blank">Any images will be publicly available at this address.</a>');
+			$('#albumLink').html('<a href="https://imgur.com/a/' + upHash + '" target="_blank">Any images will be publicly available at this address.</a>');
 		},
 		error: function(data) { console.log(data); }
 	});
@@ -497,7 +497,7 @@ $(document).ready(function() {
 				success: function(data) {
 					var imgID = data.data.cover;
 					imgID += 't';
-					imgID = 'http://i.imgur.com/' + imgID + '.jpg';
+					imgID = 'https://i.imgur.com/' + imgID + '.jpg';
 					$('#createdPalettes').prepend('<div class="albumThumbHolder" id="' + data.data.id + '"><img class="imguralbumthumb" onclick="selectUpHist(\'' + data.data.id + '\');" title="' + data.data.id + '" src="' + imgID + '" /><img src="/res/img/cancel1.png" class="deleteImg" onclick="deleteUpHist(\'' + data.data.id + '\');"><a class="albumLink" target="_blank" href="' + data.data.link + '">View Album</a></div>');
 					$('.imguralbumthumb').powerTip({
 						followMouse: true,
@@ -535,7 +535,7 @@ $(document).ready(function() {
 					success: function(data) {
 						var imgID = data.data.cover;
 						imgID += 't';
-						imgID = 'http://i.imgur.com/' + imgID + '.jpg';
+						imgID = 'https://i.imgur.com/' + imgID + '.jpg';
 						$('#playedImgurAlbums').prepend('<div class="albumThumbHolder" id="' + 'i-' + data.data.id + '"><img class="imguralbumthumb" onclick="selectPlayHist(\'' + 'i-' + data.data.id + '\');" title="' + data.data.id + '" src="' + imgID + '" /><img src="/res/img/cancel1.png" class="deleteImg" onclick="deletePlayHist(\'' + 'i-' + data.data.id + '\');"><a class="albumLink" target="_blank" href="' + data.data.link + '">View Album</a></div>');
 						loadedPlayedImgurAlbums++;
 						if (playedImgurAlbums == loadedPlayedImgurAlbums) {
