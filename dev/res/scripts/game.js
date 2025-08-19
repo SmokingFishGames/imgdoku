@@ -253,33 +253,61 @@ $(document).ready(function() {
 	
 	document.addEventListener('mousewheel', zoomMouse, false);
 	
-	$.get('/res/py/puzzle.py', {d:diff}).done( function(data) {
-		var puzzData = data.board;
-		puzzData = puzzData.split('#');
-		var puzzle = {};
-		puzzle.Solved = puzzData[0];
-		puzzle.Unsolved = puzzData[1];
-		for (var i = 0; i < 9; i++) {
-			solved[i] = [];
-			unsolved[i] = [];
-			for (var j = 0; j < 9; j++) {
-				unsolved[i][j] = puzzle.Unsolved.charAt(0);
-				solved[i][j] = puzzle.Solved.charAt(0);
-				puzzle.Unsolved = puzzle.Unsolved.substr(1);
-				puzzle.Solved = puzzle.Solved.substr(1);
-				if (unsolved[i][j] == '_') {
-					unsolved[i][j] = '.';
-				}
+	var puzzleGenerator = new SudokuPuzzle();
+	puzzleGenerator.generateBoardAndPuzzle();
+	var puzzData = puzzleGenerator.generateWebString();
+
+	var puzzle = {};
+	puzzle.Solved = puzzData[0];
+	puzzle.Unsolved = puzzData[1];
+	for (var i = 0; i < 9; i++) {
+		solved[i] = [];
+		unsolved[i] = [];
+		for (var j = 0; j < 9; j++) {
+			unsolved[i][j] = puzzle.Unsolved.charAt(0);
+			solved[i][j] = puzzle.Solved.charAt(0);
+			puzzle.Unsolved = puzzle.Unsolved.substr(1);
+			puzzle.Solved = puzzle.Solved.substr(1);
+			if (unsolved[i][j] == '_') {
+				unsolved[i][j] = '.';
 			}
 		}
-		board = new Board();
-		checkpoints.push(JSON.stringify(board));
-		loadedPuzzle = true;
-		if (loaded == 12) {
-			drawUnsolved();
-			drawToolbar();
-		}
-	});
+	}
+	board = new Board();
+	checkpoints.push(JSON.stringify(board));
+	loadedPuzzle = true;
+	if (loaded == 12) {
+		drawUnsolved();
+		drawToolbar();
+	}
+
+	// $.get('/res/py/puzzle.py', {d:diff}).done( function(data) {
+	// 	var puzzData = data.board;
+	// 	puzzData = puzzData.split('#');
+	// 	var puzzle = {};
+	// 	puzzle.Solved = puzzData[0];
+	// 	puzzle.Unsolved = puzzData[1];
+	// 	for (var i = 0; i < 9; i++) {
+	// 		solved[i] = [];
+	// 		unsolved[i] = [];
+	// 		for (var j = 0; j < 9; j++) {
+	// 			unsolved[i][j] = puzzle.Unsolved.charAt(0);
+	// 			solved[i][j] = puzzle.Solved.charAt(0);
+	// 			puzzle.Unsolved = puzzle.Unsolved.substr(1);
+	// 			puzzle.Solved = puzzle.Solved.substr(1);
+	// 			if (unsolved[i][j] == '_') {
+	// 				unsolved[i][j] = '.';
+	// 			}
+	// 		}
+	// 	}
+	// 	board = new Board();
+	// 	checkpoints.push(JSON.stringify(board));
+	// 	loadedPuzzle = true;
+	// 	if (loaded == 12) {
+	// 		drawUnsolved();
+	// 		drawToolbar();
+	// 	}
+	// });
 });
 
 function getImgurImages(hash) {
