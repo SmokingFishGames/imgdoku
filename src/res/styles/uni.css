@@ -81,6 +81,18 @@ body {
 	text-align:right;
 	padding-top:20px;
 }
+.modalWarning {
+	text-wrap: pretty;
+	min-width: 100%;
+	max-width: min-content; /* or even 0 */
+	padding: 10px 0;
+}
+.modalWarningInnerSection {
+	padding: 5px 0;
+}
+.modalWarningEmphasis {
+	font-weight: bold;
+}
 button {
 	cursor:pointer;
 }
