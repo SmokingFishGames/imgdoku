@@ -19,6 +19,13 @@ var erase;
 var zoomIn;
 var zoomOut;
 
+const difficultyValueToStringMapping = {
+	1: 'easy',
+	2: 'medium',
+	3: 'hard',
+	4: 'evil'
+}
+
 var diff;
 var hash;
 var origin;
@@ -252,9 +259,11 @@ $(document).ready(function() {
 	}
 	
 	document.addEventListener('mousewheel', zoomMouse, false);
-	
+
+	var difficultyString = difficultyValueToStringMapping[diff];
+
 	var puzzleGenerator = new SudokuPuzzle();
-	puzzleGenerator.generateBoardAndPuzzle();
+	puzzleGenerator.generateBoardAndPuzzle(-1, difficultyString);
 	var puzzData = puzzleGenerator.generateWebString();
 	puzzData = puzzData.split('#');
 
